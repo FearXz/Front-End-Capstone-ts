@@ -6,7 +6,7 @@ function CategoryFilter() {
         <div
           id="search-filters-categories"
           className="filters_categories"
-          style={{ overflow: "auto", maxHeight: "1000px" }}
+          style={{ overflow: "auto", maxHeight: "500px" }}
         >
           <div className="form-check">
             <input className="form-check-input" type="checkbox" name="types" value="american" id="types_american" />

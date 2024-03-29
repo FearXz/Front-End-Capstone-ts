@@ -3,7 +3,8 @@ import { useDispatch } from "react-redux";
 import { searchLocaliAtCoordinate } from "../../redux/actions/homeSearchAction";
 import { useQuery } from "../../functions/functions";
 import { Col, Container, Row } from "react-bootstrap";
-import SearchSideBar from "./SearchSideBar";
+import SearchSideBar from "./SideBar/SearchSideBar";
+import SearchLocalList from "./SearchLocalList";
 
 function SearchPage() {
   const params = useQuery();
@@ -26,7 +27,9 @@ function SearchPage() {
             <SearchSideBar />
             <div>&nbsp; </div>
           </Col>
-          <Col className="col-xxl-10 col-xl-9 col-lg-8 col-12 restaurants"></Col>
+          <Col className="col-xxl-10 col-xl-9 col-lg-8 col-12 restaurants">
+            <SearchLocalList />
+          </Col>
         </Row>
       </Container>
     </main>
