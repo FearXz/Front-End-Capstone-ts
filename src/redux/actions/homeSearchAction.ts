@@ -3,6 +3,7 @@ import { setIsLoading } from "../reducers/stateReducer";
 import { url } from "../../functions/config";
 import { setListaRistoranti } from "../reducers/searchRistoranteReducer";
 import { haversineDistance } from "../../functions/functions";
+import { Coordinate, ListaRistorantiResponse } from "../../interfaces/interfaces";
 
 export const searchHomeAddress = (address: string, navigate: any) => async (dispatch: any) => {
   try {
@@ -10,9 +11,11 @@ export const searchHomeAddress = (address: string, navigate: any) => async (disp
     const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${address}`);
 
     if (response.ok) {
-      const data = await response.json();
+      const data: Coordinate[] = await response.json();
+
       console.log(data);
       const { lat, lon } = data[0];
+
       toast.success("coordinate trovate con successo");
       dispatch(setIsLoading(false));
       navigate(`/locali?lat=${lat}&lon=${lon}`);
@@ -26,22 +29,22 @@ export const searchHomeAddress = (address: string, navigate: any) => async (disp
     dispatch(setIsLoading(false));
   }
 };
-export const searchLocaliAtCoordinate = (lat: number, lon: number) => async (dispatch: any) => {
+export const searchLocaliAtCoordinate = (lat: string, lon: string) => async (dispatch: any) => {
   try {
     dispatch(setIsLoading(true));
     const response = await fetch(`${url}Ristorante/listaRistoranti`);
 
     if (response.ok) {
-      const data = await response.json();
+      const data: ListaRistorantiResponse[] = await response.json();
       console.log(data);
 
       // toast.success("coordinate trovate con successo");
       dispatch(setIsLoading(false));
 
-      data.forEach((restaurant: any) => {
+      data.forEach((restaurant: ListaRistorantiResponse) => {
         restaurant.distanza = haversineDistance(
-          lat,
-          lon,
+          parseFloat(lat),
+          parseFloat(lon),
           parseFloat(restaurant.latitudine),
           parseFloat(restaurant.longitudine)
         );

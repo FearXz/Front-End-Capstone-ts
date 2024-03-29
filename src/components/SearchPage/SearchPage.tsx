@@ -5,15 +5,15 @@ import { useQuery } from "../../functions/functions";
 
 function SearchPage() {
   const params = useQuery();
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   // ho lat e lon come parametri
   console.log(params);
-  const lat = params.get("lat");
-  const lon = params.get("lon");
+  const lat: string | null = params.get("lat");
+  const lon: string | null = params.get("lon");
 
   useEffect(() => {
     // Qui puoi fare il fetch per i ristoranti vicini
-    dispatch(searchLocaliAtCoordinate(lat, lon));
+    dispatch(searchLocaliAtCoordinate(lat || "", lon || ""));
   }, []);
 
   return <div>SearchPage</div>;
