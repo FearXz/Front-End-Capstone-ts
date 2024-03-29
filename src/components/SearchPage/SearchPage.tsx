@@ -4,7 +4,7 @@ import { searchLocaliAtCoordinate } from "../../redux/actions/homeSearchAction";
 import { useQuery } from "../../functions/functions";
 import { Col, Container, Row } from "react-bootstrap";
 import SearchSideBar from "./SideBar/SearchSideBar";
-import SearchLocalList from "./SearchLocalList";
+import SearchLocalList from "./Mainlist/SearchLocalList";
 
 function SearchPage() {
   const params = useQuery();

@@ -1,5 +1,5 @@
 import { Col, Row } from "react-bootstrap";
-import MobileFilterCategory from "./MobileFilterCategory";
+import MobileFilterCategory from "./inner/MobileFilterCategory";
 
 function SearchLocalList() {
   return (

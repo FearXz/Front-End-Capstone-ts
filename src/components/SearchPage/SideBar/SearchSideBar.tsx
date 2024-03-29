@@ -1,5 +1,5 @@
-import CategoryFilter from "./CategoryFilter";
-import SearchFormLocal from "./SearchFormLocal";
+import CategoryFilter from "./inner/CategoryFilter";
+import SearchFormLocal from "./inner/SearchFormLocal";
 
 function SearchSideBar() {
   return (
