@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+body {
+  min-height: 100vh;
+  font-family: "Open Sans", sans-serif;
+  position: relative;
+}
+.font-breef {
+  font-family: "Bree Serif", serif;
+}
+.focus:focus {
+  outline: none !important;
+  border: 1px solid #28a745; /* green success di bootstrap */
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25); /* green success di bootstrap */
+}
+.bg-gray {
+  background-color: #ebebeb;
+}
+.button-border-success {
+  border-bottom: 4px solid #4b8333 !important;
+  border-left: 3px solid #5ca23e !important;
+  border-right: 3px solid #5ca23e !important;
+}
+.button-border-light {
+  border-bottom: 4px solid #999999 !important;
+  border-left: 3px solid #d0d0d0 !important;
+  border-right: 3px solid #d0d0d0 !important;
+}
+.button-border-warning {
+  border-bottom: 4px solid #c69f2a !important;
+  border-left: 3px solid #eabd36 !important;
+  border-right: 3px solid #eabd36 !important;
+}
+.text-green {
+  color: #63b34a;
+}
+.loader {
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 9999;
+}
+.my-input::placeholder {
+  color: rgb(162, 162, 162);
+}
+
+/* NAVBAR */
+.section-nav {
+  background: #fff;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 2px 2px -2px rgba(0, 0, 0, 0.14), 0 1px 8px 0 rgba(0, 0, 0, 0.12);
+}
+/*  FOOTER */
+.footer-bg {
+  background: url(/src/assets/images/bg-footer.jpg);
+}
+/*  MAIN */
+.section-search {
+  padding: 11% 0;
+  background-position: center center;
+  background-size: cover;
+  background-image: url(/src/assets/images/bg-home-2023-01.jpg);
+  position: relative;
+}
+.section-search:before {
+  content: " ";
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+.section-app {
+  background: url(/src/assets/images/bg-app.jpg);
+  background-position: center top;
+  background-size: cover;
+}
