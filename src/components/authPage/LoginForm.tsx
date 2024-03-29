@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   const {
     register,
     handleSubmit,
@@ -50,7 +50,7 @@ function LoginForm() {
                     type="email"
                     placeholder="name@example.com"
                   />
-                  {errors.email && <p className="text-danger">{errors.email.message}</p>}
+                  {errors?.email?.message && <p className="text-danger">{errors.email.message as string}</p>}
                 </FloatingLabel>
               </Col>
               <Col xs={12} xl={6} className="form-floating mb-3 ">

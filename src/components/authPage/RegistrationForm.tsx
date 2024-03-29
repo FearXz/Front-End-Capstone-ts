@@ -1,4 +1,3 @@
-import React from "react";
 import { Button, Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -7,7 +6,7 @@ import { registerPost } from "../../redux/actions/authAction";
 
 function RegistrationForm() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   const {
     register,
     handleSubmit,
@@ -15,8 +14,8 @@ function RegistrationForm() {
     getValues,
   } = useForm();
 
-  async function onSubmit(data) {
-    const registerObj = {
+  async function onSubmit(data: any) {
+    const registerObj: object = {
       email: data.email,
       password: data.password,
       nome: data.nome,
@@ -73,7 +72,7 @@ function RegistrationForm() {
                     type="text"
                     placeholder=""
                   />
-                  {errors.cellulare && <p className="text-danger">{errors.cellulare.message}</p>}
+                  {errors.cellulare && <p className="text-danger">{errors.cellulare.message as string}</p>}
                 </FloatingLabel>
               </Col>
 
@@ -91,7 +90,7 @@ function RegistrationForm() {
                     type="email"
                     placeholder=""
                   />
-                  {errors.email && <p className="text-danger">{errors.email.message}</p>}
+                  {errors.email && <p className="text-danger">{errors.email.message as string}</p>}
                 </FloatingLabel>
               </Col>
 
@@ -118,7 +117,9 @@ function RegistrationForm() {
                     type="password"
                     placeholder=""
                   />
-                  {errors.confermaPassword && <p className="text-danger">{errors.confermaPassword.message}</p>}
+                  {errors.confermaPassword && (
+                    <p className="text-danger">{errors.confermaPassword.message as string}</p>
+                  )}
                 </FloatingLabel>
               </Col>
 
@@ -157,7 +158,7 @@ function RegistrationForm() {
                     type="text"
                     placeholder=""
                   />
-                  {errors.cap && <p className="text-danger">{errors.cap.message}</p>}
+                  {errors.cap && <p className="text-danger">{errors.cap.message as string}</p>}
                 </FloatingLabel>
               </Col>
             </Row>

@@ -1,7 +1,12 @@
 //slice reducer
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface StateState {
+  refresh: boolean;
+  isLoading: boolean;
+}
+
+const initialState: StateState = {
   refresh: false,
   isLoading: false,
 };
@@ -11,7 +16,7 @@ const stateReducer = createSlice({
   initialState,
   reducers: {
     // Azione definita nello slice
-    toggleRefresh: (state, action) => {
+    toggleRefresh: (state) => {
       state.refresh = !state.refresh;
     },
     setIsLoading: (state, action) => {

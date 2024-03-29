@@ -1,7 +1,11 @@
 //slice reducer
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface SearchRistoranteState {
+  listaRistoranti: any;
+}
+
+const initialState: SearchRistoranteState = {
   listaRistoranti: null,
 };
 

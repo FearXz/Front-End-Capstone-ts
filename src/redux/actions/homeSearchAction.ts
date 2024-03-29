@@ -22,7 +22,6 @@ export const searchHomeAddress = (address: string, navigate: any) => async (disp
     }
   } catch (error) {
     // Puoi gestire gli errori qui, se necessario
-    console.error("Errore nel fetch:", error.message);
   } finally {
     dispatch(setIsLoading(false));
   }
@@ -39,7 +38,7 @@ export const searchLocaliAtCoordinate = (lat: number, lon: number) => async (dis
       // toast.success("coordinate trovate con successo");
       dispatch(setIsLoading(false));
 
-      data.forEach((restaurant) => {
+      data.forEach((restaurant: any) => {
         restaurant.distanza = haversineDistance(
           lat,
           lon,
@@ -55,7 +54,6 @@ export const searchLocaliAtCoordinate = (lat: number, lon: number) => async (dis
     }
   } catch (error) {
     // Puoi gestire gli errori qui, se necessario
-    console.error("Errore nel fetch:", error.message);
   } finally {
     dispatch(setIsLoading(false));
   }

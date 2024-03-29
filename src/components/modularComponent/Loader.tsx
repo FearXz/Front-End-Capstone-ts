@@ -1,9 +1,10 @@
 import loadingImg from "../../assets/images/logo_preload.png";
 import { Col, Container, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
 
 function Loader() {
-  const isLoading = useSelector((state) => state.global.isLoading);
+  const isLoading = useSelector((state: RootState) => state.global.isLoading);
   console.log(isLoading);
 
   if (isLoading) {

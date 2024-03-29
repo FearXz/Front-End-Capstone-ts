@@ -1,7 +1,11 @@
 //slice reducer
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface AuthState {
+  loggedProfile: any;
+}
+
+const initialState: AuthState = {
   loggedProfile: null,
 };
 

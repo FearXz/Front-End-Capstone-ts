@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo-official.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogout } from "../../redux/reducers/authReducer";
+import { RootState } from "../../redux/store/store";
 
 function MyNavbar() {
-  const profile = useSelector((state) => state.auth.loggedProfile);
+  const profile = useSelector((state: RootState) => state.auth.loggedProfile);
   const dispatch = useDispatch();
 
   return (

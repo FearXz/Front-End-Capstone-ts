@@ -3,7 +3,7 @@ import { url } from "../../functions/config";
 import { toast } from "react-toastify";
 import { setIsLoading } from "../reducers/stateReducer";
 // auth/login endpoint
-export const loginPost = (loginObj, navigate: any) => async (dispatch: any) => {
+export const loginPost = (loginObj: object, navigate: any) => async (dispatch: any) => {
   try {
     dispatch(setIsLoading(true));
     const response = await fetch(url + "auth/login", {
@@ -27,15 +27,14 @@ export const loginPost = (loginObj, navigate: any) => async (dispatch: any) => {
       throw new Error("Errore nel recupero dei risultati");
     }
   } catch (error) {
-    // Puoi gestire gli errori qui, se necessario
+    // You can handle errors here, if necessary
     toast.error("Errore nel login");
-    console.error("Errore nel fetch:", error.message);
   } finally {
     dispatch(setIsLoading(false));
   }
 };
 // auth/register endpoint
-export const registerPost = (registerObj, navigate) => async (dispatch) => {
+export const registerPost = (registerObj: any, navigate: any) => async (dispatch: any) => {
   try {
     dispatch(setIsLoading(true));
     const response = await fetch(url + "auth/register", {
@@ -68,7 +67,6 @@ export const registerPost = (registerObj, navigate) => async (dispatch) => {
   } catch (error) {
     // Puoi gestire gli errori qui, se necessario
     toast.error("Errore nel registrazione");
-    console.error("Errore nel fetch:", error.message);
   } finally {
     dispatch(setIsLoading(false));
   }
