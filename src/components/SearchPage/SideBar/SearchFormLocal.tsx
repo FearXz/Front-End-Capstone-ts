@@ -1,11 +1,20 @@
+import { Form } from "react-bootstrap";
+
 function SearchFormLocal() {
   return (
     <div>
-      Consegna in <span className="text-leaf-500 fw-bold ">Via Salvador Allende,&nbsp;1</span>
+      <span className="text-leaf-500 fw-bold ">Via Salvador Allende,&nbsp;1</span>
       <span className="d-block"></span>
-      <button className="btn btn-sm rounded-0 button-border-success  btn-leaf-500 text-white fw-bold btn-modify-address">
-        CAMBIA
-      </button>
+
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Control
+          className="rounded-0 fix-h-50  my-input"
+          type="text"
+          placeholder="Cerca il tuo locale preferito"
+          value={""}
+          onChange={() => {}}
+        />
+      </Form.Group>
     </div>
   );
 }
