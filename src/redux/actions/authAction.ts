@@ -2,8 +2,9 @@ import { setLoggedProfile } from "../reducers/authReducer";
 import { url } from "../../functions/config";
 import { toast } from "react-toastify";
 import { setIsLoading } from "../reducers/stateReducer";
+import { LoginDto, LoginResponse, RegisterDto } from "../../interfaces/interfaces";
 // auth/login endpoint
-export const loginPost = (loginObj: object, navigate: any) => async (dispatch: any) => {
+export const loginPost = (loginObj: LoginDto, navigate: any) => async (dispatch: any) => {
   try {
     dispatch(setIsLoading(true));
     const response = await fetch(url + "auth/login", {
@@ -15,7 +16,7 @@ export const loginPost = (loginObj: object, navigate: any) => async (dispatch: a
     });
 
     if (response.ok) {
-      const dataProfile = await response.json();
+      const dataProfile: LoginResponse = await response.json();
       console.log(dataProfile);
 
       dispatch(setLoggedProfile(dataProfile));
@@ -34,7 +35,7 @@ export const loginPost = (loginObj: object, navigate: any) => async (dispatch: a
   }
 };
 // auth/register endpoint
-export const registerPost = (registerObj: any, navigate: any) => async (dispatch: any) => {
+export const registerPost = (registerObj: RegisterDto, navigate: any) => async (dispatch: any) => {
   try {
     dispatch(setIsLoading(true));
     const response = await fetch(url + "auth/register", {
@@ -48,7 +49,7 @@ export const registerPost = (registerObj: any, navigate: any) => async (dispatch
     if (response.ok) {
       toast.success("Registrazione effettuata con successo");
 
-      const loginObj = {
+      const loginObj: LoginDto = {
         email: registerObj.email,
         password: registerObj.password,
       };

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { loginPost } from "../../redux/actions/authAction";
 import { useNavigate } from "react-router-dom";
+import { LoginDto } from "../../interfaces/interfaces";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function LoginForm() {
   } = useForm();
 
   async function onSubmit(data: any) {
-    const loginObj = {
+    const loginObj: LoginDto = {
       email: data.email,
       password: data.password,
     };

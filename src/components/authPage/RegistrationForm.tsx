@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { registerPost } from "../../redux/actions/authAction";
+import { RegisterDto } from "../../interfaces/interfaces";
 
 function RegistrationForm() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function RegistrationForm() {
   } = useForm();
 
   async function onSubmit(data: any) {
-    const registerObj: object = {
+    const registerObj: RegisterDto = {
       email: data.email,
       password: data.password,
       nome: data.nome,
