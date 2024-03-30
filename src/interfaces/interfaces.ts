@@ -12,7 +12,7 @@ export interface UserData {
   cap: string;
   role: string;
 }
-export interface Coordinate {
+export interface CoordinateSearch {
   lat: number;
   lon: number;
   display_name: string;

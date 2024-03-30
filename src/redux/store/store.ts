@@ -5,11 +5,12 @@ import stateReducer from "../reducers/stateReducer";
 import expireReducer from "redux-persist-expire";
 import authReducer from "../reducers/authReducer";
 import searchRistoranteReducer from "../reducers/searchRistoranteReducer";
+import persistedInfoReducer from "../reducers/persistedInfoReducer";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth"],
+  whitelist: ["auth", "persist"],
   transforms: [
     expireReducer("auth", {
       expireSeconds: 7 * 24 * 60 * 60, // 7 days
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   global: stateReducer,
   auth: authReducer,
   searchRistorante: searchRistoranteReducer,
+  persist: persistedInfoReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

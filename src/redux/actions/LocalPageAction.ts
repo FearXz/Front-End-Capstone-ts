@@ -25,6 +25,8 @@ export const searchLocaliAtCoordinate = (lat: string, lon: string) => async (dis
           parseFloat(restaurant.longitudine)
         );
       });
+      // ordina i ristoranti per distanza
+      data.sort((a, b) => a.distanza - b.distanza);
 
       dispatch(setListaRistoranti(data));
     } else {

@@ -1,9 +1,13 @@
 import { Form } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store/store";
 
 function SearchFormLocal() {
+  const indirizzoCercato = useSelector((state: RootState) => state.persist.indirizzoCercato);
+
   return (
     <div>
-      <span className="text-leaf-500 fw-bold ">Via Salvador Allende,&nbsp;1</span>
+      <span className="text-leaf-500 fw-bold ">{indirizzoCercato ? indirizzoCercato.display_name : ""}</span>
       <span className="d-block"></span>
 
       <Form.Group className="mb-3" controlId="formBasicEmail">
