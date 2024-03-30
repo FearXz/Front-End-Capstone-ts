@@ -53,3 +53,7 @@ export interface ListaRistorantiResponse {
   categorieRistorante: categorieRistorante[];
   distanza: number;
 }
+export interface CategorieResponse {
+  idCategorie: number;
+  nomeCategoria: string;
+}

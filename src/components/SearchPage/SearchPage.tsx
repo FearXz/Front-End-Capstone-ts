@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { searchLocaliAtCoordinate } from "../../redux/actions/homeSearchAction";
 import { useQuery } from "../../functions/functions";
 import { Col, Container, Row } from "react-bootstrap";
 import SearchSideBar from "./SideBar/SearchSideBar";
 import SearchLocalList from "./Mainlist/SearchLocalList";
+import { searchLocaliAtCoordinate } from "../../redux/actions/LocalPageAction";
 
 function SearchPage() {
   const params = useQuery();
