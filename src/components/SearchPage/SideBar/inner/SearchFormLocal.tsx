@@ -1,9 +1,12 @@
 import { Form } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store/store";
+import { setFiltroSearchBar } from "../../../../redux/reducers/searchRistoranteReducer";
 
 function SearchFormLocal() {
+  const dispatch: any = useDispatch();
   const indirizzoCercato = useSelector((state: RootState) => state.persist.indirizzoCercato);
+  const filtroSearchBar = useSelector((state: RootState) => state.searchRistorante.filtroSearchBar);
 
   return (
     <div>
@@ -15,8 +18,8 @@ function SearchFormLocal() {
           className="rounded-0 fix-h-50  my-input"
           type="text"
           placeholder="Cerca il tuo locale preferito"
-          value={""}
-          onChange={() => {}}
+          value={filtroSearchBar}
+          onChange={(e) => dispatch(setFiltroSearchBar(e.target.value))}
         />
       </Form.Group>
     </div>
