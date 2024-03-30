@@ -1,13 +1,11 @@
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { searchHomeAddress } from "../../redux/actions/homeSearchAction";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { RootState } from "../../redux/store/store";
 
 function HeroSearchForm() {
   const profile = useSelector((state: RootState) => state.auth.loggedProfile);
-  const dispatch: any = useDispatch();
   const fullAddress = profile ? profile.utente.indirizzo + " " + profile.utente.citta + " " + profile.utente.cap : "";
   const [address, setAddress] = useState(fullAddress);
   const navigate = useNavigate();
@@ -15,7 +13,7 @@ function HeroSearchForm() {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    dispatch(searchHomeAddress(address, navigate));
+    navigate(`/locali/${address}`);
   };
 
   return (

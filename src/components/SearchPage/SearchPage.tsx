@@ -1,22 +1,24 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useQuery } from "../../functions/functions";
 import { Col, Container, Row } from "react-bootstrap";
 import SearchSideBar from "./SideBar/SearchSideBar";
 import SearchLocalList from "./Mainlist/SearchLocalList";
-import { searchLocaliAtCoordinate } from "../../redux/actions/LocalPageAction";
+import { useParams } from "react-router-dom";
+import { searchHomeAddress } from "../../redux/actions/LocalPageAction";
 
 function SearchPage() {
-  const params = useQuery();
+  const params = useParams();
   const dispatch: any = useDispatch();
-  // ho lat e lon come parametri
+
+  console.log(params.address);
+
   console.log(params);
-  const lat: string | null = params.get("lat");
-  const lon: string | null = params.get("lon");
+  const address: string = params.address ? params.address : "";
 
   useEffect(() => {
     // Qui puoi fare il fetch per i ristoranti vicini
-    dispatch(searchLocaliAtCoordinate(lat || "", lon || ""));
+    dispatch(searchHomeAddress(address));
+    // dispatch(searchLocaliAtCoordinate(lat || "", lon || ""));
   }, []);
 
   return (

@@ -21,7 +21,6 @@ export const loginPost = (loginObj: LoginDto, navigate: any) => async (dispatch:
 
       dispatch(setLoggedProfile(dataProfile));
       toast.success("Login effettuato con successo");
-      dispatch(setIsLoading(false));
 
       navigate("/");
     } else {
@@ -55,7 +54,6 @@ export const registerPost = (registerObj: RegisterDto, navigate: any) => async (
       };
 
       dispatch(loginPost(loginObj, navigate));
-      dispatch(setIsLoading(false));
       navigate("/");
     } else {
       if (response.status === 409) {
