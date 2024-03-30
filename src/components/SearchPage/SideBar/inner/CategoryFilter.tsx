@@ -3,10 +3,21 @@ import { RootState } from "../../../../redux/store/store";
 import { CategorieResponse } from "../../../../interfaces/interfaces";
 import { useEffect } from "react";
 import { fetchListaCategorie } from "../../../../redux/actions/LocalPageAction";
+import { addToFiltroCheckBox, removeFromFiltroCheckBox } from "../../../../redux/reducers/searchRistoranteReducer";
 
 function CategoryFilter() {
   const listaCategorie = useSelector((state: RootState) => state.searchRistorante.listaCategorie);
+  const filtroCheckBox = useSelector((state: RootState) => state.searchRistorante.filtroCheckBox);
   const dispatch: any = useDispatch();
+
+  const handleCheckboxChange = (event: any) => {
+    const categoryId = Number(event.target.value);
+    if (event.target.checked) {
+      dispatch(addToFiltroCheckBox(categoryId));
+    } else {
+      dispatch(removeFromFiltroCheckBox(categoryId));
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchListaCategorie());
@@ -30,6 +41,7 @@ function CategoryFilter() {
                   name="types"
                   value={categoria.idCategorie}
                   id={"id-" + index}
+                  onChange={handleCheckboxChange}
                 />
                 <label className="form-check-label" typeof={"id-" + index}>
                   {categoria.nomeCategoria}{" "}

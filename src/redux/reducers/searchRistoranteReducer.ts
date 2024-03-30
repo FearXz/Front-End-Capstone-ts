@@ -6,12 +6,14 @@ interface SearchRistoranteState {
   listaRistoranti: ListaRistorantiResponse[] | null;
   listaCategorie: CategorieResponse[] | null;
   filtroSearchBar: string;
+  filtroCheckBox: number[]; // Array di idCategorie selezionate
 }
 
 const initialState: SearchRistoranteState = {
   listaRistoranti: null,
   listaCategorie: null,
   filtroSearchBar: "",
+  filtroCheckBox: [],
 };
 
 const searchRistoranteReducer = createSlice({
@@ -28,9 +30,21 @@ const searchRistoranteReducer = createSlice({
     setFiltroSearchBar: (state, action) => {
       state.filtroSearchBar = action.payload;
     },
+    addToFiltroCheckBox: (state, action) => {
+      state.filtroCheckBox = [...state.filtroCheckBox, action.payload];
+    },
+    removeFromFiltroCheckBox: (state, action) => {
+      state.filtroCheckBox = state.filtroCheckBox.filter((id) => id !== action.payload);
+    },
   },
 });
 
 // Esporto solo l'azione definita nello slice
-export const { setListaRistoranti, setListaCategorie, setFiltroSearchBar } = searchRistoranteReducer.actions;
+export const {
+  setListaRistoranti,
+  setListaCategorie,
+  setFiltroSearchBar,
+  addToFiltroCheckBox,
+  removeFromFiltroCheckBox,
+} = searchRistoranteReducer.actions;
 export default searchRistoranteReducer.reducer;
