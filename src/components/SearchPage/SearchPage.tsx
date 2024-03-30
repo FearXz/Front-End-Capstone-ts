@@ -12,13 +12,10 @@ function SearchPage() {
 
   console.log(params.address);
 
-  console.log(params);
   const address: string = params.address ? params.address : "";
 
   useEffect(() => {
-    // Qui puoi fare il fetch per i ristoranti vicini
     dispatch(searchHomeAddress(address));
-    // dispatch(searchLocaliAtCoordinate(lat || "", lon || ""));
   }, []);
 
   return (
