@@ -14,7 +14,33 @@ function HeroSearchForm() {
   const [address, setAddress] = useState(fullAddress);
   const [suggestions, setSuggestions] = useState<OSMResponse[]>([]);
   const [searchTimeout, setSearchTimeout] = useState<null | number>(null);
+  const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
 
+  // Funzione per gestire la pressione dei tasti
+  const handleKeyDown = (e: any) => {
+    // Freccia giù
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setHighlightedIndex((prevIndex) => (prevIndex < suggestions.length - 1 ? prevIndex + 1 : 0));
+    }
+    // Freccia su
+    else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setHighlightedIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : suggestions.length - 1));
+    }
+    // Invio
+    else if (e.key === "Enter" && highlightedIndex >= 0) {
+      e.preventDefault();
+      handleSuggestionClick(suggestions[highlightedIndex]);
+    }
+  };
+  // Funzione per gestire il click su una suggerimento
+  const handleSuggestionClick = (suggestion: any) => {
+    setAddress(suggestion.label);
+    setSuggestions([]);
+    console.log(suggestion);
+  };
+  // Funzione per gestire il campo di ricerca
   const handleSearchChange = async (e: any) => {
     setAddress(e.target.value);
 
@@ -32,12 +58,7 @@ function HeroSearchForm() {
       }, 300)
     ); // Ritarda la chiamata di 1 secondo
   };
-
-  const handleSuggestionClick = (suggestion: any) => {
-    setAddress(suggestion.label);
-    setSuggestions([]);
-    console.log(suggestion);
-  };
+  // Funzione per gestire l'invio del form
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
@@ -55,11 +76,12 @@ function HeroSearchForm() {
               placeholder="Il tuo indirizzo (comprensivo di città e numero civico)"
               value={address}
               onChange={handleSearchChange}
+              onKeyDown={handleKeyDown}
             />
             <div className=" bg-white position-absolute w-100 ">
               {suggestions?.map((suggestion, index) => (
                 <div
-                  className="cursor-pointer suggestion p-1"
+                  className={`cursor-pointer suggestion p-1 ${index === highlightedIndex ? "highlight" : ""}`}
                   key={index}
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
