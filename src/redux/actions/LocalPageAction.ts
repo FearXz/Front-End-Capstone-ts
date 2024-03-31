@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { setIsLoading } from "../reducers/stateReducer";
 import { setListaCategorie, setListaRistoranti } from "../reducers/searchRistoranteReducer";
-import { CategorieResponse, CoordinateSearch, ListaRistorantiResponse } from "../../interfaces/interfaces";
+import { CoordinateSearch, ListaRistorantiResponse, categorieRistorante } from "../../interfaces/interfaces";
 import { url } from "../../functions/config";
 import { haversineDistance } from "../../functions/functions";
 import { setIndirizzoCercato } from "../reducers/persistedInfoReducer";
@@ -74,7 +74,7 @@ export const fetchListaCategorie = () => async (dispatch: any) => {
     const response = await fetch(`${url}ristorante/listaCategorie`);
 
     if (response.ok) {
-      const data: CategorieResponse[] = await response.json();
+      const data: categorieRistorante[] = await response.json();
       console.log(data);
 
       dispatch(setListaCategorie(data));

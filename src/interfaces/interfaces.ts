@@ -31,6 +31,11 @@ export interface CoordinateSearch {
   lon: number;
   display_name: string;
 }
+export interface OSMResponse {
+  x: number;
+  y: number;
+  label: string;
+}
 export interface categorieRistorante {
   idCategorie: number;
   nomeCategoria: string;
