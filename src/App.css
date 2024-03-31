@@ -6,6 +6,9 @@ body {
   font-family: "Open Sans", sans-serif;
   position: relative;
 }
+main {
+  min-height: 61.5vh;
+}
 .font-breef {
   font-family: "Bree Serif", serif;
 }
