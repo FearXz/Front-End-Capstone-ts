@@ -32,6 +32,10 @@ function HeroSearchForm() {
     else if (e.key === "Enter" && highlightedIndex >= 0) {
       e.preventDefault();
       handleSuggestionClick(suggestions[highlightedIndex]);
+      setHighlightedIndex(-1);
+    } else if (e.key === "Enter" && highlightedIndex === -1) {
+      e.preventDefault();
+      handleSubmit(e);
     }
   };
   // Funzione per gestire il click su una suggerimento
@@ -64,6 +68,11 @@ function HeroSearchForm() {
 
     navigate(`/locali/${address}`);
   };
+  // Funzione per resettare il campo di ricerca
+  const handleReset = () => {
+    setHighlightedIndex(-1);
+    setSuggestions([]);
+  };
 
   return (
     <Row>
@@ -75,6 +84,8 @@ function HeroSearchForm() {
               type="text"
               placeholder="Il tuo indirizzo (comprensivo di città e numero civico)"
               value={address}
+              onClick={handleReset}
+              onBlur={handleReset}
               onChange={handleSearchChange}
               onKeyDown={handleKeyDown}
             />
