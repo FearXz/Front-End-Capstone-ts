@@ -11,16 +11,17 @@ function SearchFormLocal() {
 
   return (
     <div>
-      <span className="text-leaf-500 fw-bold ">{indirizzoCercato ? indirizzoCercato.display_name : ""}</span>
-      <span className="d-block"></span>
+      <p className="text-leaf-500 fw-bold ">{indirizzoCercato ? indirizzoCercato.display_name : ""}</p>
+
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Control
-          className="rounded-0 fix-h-50  my-input"
+          className="rounded-0 fix-h-50  my-input focus"
           type="text"
           placeholder="Cerca il tuo locale preferito"
           value={filtroSearchBar}
           onChange={(e) => dispatch(setFiltroSearchBar(e.target.value))}
         />
+        <h4 className="h5 text-uppercase fw-bold mt-3">DISTANZA</h4>
       </Form.Group>
       <Row className="flex-nowrap">
         <Col className="col-auto p-0 ps-3">1</Col>
