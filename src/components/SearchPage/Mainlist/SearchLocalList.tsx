@@ -13,10 +13,8 @@ function SearchLocalList() {
   const filteredRestaurants = listaRistoranti?.filter(
     (ristorante: ListaRistorantiResponse) =>
       ristorante.nomeRistorante.toLowerCase().includes(filtroSearchBar.toLowerCase()) &&
-      (filtroCheckBox.length === 0 ||
-        ristorante.categorieRistorante.some((categoria: categorieRistorante) =>
-          filtroCheckBox.includes(categoria.idCategorie)
-        ))
+      (filtroCheckBox.length == 0 ||
+        filtroCheckBox.every((id) => ristorante.categorieRistorante.some((categoria) => categoria.idCategorie === id)))
   );
 
   return (
