@@ -1,12 +1,13 @@
 //slice reducer
 import { createSlice } from "@reduxjs/toolkit";
-import { CategorieResponse, ListaRistorantiResponse } from "../../interfaces/interfaces";
+import { ListaRistorantiResponse, categorieRistorante } from "../../interfaces/interfaces";
 
 interface SearchRistoranteState {
   listaRistoranti: ListaRistorantiResponse[] | null;
-  listaCategorie: CategorieResponse[] | null;
+  listaCategorie: categorieRistorante[] | null;
   filtroSearchBar: string;
   filtroCheckBox: number[]; // Array di idCategorie selezionate
+  filtroRange: number; // Distanza in km
 }
 
 const initialState: SearchRistoranteState = {
@@ -14,6 +15,7 @@ const initialState: SearchRistoranteState = {
   listaCategorie: null,
   filtroSearchBar: "",
   filtroCheckBox: [],
+  filtroRange: 10,
 };
 
 const searchRistoranteReducer = createSlice({
@@ -36,6 +38,9 @@ const searchRistoranteReducer = createSlice({
     removeFromFiltroCheckBox: (state, action) => {
       state.filtroCheckBox = state.filtroCheckBox.filter((id) => id !== action.payload);
     },
+    setFiltroRange: (state, action) => {
+      state.filtroRange = action.payload;
+    },
   },
 });
 
@@ -46,5 +51,6 @@ export const {
   setFiltroSearchBar,
   addToFiltroCheckBox,
   removeFromFiltroCheckBox,
+  setFiltroRange,
 } = searchRistoranteReducer.actions;
 export default searchRistoranteReducer.reducer;

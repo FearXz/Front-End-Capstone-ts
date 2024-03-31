@@ -2,19 +2,23 @@ import { Col, Row } from "react-bootstrap";
 import MobileFilterCategory from "./inner/MobileFilterCategory";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { ListaRistorantiResponse, categorieRistorante } from "../../../interfaces/interfaces";
+import { ListaRistorantiResponse } from "../../../interfaces/interfaces";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 function SearchLocalList() {
   const listaRistoranti = useSelector((state: RootState) => state.searchRistorante.listaRistoranti);
   const filtroSearchBar = useSelector((state: RootState) => state.searchRistorante.filtroSearchBar);
   const filtroCheckBox = useSelector((state: RootState) => state.searchRistorante.filtroCheckBox);
+  const filtroRange = useSelector((state: RootState) => state.searchRistorante.filtroRange);
 
   const filteredRestaurants = listaRistoranti?.filter(
     (ristorante: ListaRistorantiResponse) =>
       ristorante.nomeRistorante.toLowerCase().includes(filtroSearchBar.toLowerCase()) &&
       (filtroCheckBox.length == 0 ||
-        filtroCheckBox.every((id) => ristorante.categorieRistorante.some((categoria) => categoria.idCategorie === id)))
+        filtroCheckBox.every((id) =>
+          ristorante.categorieRistorante.some((categoria) => categoria.idCategorie === id)
+        )) &&
+      ristorante.distanza <= filtroRange
   );
 
   return (

@@ -12,11 +12,6 @@ export interface UserData {
   cap: string;
   role: string;
 }
-export interface CoordinateSearch {
-  lat: number;
-  lon: number;
-  display_name: string;
-}
 export interface LoginResponse {
   token: string;
   utente: UserData;
@@ -30,6 +25,11 @@ export interface RegisterDto {
   indirizzo: string;
   citta: string;
   cap: string;
+}
+export interface CoordinateSearch {
+  lat: number;
+  lon: number;
+  display_name: string;
 }
 export interface categorieRistorante {
   idCategorie: number;
@@ -52,8 +52,4 @@ export interface ListaRistorantiResponse {
   descrizione: string | null;
   categorieRistorante: categorieRistorante[];
   distanza: number;
-}
-export interface CategorieResponse {
-  idCategorie: number;
-  nomeCategoria: string;
 }

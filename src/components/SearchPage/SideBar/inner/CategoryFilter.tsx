@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store/store";
-import { CategorieResponse } from "../../../../interfaces/interfaces";
+import { categorieRistorante } from "../../../../interfaces/interfaces";
 import { useEffect } from "react";
 import { fetchListaCategorie } from "../../../../redux/actions/LocalPageAction";
 import { addToFiltroCheckBox, removeFromFiltroCheckBox } from "../../../../redux/reducers/searchRistoranteReducer";
 
 function CategoryFilter() {
   const listaCategorie = useSelector((state: RootState) => state.searchRistorante.listaCategorie);
-  const filtroCheckBox = useSelector((state: RootState) => state.searchRistorante.filtroCheckBox);
   const dispatch: any = useDispatch();
 
   const handleCheckboxChange = (event: any) => {
@@ -33,7 +32,7 @@ function CategoryFilter() {
           style={{ overflow: "auto", maxHeight: "500px" }}
         >
           {listaCategorie &&
-            listaCategorie.map((categoria: CategorieResponse, index) => (
+            listaCategorie.map((categoria: categorieRistorante, index) => (
               <div key={`form-${index}`} className="form-check ms-2">
                 <input
                   className="form-check-input"
