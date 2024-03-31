@@ -32,16 +32,15 @@ function HeroSearchForm() {
     else if (e.key === "Enter" && highlightedIndex >= 0) {
       e.preventDefault();
       handleSuggestionClick(suggestions[highlightedIndex]);
-      setHighlightedIndex(-1);
     } else if (e.key === "Enter" && highlightedIndex === -1) {
       e.preventDefault();
       handleSubmit(e);
     }
   };
   // Funzione per gestire il click su una suggerimento
-  const handleSuggestionClick = (suggestion: any) => {
+  const handleSuggestionClick = (suggestion: OSMResponse) => {
     setAddress(suggestion.label);
-    setSuggestions([]);
+    handleReset();
     console.log(suggestion);
   };
   // Funzione per gestire il campo di ricerca
@@ -58,7 +57,6 @@ function HeroSearchForm() {
       setTimeout(async () => {
         const results: OSMResponse[] = await provider.search({ query: e.target.value });
         setSuggestions(results);
-        console.log(results);
       }, 300)
     ); // Ritarda la chiamata di 1 secondo
   };
@@ -80,14 +78,14 @@ function HeroSearchForm() {
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3 position-relative" controlId="formBasicEmail">
             <Form.Control
-              className="rounded-0 fix-h-50  my-input"
+              className="rounded-0 fix-h-50  my-input focus"
               type="text"
               placeholder="Il tuo indirizzo (comprensivo di città e numero civico)"
               value={address}
               onClick={handleReset}
-              onBlur={handleReset}
               onChange={handleSearchChange}
               onKeyDown={handleKeyDown}
+              onBlur={() => setTimeout(handleReset, 100)}
             />
             <div className=" bg-white position-absolute w-100 ">
               {suggestions?.map((suggestion, index) => (
