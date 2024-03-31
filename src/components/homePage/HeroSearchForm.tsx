@@ -1,7 +1,7 @@
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { RootState } from "../../redux/store/store";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
 import { OSMResponse } from "../../interfaces/interfaces";
@@ -15,6 +15,8 @@ function HeroSearchForm() {
   const [suggestions, setSuggestions] = useState<OSMResponse[]>([]);
   const [searchTimeout, setSearchTimeout] = useState<null | number>(null);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
+
+  const searchBarRef = useRef<HTMLInputElement>(null);
 
   // Funzione per gestire la pressione dei tasti
   const handleKeyDown = (e: any) => {
@@ -41,6 +43,7 @@ function HeroSearchForm() {
   const handleSuggestionClick = (suggestion: OSMResponse) => {
     setAddress(suggestion.label);
     handleReset();
+    searchBarRef.current?.focus();
     console.log(suggestion);
   };
   // Funzione per gestire il campo di ricerca
@@ -86,6 +89,7 @@ function HeroSearchForm() {
               onChange={handleSearchChange}
               onKeyDown={handleKeyDown}
               onBlur={() => setTimeout(handleReset, 100)}
+              ref={searchBarRef}
             />
             <div className=" bg-white position-absolute w-100 ">
               {suggestions?.map((suggestion, index) => (
