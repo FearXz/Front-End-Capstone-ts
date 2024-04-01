@@ -4,8 +4,8 @@ export function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-export function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
-  function toRad(x: number) {
+export function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  function toRad(x: number): number {
     return (x * Math.PI) / 180;
   }
 

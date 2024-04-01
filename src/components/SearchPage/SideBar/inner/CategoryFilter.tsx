@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store/store";
+import { AppDispatch, RootState } from "../../../../redux/store/store";
 import { categorieRistorante } from "../../../../interfaces/interfaces";
 import { useEffect } from "react";
 import { fetchListaCategorie } from "../../../../redux/actions/LocalPageAction";
@@ -7,7 +7,7 @@ import { addToFiltroCheckBox, removeFromFiltroCheckBox } from "../../../../redux
 
 function CategoryFilter() {
   const listaCategorie = useSelector((state: RootState) => state.searchRistorante.listaCategorie);
-  const dispatch: any = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const handleCheckboxChange = (event: any) => {
     const categoryId = Number(event.target.value);

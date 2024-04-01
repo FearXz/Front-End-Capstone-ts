@@ -1,10 +1,10 @@
 import { Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store/store";
+import { AppDispatch, RootState } from "../../../../redux/store/store";
 import { setFiltroRange, setFiltroSearchBar } from "../../../../redux/reducers/searchRistoranteReducer";
 
 function SearchFormLocal() {
-  const dispatch: any = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const indirizzoCercato = useSelector((state: RootState) => state.persist.indirizzoCercato);
   const filtroSearchBar = useSelector((state: RootState) => state.searchRistorante.filtroSearchBar);
   const filtroRange = useSelector((state: RootState) => state.searchRistorante.filtroRange);

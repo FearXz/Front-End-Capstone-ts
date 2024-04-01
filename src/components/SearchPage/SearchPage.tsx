@@ -5,10 +5,11 @@ import SearchSideBar from "./SideBar/SearchSideBar";
 import SearchLocalList from "./Mainlist/SearchLocalList";
 import { useParams } from "react-router-dom";
 import { searchHomeAddress } from "../../redux/actions/LocalPageAction";
+import { AppDispatch } from "../../redux/store/store";
 
 function SearchPage() {
   const params = useParams();
-  const dispatch: any = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   console.log(params.address);
 

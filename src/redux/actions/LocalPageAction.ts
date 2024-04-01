@@ -5,8 +5,9 @@ import { CoordinateSearch, ListaRistorantiResponse, categorieRistorante } from "
 import { url } from "../../functions/config";
 import { haversineDistance } from "../../functions/functions";
 import { setIndirizzoCercato } from "../reducers/persistedInfoReducer";
+import { AppDispatch } from "../store/store";
 
-export const searchHomeAddress = (address: string) => async (dispatch: any) => {
+export const searchHomeAddress = (address: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsLoading(true));
 
@@ -36,7 +37,7 @@ export const searchHomeAddress = (address: string) => async (dispatch: any) => {
     dispatch(setIsLoading(false));
   }
 };
-export const searchLocaliAtCoordinate = (lat: string, lon: string) => async (dispatch: any) => {
+export const searchLocaliAtCoordinate = (lat: string, lon: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsLoading(true));
 
@@ -68,7 +69,7 @@ export const searchLocaliAtCoordinate = (lat: string, lon: string) => async (dis
     dispatch(setIsLoading(false));
   }
 };
-export const fetchListaCategorie = () => async (dispatch: any) => {
+export const fetchListaCategorie = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsLoading(true));
     const response = await fetch(`${url}ristorante/listaCategorie`);

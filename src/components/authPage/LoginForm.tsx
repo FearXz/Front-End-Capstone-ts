@@ -4,10 +4,11 @@ import { useDispatch } from "react-redux";
 import { loginPost } from "../../redux/actions/authAction";
 import { useNavigate } from "react-router-dom";
 import { LoginDto } from "../../interfaces/interfaces";
+import { AppDispatch } from "../../redux/store/store";
 
 function LoginForm() {
   const navigate = useNavigate();
-  const dispatch: any = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const {
     register,
     handleSubmit,

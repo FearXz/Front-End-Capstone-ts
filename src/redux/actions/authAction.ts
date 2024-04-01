@@ -3,8 +3,9 @@ import { url } from "../../functions/config";
 import { toast } from "react-toastify";
 import { setIsLoading } from "../reducers/stateReducer";
 import { LoginDto, LoginResponse, RegisterDto } from "../../interfaces/interfaces";
+import { AppDispatch } from "../store/store";
 // auth/login endpoint
-export const loginPost = (loginObj: LoginDto, navigate: any) => async (dispatch: any) => {
+export const loginPost = (loginObj: LoginDto, navigate: Function) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsLoading(true));
     const response = await fetch(url + "auth/login", {
@@ -34,7 +35,7 @@ export const loginPost = (loginObj: LoginDto, navigate: any) => async (dispatch:
   }
 };
 // auth/register endpoint
-export const registerPost = (registerObj: RegisterDto, navigate: any) => async (dispatch: any) => {
+export const registerPost = (registerObj: RegisterDto, navigate: Function) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsLoading(true));
     const response = await fetch(url + "auth/register", {
