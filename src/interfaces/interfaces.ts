@@ -40,10 +40,15 @@ export interface categorieRistorante {
   idCategorie: number;
   nomeCategoria: string;
 }
+export interface GiorniDiChiusura {
+  nomeGiorno: string;
+  numeroGiorno: number;
+}
 export interface ListaRistorantiResponse {
   idAzienda: number;
   idRistorante: number;
   nomeRistorante: string;
+  tagRistorante: string;
   indirizzo: string;
   citta: string;
   cap: string;
@@ -56,5 +61,6 @@ export interface ListaRistorantiResponse {
   imgLogo: string | null;
   descrizione: string | null;
   categorieRistorante: categorieRistorante[];
+  giorniDiChiusura: GiorniDiChiusura[];
   distanza: number;
 }

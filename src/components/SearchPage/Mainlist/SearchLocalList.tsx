@@ -45,12 +45,15 @@ function SearchLocalList() {
                   />
                 </a>
                 <div className="pt-5">
-                  <a href="https://take2me.it/locali/canapa-house-riccione.html" className="text-secondary">
+                  <a
+                    href="https://take2me.it/locali/canapa-house-riccione.html"
+                    className="text-black text-decoration-none"
+                  >
                     <h5 className="h5 mb-0 fw-bold ">{ristorante.nomeRistorante}</h5>
                   </a>
 
                   <Row className="justify-content-between">
-                    <Col className="fw-light">{ristorante.descrizione}</Col>
+                    <Col className="">{ristorante.tagRistorante}</Col>
                     <Col className=" text-end">{ristorante.distanza.toFixed(2)} km</Col>
                   </Row>
                 </div>
