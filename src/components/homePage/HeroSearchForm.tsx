@@ -67,7 +67,7 @@ function HeroSearchForm() {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    navigate(`/locali/${address}`);
+    navigate(`/searchlocal/${address}`);
   };
   // Funzione per resettare il campo di ricerca
   const handleReset = () => {

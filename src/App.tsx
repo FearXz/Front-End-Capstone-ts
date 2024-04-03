@@ -9,6 +9,7 @@ import MyMain from "./components/homePage/MyMain";
 import MyFooter from "./components/footer/MyFooter";
 import Loader from "./components/modularComponent/Loader";
 import SearchPage from "./components/SearchPage/SearchPage";
+import OrderPage from "./components/orderPage/OrderPage";
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
         <Route path="/auth">
           <Route path="login" element={<AuthPage />} />
         </Route>
-        <Route path="/locali/:address" element={<SearchPage />} />
+        <Route path="/searchlocal/:address" element={<SearchPage />} />
+        <Route path="/local" element={<OrderPage />} />
       </Routes>
       <MyFooter />
     </BrowserRouter>
