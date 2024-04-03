@@ -5,13 +5,15 @@ import MobileOrder from "./inner/MobileOrder";
 
 function OrderPage() {
   return (
-    <Container fluid>
-      <Row>
-        <MainOrder />
-        <CartOrder />
-      </Row>
-      <MobileOrder />
-    </Container>
+    <main>
+      <Container fluid>
+        <Row>
+          <MainOrder />
+          <CartOrder />
+        </Row>
+        <MobileOrder />
+      </Container>
+    </main>
   );
 }
 
