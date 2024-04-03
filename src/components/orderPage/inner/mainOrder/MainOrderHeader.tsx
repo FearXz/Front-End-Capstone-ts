@@ -45,8 +45,8 @@ function MainOrderHeader() {
             </strong>
             17:30 - 22:05
             <span className="d-block pb-2"></span>
-            <strong className="text-leaf-500">Pagamenti accettati:</strong>
-            Paypal, Carte di credito
+            <strong className="text-leaf-500">Pagamenti accettati: </strong>
+            Carte di credito
           </Col>
           <Col className="col-xxl-12 col-md-5 col-sm-4 col-12 py-sm-2 py-1 text-xxl-start text-sm-end text-start"></Col>
         </Row>
