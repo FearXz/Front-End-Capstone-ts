@@ -20,10 +20,13 @@ function MainOrderHeader() {
           <Col className="col-xxl-4 col-sm-5 col-12 py-sm-0 py-1">
             <div className="text-sm-end text-start">
               <div className="restaurant-full-address">
-                <i className="fas fa-map-marker-alt text-success"></i>&nbsp;Piazza dei Navigatori, 1/C, San Giovanni in
+                <i className="bi bi-geo-alt-fill text-leaf-500"></i>&nbsp;Piazza dei Navigatori, 1/C, San Giovanni in
                 Marignano (RN)
               </div>
-              <div>P. IVA:IT03245090406</div>
+              <div>
+                {" "}
+                <i className="bi bi-info-square-fill me-1 text-leaf-500"></i>P. IVA:IT03245090406
+              </div>
             </div>
           </Col>
         </Row>
@@ -40,11 +43,12 @@ function MainOrderHeader() {
         <Row>
           <Col className="col-xxl-12 col-md-7 col-sm-8 col-12 py-sm-2 py-1">
             <strong className="text-leaf-500">
-              <i className="fa fa-info-circle"></i>
+              <i className="bi bi-info-circle-fill me-1"></i>
               Orari di apertura:{" "}
             </strong>
             17:30 - 22:05
             <span className="d-block pb-2"></span>
+            <i className="bi bi-info-circle-fill me-1 text-leaf-500"></i>
             <strong className="text-leaf-500">Pagamenti accettati: </strong>
             Carte di credito
           </Col>

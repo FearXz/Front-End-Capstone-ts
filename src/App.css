@@ -163,10 +163,3 @@ footer {
   left: 16px;
 }
 /*  ORDER PAGE  */
-.product-image {
-  background-size: cover;
-  background-position: center;
-  background-image: url(https://thumbnails.take2me.it/w_360/h_227/fit_crop/url/https://take2me.it/images/no-img-restaurants-c8680d27-e5e3-4068-bf1e-c666f4ab3844.jpg);
-  border-radius: 5px;
-  padding-bottom: 70%;
-}
