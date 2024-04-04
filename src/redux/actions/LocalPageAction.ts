@@ -7,7 +7,7 @@ import { haversineDistance } from "../../functions/functions";
 import { setIndirizzoCercato } from "../reducers/persistedInfoReducer";
 import { AppDispatch } from "../store/store";
 
-export const searchHomeAddress = (address: string) => async (dispatch: AppDispatch) => {
+export const searchHomeAddress = (address: string, navigate: Function) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsLoading(true));
 
@@ -17,6 +17,12 @@ export const searchHomeAddress = (address: string) => async (dispatch: AppDispat
       const data: CoordinateSearch[] = await response.json();
 
       console.log(data);
+
+      if (data.length === 0) {
+        toast.error("Nessun indirizzo trovato");
+        dispatch(setIndirizzoCercato(null));
+        navigate("/");
+      }
 
       const filteredData: CoordinateSearch = {
         lat: data[0].lat,
@@ -46,6 +52,11 @@ export const searchLocaliAtCoordinate = (lat: string, lon: string) => async (dis
     if (response.ok) {
       const data: ListaRistorantiResponse[] = await response.json();
       console.log(data);
+
+      if (data.length === 0) {
+        toast.error("Nessun ristorante trovato");
+        throw new Error("Nessun ristorante trovato");
+      }
 
       data.forEach((restaurant: ListaRistorantiResponse) => {
         restaurant.distanza = haversineDistance(

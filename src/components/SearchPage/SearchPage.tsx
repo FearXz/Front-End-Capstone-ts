@@ -3,20 +3,21 @@ import { useDispatch } from "react-redux";
 import { Col, Container, Row } from "react-bootstrap";
 import SearchSideBar from "./SideBar/SearchSideBar";
 import SearchLocalList from "./Mainlist/SearchLocalList";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { searchHomeAddress } from "../../redux/actions/LocalPageAction";
 import { AppDispatch } from "../../redux/store/store";
 
 function SearchPage() {
   const params = useParams();
   const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
 
   console.log(params.address);
 
   const address: string = params.address ? params.address : "";
 
   useEffect(() => {
-    dispatch(searchHomeAddress(address));
+    dispatch(searchHomeAddress(address, navigate));
   }, []);
 
   return (
