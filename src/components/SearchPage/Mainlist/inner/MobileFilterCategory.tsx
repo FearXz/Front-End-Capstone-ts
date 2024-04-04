@@ -17,18 +17,9 @@ function MobileFilterCategory() {
       <Row>
         <Col className="col-10">
           <span className="find_restaurant_address text-leaf-500 fw-bold ">{indirizzo?.display_name}</span>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Control
-              className="rounded-0   my-input"
-              type="text"
-              placeholder="Cerca il tuo locale preferito"
-              value={""}
-              onChange={() => {}}
-            />
-          </Form.Group>
         </Col>
         <div className="col-2 d-flex justify-content-end">
-          <button className="btn btn-outline-leaf-500 rounded-0 max-h-50 mt-3" role="button" onClick={handleShow}>
+          <button className="btn btn-outline-leaf-500 rounded-0 max-h-50 mt-1" role="button" onClick={handleShow}>
             <i className="bi bi-sliders2-vertical text-black "></i>
           </button>
         </div>

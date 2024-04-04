@@ -1,6 +1,14 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import SearchSideBar from "../../SideBar/SearchSideBar";
+import SearchFormLocal from "../../SideBar/inner/SearchFormLocal";
+import CategoryFilter from "../../SideBar/inner/CategoryFilter";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../../redux/store/store";
+import {
+  setFiltroCheckBox,
+  setFiltroRange,
+  setFiltroSearchBar,
+} from "../../../../redux/reducers/searchRistoranteReducer";
 
 interface MobileModalProps {
   show: boolean;
@@ -9,6 +17,17 @@ interface MobileModalProps {
 }
 
 function MobileModal(props: MobileModalProps) {
+  const dispatch: AppDispatch = useDispatch();
+
+  function handleReset(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    dispatch(setFiltroRange(10));
+    dispatch(setFiltroSearchBar(""));
+    dispatch(setFiltroCheckBox([]));
+
+    props.handleClose();
+  }
+
   return (
     <div>
       <Modal
@@ -23,13 +42,16 @@ function MobileModal(props: MobileModalProps) {
           <Modal.Title className=" font-breef">Filtri</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <SearchSideBar />
+          <SearchFormLocal />
+          <CategoryFilter />
         </Modal.Body>
         <Modal.Footer className=" justify-content-between">
-          <Button variant="secondary" onClick={props.handleClose}>
-            Close
+          <Button className="btn btn-gray-500 rounded-0 button-border-gray text-white" onClick={handleReset}>
+            RESETTA
           </Button>
-          <Button variant="primary">Understood</Button>
+          <Button className="btn btn-leaf-500 rounded-0 button-border-success text-white" onClick={props.handleClose}>
+            CERCA
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

@@ -43,6 +43,9 @@ const searchRistoranteReducer = createSlice({
     removeFromFiltroCheckBox: (state, action) => {
       state.filtroCheckBox = state.filtroCheckBox.filter((id) => id !== action.payload);
     },
+    setFiltroCheckBox: (state, action) => {
+      state.filtroCheckBox = action.payload;
+    },
     setFiltroRange: (state, action) => {
       state.filtroRange = action.payload;
     },
@@ -58,5 +61,6 @@ export const {
   removeFromFiltroCheckBox,
   setFiltroRange,
   setLocaleById,
+  setFiltroCheckBox,
 } = searchRistoranteReducer.actions;
 export default searchRistoranteReducer.reducer;
