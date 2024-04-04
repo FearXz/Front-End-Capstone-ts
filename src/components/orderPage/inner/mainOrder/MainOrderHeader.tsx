@@ -1,60 +1,72 @@
 import { Col, Row } from "react-bootstrap";
+import { LocaleIdResponse } from "../../../../interfaces/interfaces";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store/store";
 
 function MainOrderHeader() {
+  const locale: LocaleIdResponse | null = useSelector((state: RootState) => state.searchRistorante.localeById);
+
   return (
     <Row>
-      <Col className="col-xxl-10 col-12 pe-xxl-5 ps-xl-4 pe-xl-5 pe-md-4 px-3">
-        <Row>
-          <Col className="col-xxl-8 col-sm-7 col-12">
-            <div className="d-flex align-items-center">
-              <img
-                src="https://cdn.take2me.it/img/restaurants/7/1/9/719c596f-9dad-4372-92ea-b663076f2495.png"
-                className="fix-h-50 fix-w-50 border-lightw me-2 mb-2"
-                alt="Maxi Pizza"
-              />
-              <h1 className="h2 font-breef mb-1">Maxi Pizza</h1>
-            </div>
-            <small className="text-uppercase border p-1 my-1 me-1 d-inline-block">Pizza</small>
-            <small className="text-uppercase border p-1 my-1 me-1 d-inline-block">Panini</small>
-          </Col>
-          <Col className="col-xxl-4 col-sm-5 col-12 py-sm-0 py-1">
-            <div className="text-sm-end text-start">
-              <div className="restaurant-full-address">
-                <i className="bi bi-geo-alt-fill text-leaf-500"></i>&nbsp;Piazza dei Navigatori, 1/C, San Giovanni in
-                Marignano (RN)
+      {locale && (
+        <Col className="col-xxl-10 col-12 pe-xxl-5 ps-xl-4 pe-xl-5 pe-md-4 px-3">
+          <Row>
+            <Col className="col-xxl-8 col-sm-7 col-12">
+              <div className="d-flex align-items-center">
+                <img
+                  src={
+                    locale.imgLogo
+                      ? locale.imgLogo
+                      : "https://ralfvanveen.com/wp-content/uploads//2021/06/Placeholder-_-Begrippenlijst.svg"
+                  }
+                  className="fix-h-50 fix-w-50 border-lightw me-2 mb-2"
+                  alt={locale.nomeRistorante}
+                />
+                <h1 className="h2 font-breef mb-1">{locale.nomeRistorante}</h1>
               </div>
-              <div>
-                {" "}
-                <i className="bi bi-info-square-fill me-1 text-leaf-500"></i>P. IVA:IT03245090406
+              {locale.categorieRistorante &&
+                locale.categorieRistorante.map((categoria, index) => (
+                  <small key={index} className="text-uppercase border p-1 my-1 me-1 d-inline-block">
+                    {categoria.nomeCategoria}
+                  </small>
+                ))}
+            </Col>
+            <Col className="col-xxl-4 col-sm-5 col-12 py-sm-0 py-1">
+              <div className="text-sm-end text-start">
+                <div className="restaurant-full-address">
+                  <i className="bi bi-geo-alt-fill text-leaf-500"></i>&nbsp;{locale.indirizzo}, {locale.cap}{" "}
+                  {locale.citta}
+                </div>
+                <div>
+                  {" "}
+                  <i className="bi bi-info-square-fill me-1 text-leaf-500"></i>P. IVA:{locale.partitaIva}
+                </div>
               </div>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col className="col-12 py-2">
-            Pizzeria di antica tradizione napoletana. Nei nostri impasti non utilizziamo farine 0 o 00 ma solo farine
-            biologiche macinate a pietra italiane. Puoi scegliere anche tra altri impasti come, farro, 10 cereali,
-            canapa o integrale. Usiamo solo ingredienti di prima qualità con i quali farciamo i nostri panini fatti al
-            momento.
-          </Col>
-        </Row>
-      </Col>
-      <Col className="col-xxl-2 col-12 px-xxl-2 ps-xl-4 pe-xl-5 pe-md-4 px-3">
-        <Row>
-          <Col className="col-xxl-12 col-md-7 col-sm-8 col-12 py-sm-2 py-1">
-            <strong className="text-leaf-500">
-              <i className="bi bi-info-circle-fill me-1"></i>
-              Orari di apertura:{" "}
-            </strong>
-            17:30 - 22:05
-            <span className="d-block pb-2"></span>
-            <i className="bi bi-info-circle-fill me-1 text-leaf-500"></i>
-            <strong className="text-leaf-500">Pagamenti accettati: </strong>
-            Carte di credito
-          </Col>
-          <Col className="col-xxl-12 col-md-5 col-sm-4 col-12 py-sm-2 py-1 text-xxl-start text-sm-end text-start"></Col>
-        </Row>
-      </Col>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="col-12 py-2">{locale.descrizione}</Col>
+          </Row>
+        </Col>
+      )}
+      {locale && (
+        <Col className="col-xxl-2 col-12 px-xxl-2 ps-xl-4 pe-xl-5 pe-md-4 px-3">
+          <Row>
+            <Col className="col-xxl-12 col-md-7 col-sm-8 col-12 py-sm-2 py-1">
+              <strong className="text-leaf-500">
+                <i className="bi bi-info-circle-fill me-1"></i>
+                Orari di apertura:{" "}
+              </strong>
+              {locale.orarioApertura} - {locale.orarioChiusura}
+              <span className="d-block pb-2"></span>
+              <i className="bi bi-info-circle-fill me-1 text-leaf-500"></i>
+              <strong className="text-leaf-500">Pagamenti accettati: </strong>
+              Carte di credito
+            </Col>
+            <Col className="col-xxl-12 col-md-5 col-sm-4 col-12 py-sm-2 py-1 text-xxl-start text-sm-end text-start"></Col>
+          </Row>
+        </Col>
+      )}
     </Row>
   );
 }

@@ -64,3 +64,41 @@ export interface ListaRistorantiResponse {
   giorniDiChiusura: GiorniDiChiusura[];
   distanza: number;
 }
+export interface IngredientiProdottiLocale {
+  idIngrediente: number;
+  nomeIngrediente: string;
+  prezzoIngrediente: number;
+}
+export interface TipiProdottoLocale {
+  idTipoProdotto: number;
+  nomeTipoProdotto: string;
+}
+export interface ProdottiLocale {
+  idProdottoRistorante: number;
+  nomeProdotto: string;
+  prezzoProdotto: number;
+  descrizioneProdotto: string | null;
+  imgProdotto: string | null;
+  ingredienti: IngredientiProdottiLocale[];
+  tipiProdotto: TipiProdottoLocale[];
+}
+export interface LocaleIdResponse {
+  idAzienda: number;
+  partitaIva: string;
+  idRistorante: number;
+  nomeRistorante: string;
+  indirizzo: string;
+  citta: string;
+  cap: string;
+  latitudine: string;
+  longitudine: string;
+  telefono: string;
+  orarioApertura: string;
+  orarioChiusura: string;
+  imgCopertina: string | null;
+  imgLogo: string | null;
+  descrizione: string | null;
+  categorieRistorante: categorieRistorante[];
+  giorniDiChiusura: GiorniDiChiusura[];
+  prodotti: ProdottiLocale[];
+}

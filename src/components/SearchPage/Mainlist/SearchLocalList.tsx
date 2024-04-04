@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { ListaRistorantiResponse } from "../../../interfaces/interfaces";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { Link } from "react-router-dom";
 
 function SearchLocalList() {
   const listaRistoranti = useSelector((state: RootState) => state.searchRistorante.listaRistoranti);
@@ -30,9 +31,9 @@ function SearchLocalList() {
           <CSSTransition key={`ristorante-${index}`} timeout={500} classNames="fade">
             <Col className="col-xxl-3 col-xl-4 col-sm-6 col-12 px-2">
               <div className="py-2 px-2 my-3 shadow ">
-                <a
-                  href="https://take2me.it/locali/canapa-house-riccione.html"
-                  className="d-block restaurant-img noimage bg-cover rounded-3 position-relative lazy"
+                <Link
+                  to={`/local/${ristorante.idRistorante}`}
+                  className="d-block restaurant-img  bg-cover rounded-3 position-relative "
                   style={{
                     backgroundImage:
                       'url("https://thumbnails.take2me.it/w_348/h_230/fit_crop-bottom/url/https://cdn.take2me.it/img/restaurants/e/9/f/e9f7ba27-32e4-4ad3-95f5-53515a3a3347.jpg")',
@@ -43,7 +44,7 @@ function SearchLocalList() {
                     className="img-logo border-lightw"
                     alt="Canapa House "
                   />
-                </a>
+                </Link>
                 <div className="pt-5">
                   <a
                     href="https://take2me.it/locali/canapa-house-riccione.html"

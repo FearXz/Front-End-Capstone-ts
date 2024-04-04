@@ -23,7 +23,7 @@ function App() {
           <Route path="login" element={<AuthPage />} />
         </Route>
         <Route path="/searchlocal/:address" element={<SearchPage />} />
-        <Route path="/local" element={<OrderPage />} />
+        <Route path="/local/:id" element={<OrderPage />} />
       </Routes>
       <MyFooter />
     </BrowserRouter>
