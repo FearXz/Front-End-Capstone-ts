@@ -34,24 +34,24 @@ function SearchLocalList() {
                 <Link
                   to={`/local/${ristorante.idRistorante}`}
                   className="d-block restaurant-img  bg-cover rounded-3 position-relative "
-                  style={{
-                    backgroundImage:
-                      'url("https://thumbnails.take2me.it/w_348/h_230/fit_crop-bottom/url/https://cdn.take2me.it/img/restaurants/e/9/f/e9f7ba27-32e4-4ad3-95f5-53515a3a3347.jpg")',
-                  }}
+                  style={
+                    ristorante.imgCopertina
+                      ? { backgroundImage: `url(${ristorante.imgCopertina})` }
+                      : {
+                          backgroundImage: `url("https://ralfvanveen.com/wp-content/uploads//2021/06/Placeholder-_-Begrippenlijst.svg")`,
+                        }
+                  }
                 >
                   <img
                     src="https://thumbnails.take2me.it/w_50/h_50/fit_crop-bottom/url/https://cdn.take2me.it/img/restaurants/8/0/d/80d2e290-1176-4764-a65f-ac1de8e4f97f.jpg"
-                    className="img-logo border-lightw"
-                    alt="Canapa House "
+                    className="img-logo border-light"
+                    alt={ristorante.nomeRistorante}
                   />
                 </Link>
                 <div className="pt-5">
-                  <a
-                    href="https://take2me.it/locali/canapa-house-riccione.html"
-                    className="text-black text-decoration-none"
-                  >
+                  <Link to={`/local/${ristorante.idRistorante}`} className="text-black text-decoration-none">
                     <h5 className="h5 mb-0 fw-bold ">{ristorante.nomeRistorante}</h5>
-                  </a>
+                  </Link>
 
                   <Row className="justify-content-between">
                     <Col className="">{ristorante.tagRistorante}</Col>

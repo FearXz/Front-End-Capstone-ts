@@ -7,6 +7,7 @@ import { addToFiltroCheckBox, removeFromFiltroCheckBox } from "../../../../redux
 
 function CategoryFilter() {
   const listaCategorie = useSelector((state: RootState) => state.searchRistorante.listaCategorie);
+  const filtroCheckBox = useSelector((state: RootState) => state.searchRistorante.filtroCheckBox);
   const dispatch: AppDispatch = useDispatch();
 
   const handleCheckboxChange = (event: any) => {
@@ -38,6 +39,7 @@ function CategoryFilter() {
                   className="form-check-input"
                   type="checkbox"
                   name="types"
+                  checked={filtroCheckBox.includes(categoria.idCategorie)}
                   value={categoria.idCategorie}
                   id={"id-" + index}
                   onChange={handleCheckboxChange}
