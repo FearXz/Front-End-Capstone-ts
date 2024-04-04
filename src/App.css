@@ -166,10 +166,12 @@ footer {
 #search-filters {
   top: 90px !important;
 }
-.restaurant-img.bg-cover {
-  height: 230px;
+.restaurant-alert-absolute {
+  position: absolute;
+  bottom: 10px;
+  right: 0;
 }
-.restaurant-img .img-logo {
+.img-logo {
   position: absolute;
   border-radius: 50%;
   width: 55px;

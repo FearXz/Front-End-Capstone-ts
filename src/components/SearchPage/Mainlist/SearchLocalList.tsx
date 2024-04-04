@@ -12,6 +12,8 @@ function SearchLocalList() {
   const filtroCheckBox = useSelector((state: RootState) => state.searchRistorante.filtroCheckBox);
   const filtroRange = useSelector((state: RootState) => state.searchRistorante.filtroRange);
 
+  const currentDay = new Date().getDay();
+
   const filteredRestaurants = listaRistoranti?.filter(
     (ristorante: ListaRistorantiResponse) =>
       ristorante.nomeRistorante.toLowerCase().includes(filtroSearchBar.toLowerCase()) &&
@@ -33,30 +35,51 @@ function SearchLocalList() {
               <div className="py-2 px-2 my-3 shadow ">
                 <Link
                   to={`/local/${ristorante.idRistorante}`}
-                  className="d-block restaurant-img  bg-cover rounded-3 position-relative "
+                  className="d-block restaurant-img fix-h-230  rounded-3 position-relative "
                   style={
-                    ristorante.imgCopertina
-                      ? { backgroundImage: `url(${ristorante.imgCopertina})` }
-                      : {
-                          backgroundImage: `url("https://ralfvanveen.com/wp-content/uploads//2021/06/Placeholder-_-Begrippenlijst.svg")`,
-                        }
+                    ristorante.giorniDiChiusura.some((giorno) => giorno.numeroGiorno == currentDay)
+                      ? { filter: "grayscale(100%)", opacity: "0.5", pointerEvents: "none" }
+                      : {}
                   }
                 >
                   <img
-                    src="https://thumbnails.take2me.it/w_50/h_50/fit_crop-bottom/url/https://cdn.take2me.it/img/restaurants/8/0/d/80d2e290-1176-4764-a65f-ac1de8e4f97f.jpg"
+                    className="w-100 h-100 rounded-3 object-fit-cover"
+                    src={
+                      ristorante.imgCopertina
+                        ? ristorante.imgCopertina
+                        : "https://ralfvanveen.com/wp-content/uploads//2021/06/Placeholder-_-Begrippenlijst.svg"
+                    }
+                    alt=""
+                  />
+                  <img
+                    src={
+                      ristorante.imgLogo
+                        ? ristorante.imgLogo
+                        : "https://ralfvanveen.com/wp-content/uploads//2021/06/Placeholder-_-Begrippenlijst.svg"
+                    }
                     className="img-logo border-light"
                     alt={ristorante.nomeRistorante}
                   />
+                  {ristorante.giorniDiChiusura.some((giorno) => giorno.numeroGiorno == currentDay) && (
+                    <div className="bg-danger text-white p-2 fw-bold restaurant-alert-absolute">Oggi chiuso</div>
+                  )}
                 </Link>
                 <div className="pt-5">
-                  <Link to={`/local/${ristorante.idRistorante}`} className="text-black text-decoration-none">
+                  <Link
+                    style={
+                      ristorante.giorniDiChiusura.some((giorno) => giorno.numeroGiorno == currentDay)
+                        ? { filter: "grayscale(100%)", opacity: "0.5", pointerEvents: "none" }
+                        : {}
+                    }
+                    to={`/local/${ristorante.idRistorante}`}
+                    className="text-black text-decoration-none"
+                  >
                     <h5 className="h5 mb-0 fw-bold ">{ristorante.nomeRistorante}</h5>
+                    <Row className="justify-content-between">
+                      <Col className="">{ristorante.tagRistorante}</Col>
+                      <Col className=" text-end">{ristorante.distanza.toFixed(2)} km</Col>
+                    </Row>
                   </Link>
-
-                  <Row className="justify-content-between">
-                    <Col className="">{ristorante.tagRistorante}</Col>
-                    <Col className=" text-end">{ristorante.distanza.toFixed(2)} km</Col>
-                  </Row>
                 </div>
               </div>
             </Col>
