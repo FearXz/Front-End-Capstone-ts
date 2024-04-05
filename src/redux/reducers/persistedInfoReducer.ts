@@ -4,10 +4,12 @@ import { CoordinateSearch } from "../../interfaces/interfaces";
 
 interface persistedInfoState {
   indirizzoCercato: CoordinateSearch | null;
+  cart: any;
 }
 
 const initialState: persistedInfoState = {
   indirizzoCercato: null,
+  cart: [],
 };
 
 const persistedInfoReducer = createSlice({
@@ -18,9 +20,15 @@ const persistedInfoReducer = createSlice({
     setIndirizzoCercato: (state, action) => {
       state.indirizzoCercato = action.payload;
     },
+    addToCart: (state, action) => {
+      state.cart = [...state.cart, action.payload];
+    },
+    removeFromCart: (state, action) => {
+      state.cart = state.cart.filter((item: any) => item.id !== action.payload);
+    },
   },
 });
 
 // Esporto solo l'azione definita nello slice
-export const { setIndirizzoCercato } = persistedInfoReducer.actions;
+export const { setIndirizzoCercato, addToCart, removeFromCart } = persistedInfoReducer.actions;
 export default persistedInfoReducer.reducer;
