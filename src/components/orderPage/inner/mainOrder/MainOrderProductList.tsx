@@ -2,33 +2,18 @@ import { Col, Row } from "react-bootstrap";
 import { LocaleIdResponse, ProdottiLocale } from "../../../../interfaces/interfaces";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store/store";
+import { groupProductsByType } from "../../../../functions/functions";
 
 function MainOrderProductList() {
   const locale: LocaleIdResponse | null = useSelector((state: RootState) => state.searchRistorante.localeById);
   const productsByType = groupProductsByType(locale);
   console.log(productsByType);
 
-  function groupProductsByType(locale: LocaleIdResponse | null): object {
-    const groupedProducts: any = {};
-
-    locale?.prodotti.forEach((prodotto) => {
-      prodotto.tipiProdotto.forEach((tipo) => {
-        if (!groupedProducts[tipo.nomeTipoProdotto]) {
-          groupedProducts[tipo.nomeTipoProdotto] = [];
-        }
-
-        groupedProducts[tipo.nomeTipoProdotto].push(prodotto);
-      });
-    });
-
-    return groupedProducts;
-  }
-
   return (
     <Col className="col-xxl-10 col-xl-9 col-sm-8 col-12 ps-xxl-3 px-3">
       {/* MAP TIPIPRODOTTI */}
       {productsByType &&
-        Object.entries(productsByType).map(([tipo, prodotti], index) => (
+        Object.entries(productsByType).map(([tipo, prodotti], index: number) => (
           <div id={tipo} key={`tipo-${index}`}>
             <div className="pt-md-4 pt-2 border-bottom border-leaf-500 d-flex justify-content-between align-items-end">
               <h3 className="h4 text-leaf-500 fw-bold text-uppercase mb-0">{tipo}</h3>
@@ -79,7 +64,7 @@ function MainOrderProductList() {
                 </Col>
               ))}
 
-              {/* FINE MAP CARD */}
+              {/* FINE MAP PRODOTTO */}
             </Row>
           </div>
         ))}

@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import { LocaleIdResponse } from "../interfaces/interfaces";
 
 export function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -21,4 +22,19 @@ export function haversineDistance(lat1: number, lon1: number, lat2: number, lon2
   var distance = R * c;
 
   return distance;
+}
+export function groupProductsByType(locale: LocaleIdResponse | null): object {
+  const groupedProducts: any = {};
+
+  locale?.prodotti.forEach((prodotto) => {
+    prodotto.tipiProdotto.forEach((tipo) => {
+      if (!groupedProducts[tipo.nomeTipoProdotto]) {
+        groupedProducts[tipo.nomeTipoProdotto] = [];
+      }
+
+      groupedProducts[tipo.nomeTipoProdotto].push(prodotto);
+    });
+  });
+
+  return groupedProducts;
 }
