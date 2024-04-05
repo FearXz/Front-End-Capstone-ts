@@ -98,7 +98,23 @@ export interface LocaleIdResponse {
   imgCopertina: string | null;
   imgLogo: string | null;
   descrizione: string | null;
+  ingredientiRistorante: IngredientiProdottiLocale[];
   categorieRistorante: categorieRistorante[];
   giorniDiChiusura: GiorniDiChiusura[];
   prodotti: ProdottiLocale[];
+}
+export interface CartIngredient {
+  idIngrediente: number;
+  nomeIngrediente: string;
+  prezzoIngrediente: number;
+  quantita: number;
+  isExtra: boolean;
+}
+export interface CartProduct {
+  idProdotto: number;
+  uniqueId: string;
+  nomeProdotto: string;
+  prezzoProdotto: number;
+  quantita: number;
+  ingredienti: CartIngredient[];
 }

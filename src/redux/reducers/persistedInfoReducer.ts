@@ -21,7 +21,9 @@ const persistedInfoReducer = createSlice({
       state.indirizzoCercato = action.payload;
     },
     addToCart: (state, action) => {
+      console.log(action.payload);
       state.cart = [...state.cart, action.payload];
+      console.log(state.cart);
     },
     removeFromCart: (state, action) => {
       state.cart = state.cart.filter((item: any) => item.id !== action.payload);
