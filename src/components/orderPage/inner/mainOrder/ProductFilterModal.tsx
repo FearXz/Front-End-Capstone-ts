@@ -26,7 +26,7 @@ function ProductFilterModal(p: ProductFilterModalProps) {
         uniqueId: `${p.selectedProduct.idProdottoRistorante}-${Date.now()}`,
         ingredienti: [],
       };
-      // voglio ciclare gli ingredienti del prodotto selezionato e aggiungerli a newProduct
+      // popolo l'array ingredienti con gli ingredienti del prodotto selezionato
       p.selectedProduct.ingredienti?.forEach((ingrediente) =>
         newProduct.ingredienti?.push({
           idIngrediente: ingrediente.idIngrediente,
