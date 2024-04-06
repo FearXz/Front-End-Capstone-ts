@@ -14,8 +14,12 @@ function MainOrderProductList() {
   const dispatch: AppDispatch = useDispatch();
 
   const [show, setShow] = useState<boolean>(false);
-  const handleClose = () => setShow(false);
+
   const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+    dispatch(setNewProduct(null));
+  };
 
   function handleProductModal(prodotto: ProdottiLocale) {
     dispatch(setNewProduct(prodotto));

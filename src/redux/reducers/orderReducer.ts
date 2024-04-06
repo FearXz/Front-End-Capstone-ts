@@ -15,9 +15,12 @@ const orderReducer = createSlice({
   initialState,
   reducers: {
     // Azione definita nello slice
-    setNewProduct: (state, action: PayloadAction<ProdottiLocale>) => {
+    setNewProduct: (state, action: PayloadAction<ProdottiLocale | null>) => {
+      if (!action.payload) {
+        state.newProduct = null;
+        return;
+      }
       const p: ProdottiLocale = action.payload;
-
       const newProduct: CartProduct = {
         idProdotto: p.idProdottoRistorante,
         nomeProdotto: p.nomeProdotto,
