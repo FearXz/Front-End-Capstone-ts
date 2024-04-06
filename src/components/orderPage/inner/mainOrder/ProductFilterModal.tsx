@@ -81,16 +81,18 @@ function ProductFilterModal(p: ProductFilterModalProps) {
                     Seleziona gli ingredienti da <span className="fw-bold text-danger">rimuovere</span>
                   </div>
                   <div>
-                    {newProduct.ingredienti?.map((ingrediente, index) => (
-                      <Row key={`ingredientiProdotto-${index}`} className=" py-1">
-                        <Col className="col-12">
-                          <label className="form-check-label w-100 fs-5" typeof="">
-                            <input className="form-check-input danger" type="checkbox" id="" />
-                            <span className="ms-1 fs-6">{ingrediente.nomeIngrediente}</span>
-                          </label>
-                        </Col>
-                      </Row>
-                    ))}
+                    {newProduct.ingredienti
+                      ?.filter((ingrediente) => !ingrediente.isExtra)
+                      .map((ingrediente, index) => (
+                        <Row key={`ingredientiProdotto-${index}`} className=" py-1">
+                          <Col className="col-12">
+                            <label className="form-check-label w-100 fs-5" typeof="">
+                              <input className="form-check-input danger" type="checkbox" id="" />
+                              <span className="ms-1 fs-6">{ingrediente.nomeIngrediente}</span>
+                            </label>
+                          </Col>
+                        </Row>
+                      ))}
                   </div>
                 </Accordion.Body>
               </Accordion.Item>
