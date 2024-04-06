@@ -1,10 +1,10 @@
 //slice reducer
-import { createSlice } from "@reduxjs/toolkit";
-import { CoordinateSearch } from "../../interfaces/interfaces";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { CartProduct, CoordinateSearch } from "../../interfaces/interfaces";
 
 interface persistedInfoState {
   indirizzoCercato: CoordinateSearch | null;
-  cart: any;
+  cart: CartProduct[];
 }
 
 const initialState: persistedInfoState = {
@@ -17,16 +17,31 @@ const persistedInfoReducer = createSlice({
   initialState,
   reducers: {
     // Azione definita nello slice
-    setIndirizzoCercato: (state, action) => {
+    setIndirizzoCercato: (state, action: PayloadAction<CoordinateSearch | null>) => {
       state.indirizzoCercato = action.payload;
     },
-    addToCart: (state, action) => {
-      console.log(action.payload);
-      state.cart = [...state.cart, action.payload];
-      console.log(state.cart);
+    addToCart: (state, action: PayloadAction<CartProduct>) => {
+      const addedProduct: CartProduct = action.payload;
+
+      const index = state.cart.findIndex(
+        (cartProduct: CartProduct) =>
+          cartProduct.idProdotto === addedProduct.idProdotto &&
+          cartProduct.ingredienti.length === addedProduct.ingredienti.length &&
+          addedProduct.ingredienti.every((addedIng) =>
+            cartProduct.ingredienti.some((cartIng) => cartIng.idIngrediente === addedIng.idIngrediente)
+          )
+      );
+
+      if (index !== -1) {
+        // Se il prodotto esiste, aumenta la sua quantità di 1
+        state.cart[index].quantita += 1;
+      } else {
+        // Altrimenti, aggiungi un nuovo prodotto al carrello
+        state.cart = [...state.cart, addedProduct];
+      }
     },
-    removeFromCart: (state, action) => {
-      state.cart = state.cart.filter((item: any) => item.id !== action.payload);
+    removeFromCart: (state, action: PayloadAction<CartProduct>) => {
+      state.cart = state.cart.filter((item: CartProduct) => item.idProdotto !== action.payload.idProdotto);
     },
   },
 });

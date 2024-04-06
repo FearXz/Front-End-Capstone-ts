@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { LocaleIdResponse } from "../interfaces/interfaces";
+import { CartProduct, LocaleIdResponse } from "../interfaces/interfaces";
 
 export function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -37,4 +37,15 @@ export function groupProductsByType(locale: LocaleIdResponse | null): object {
   });
 
   return groupedProducts;
+}
+export function getTotalPrice(newProduct: CartProduct): number {
+  let total: number = newProduct.prezzoProdotto;
+
+  newProduct.ingredienti
+    .filter((ingrediente) => ingrediente.isExtra)
+    .forEach((ingrediente) => {
+      total += ingrediente.prezzoIngrediente * ingrediente.quantita;
+    });
+
+  return total;
 }

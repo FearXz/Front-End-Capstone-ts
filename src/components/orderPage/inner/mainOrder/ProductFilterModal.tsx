@@ -3,6 +3,8 @@ import { CartProduct, IngredientiProdottiLocale, LocaleIdResponse } from "../../
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../redux/store/store";
 import { addExtraIngredient, removeExtraIngredient, toggleIngredient } from "../../../../redux/reducers/orderReducer";
+import { addToCart } from "../../../../redux/reducers/persistedInfoReducer";
+import { getTotalPrice } from "../../../../functions/functions";
 
 interface ProductFilterModalProps {
   show: boolean;
@@ -13,8 +15,16 @@ interface ProductFilterModalProps {
 function ProductFilterModal(p: ProductFilterModalProps) {
   const locale: LocaleIdResponse | null = useSelector((state: RootState) => state.searchRistorante.localeById);
   const newProduct: CartProduct | null = useSelector((state: RootState) => state.order.newProduct);
+  const cart: CartProduct[] = useSelector((state: RootState) => state.persist.cart);
   const dispatch: AppDispatch = useDispatch();
   console.log(newProduct);
+
+  function handleAddToCart(newProduct: CartProduct) {
+    newProduct = { ...newProduct, totale: getTotalPrice(newProduct) };
+    console.log(newProduct);
+    dispatch(addToCart(newProduct));
+    p.handleClose();
+  }
 
   return (
     <div>
@@ -108,7 +118,10 @@ function ProductFilterModal(p: ProductFilterModalProps) {
             <Button className="btn btn-gray-500 rounded-0 button-border-gray text-white" onClick={p.handleClose}>
               CHIUDI
             </Button>
-            <Button className="btn btn-leaf-500 rounded-0 button-border-success text-white">
+            <Button
+              className="btn btn-leaf-500 rounded-0 button-border-success text-white"
+              onClick={() => handleAddToCart(newProduct)}
+            >
               CONFERMA{" "}
               {`(+ € ${newProduct.ingredienti
                 ?.filter((ingrediente) => ingrediente.isExtra)

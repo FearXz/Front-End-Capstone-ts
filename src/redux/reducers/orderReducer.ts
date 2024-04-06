@@ -84,6 +84,7 @@ const orderReducer = createSlice({
         }
       }
     },
+
     toggleIngredient: (state, action: PayloadAction<IngredientiProdottiLocale>) => {
       if (state.newProduct === null) {
         return;
