@@ -116,5 +116,6 @@ export interface CartProduct {
   nomeProdotto: string;
   prezzoProdotto: number;
   quantita: number;
+  totale?: number;
   ingredienti: CartIngredient[];
 }

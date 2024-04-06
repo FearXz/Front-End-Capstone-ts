@@ -46,13 +46,14 @@ const orderReducer = createSlice({
         return;
       }
 
-      const ingredienteExtra = action.payload;
-      const ifExtraIndex = state.newProduct?.ingredienti.findIndex(
-        (ingrediente) => ingrediente.idIngrediente === ingredienteExtra.idIngrediente && ingrediente.isExtra
+      const ingredienteExtra: IngredientiProdottiLocale = action.payload;
+      const extraIndex: number = state.newProduct?.ingredienti.findIndex(
+        (ingrediente: CartIngredient) =>
+          ingrediente.idIngrediente === ingredienteExtra.idIngrediente && ingrediente.isExtra
       );
 
-      if (ifExtraIndex !== undefined && ifExtraIndex !== -1) {
-        state.newProduct.ingredienti[ifExtraIndex].quantita += 1;
+      if (extraIndex !== -1) {
+        state.newProduct.ingredienti[extraIndex].quantita += 1;
       } else {
         const extraCartIngredient: CartIngredient = {
           idIngrediente: action.payload.idIngrediente,
@@ -69,23 +70,38 @@ const orderReducer = createSlice({
         return;
       }
       const ingredienteExtra = action.payload;
-      const ifExtraIndex = state.newProduct?.ingredienti.findIndex(
+      const extraIndex = state.newProduct?.ingredienti.findIndex(
         (ingrediente) => ingrediente.idIngrediente === ingredienteExtra.idIngrediente && ingrediente.isExtra
       );
 
-      if (ifExtraIndex !== undefined && ifExtraIndex !== -1) {
-        if (state.newProduct.ingredienti[ifExtraIndex].quantita === 1) {
+      if (extraIndex !== -1) {
+        if (state.newProduct.ingredienti[extraIndex].quantita === 1) {
           state.newProduct.ingredienti = state.newProduct.ingredienti.filter(
             (ingrediente) => !(ingrediente.idIngrediente === ingredienteExtra.idIngrediente && ingrediente.isExtra)
           );
         } else {
-          state.newProduct.ingredienti[ifExtraIndex].quantita -= 1;
+          state.newProduct.ingredienti[extraIndex].quantita -= 1;
         }
+      }
+    },
+    toggleIngredient: (state, action: PayloadAction<IngredientiProdottiLocale>) => {
+      if (state.newProduct === null) {
+        return;
+      }
+
+      const ingrediente: IngredientiProdottiLocale = action.payload;
+      const index: number = state.newProduct?.ingredienti.findIndex(
+        (cartIngredient: CartIngredient) =>
+          cartIngredient.idIngrediente === ingrediente.idIngrediente && !cartIngredient.isExtra
+      );
+
+      if (index !== -1) {
+        state.newProduct.ingredienti[index].quantita = state.newProduct.ingredienti[index].quantita === 0 ? 1 : 0;
       }
     },
   },
 });
 
 // Esporto solo l'azione definita nello slice
-export const { setNewProduct, addExtraIngredient, removeExtraIngredient } = orderReducer.actions;
+export const { setNewProduct, addExtraIngredient, removeExtraIngredient, toggleIngredient } = orderReducer.actions;
 export default orderReducer.reducer;

@@ -2,7 +2,7 @@ import { Accordion, Button, Col, Modal, Row } from "react-bootstrap";
 import { CartProduct, IngredientiProdottiLocale, LocaleIdResponse } from "../../../../interfaces/interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../redux/store/store";
-import { addExtraIngredient, removeExtraIngredient } from "../../../../redux/reducers/orderReducer";
+import { addExtraIngredient, removeExtraIngredient, toggleIngredient } from "../../../../redux/reducers/orderReducer";
 
 interface ProductFilterModalProps {
   show: boolean;
@@ -86,8 +86,14 @@ function ProductFilterModal(p: ProductFilterModalProps) {
                       .map((ingrediente, index) => (
                         <Row key={`ingredientiProdotto-${index}`} className=" py-1">
                           <Col className="col-12">
-                            <label className="form-check-label w-100 fs-5" typeof="">
-                              <input className="form-check-input danger" type="checkbox" id="" />
+                            <label className="form-check-label w-100 fs-5" typeof={ingrediente.nomeIngrediente}>
+                              <input
+                                className="form-check-input danger"
+                                type="checkbox"
+                                checked={ingrediente.quantita == 0}
+                                onChange={() => dispatch(toggleIngredient(ingrediente))}
+                                id={ingrediente.nomeIngrediente}
+                              />
                               <span className="ms-1 fs-6">{ingrediente.nomeIngrediente}</span>
                             </label>
                           </Col>
@@ -102,7 +108,12 @@ function ProductFilterModal(p: ProductFilterModalProps) {
             <Button className="btn btn-gray-500 rounded-0 button-border-gray text-white" onClick={p.handleClose}>
               CHIUDI
             </Button>
-            <Button className="btn btn-leaf-500 rounded-0 button-border-success text-white">CONFERMA</Button>
+            <Button className="btn btn-leaf-500 rounded-0 button-border-success text-white">
+              CONFERMA{" "}
+              {`(+ € ${newProduct.ingredienti
+                ?.filter((ingrediente) => ingrediente.isExtra)
+                .reduce((total, ingrediente) => total + ingrediente.quantita * ingrediente.prezzoIngrediente, 0)})`}
+            </Button>
           </Modal.Footer>
         </Modal>
       )}
