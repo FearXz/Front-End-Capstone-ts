@@ -15,7 +15,7 @@ interface ProductFilterModalProps {
 function ProductFilterModal(p: ProductFilterModalProps) {
   const locale: LocaleIdResponse | null = useSelector((state: RootState) => state.searchRistorante.localeById);
   const newProduct: CartProduct | null = useSelector((state: RootState) => state.order.newProduct);
-  const cart: CartProduct[] = useSelector((state: RootState) => state.persist.cart);
+
   const dispatch: AppDispatch = useDispatch();
   console.log(newProduct);
 
