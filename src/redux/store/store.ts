@@ -1,4 +1,4 @@
-import { Action, Dispatch, combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import stateReducer from "../reducers/stateReducer";
@@ -6,6 +6,7 @@ import expireReducer from "redux-persist-expire";
 import authReducer from "../reducers/authReducer";
 import searchRistoranteReducer from "../reducers/searchRistoranteReducer";
 import persistedInfoReducer from "../reducers/persistedInfoReducer";
+import orderReducer from "../reducers/orderReducer";
 
 const persistConfig = {
   key: "root",
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   searchRistorante: searchRistoranteReducer,
   persist: persistedInfoReducer,
+  order: orderReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

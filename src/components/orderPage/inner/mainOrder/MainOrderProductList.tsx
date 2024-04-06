@@ -1,34 +1,30 @@
 import { Col, Row } from "react-bootstrap";
 import { LocaleIdResponse, ProdottiLocale } from "../../../../interfaces/interfaces";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../redux/store/store";
 import { groupProductsByType } from "../../../../functions/functions";
 import { useState } from "react";
 import ProductFilterModal from "./ProductFilterModal";
+import { setNewProduct } from "../../../../redux/reducers/orderReducer";
 
 function MainOrderProductList() {
   const locale: LocaleIdResponse | null = useSelector((state: RootState) => state.searchRistorante.localeById);
   const productsByType = groupProductsByType(locale);
 
+  const dispatch: AppDispatch = useDispatch();
+
   const [show, setShow] = useState<boolean>(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [selectedProduct, setSelectedProduct] = useState<ProdottiLocale | null>(null);
-
   function handleProductModal(prodotto: ProdottiLocale) {
-    setSelectedProduct(prodotto);
+    dispatch(setNewProduct(prodotto));
     handleShow();
   }
 
   return (
     <Col className="col-xxl-10 col-xl-9 col-sm-8 col-12 ps-xxl-3 px-3">
-      <ProductFilterModal
-        show={show}
-        handleClose={handleClose}
-        handleShow={handleShow}
-        selectedProduct={selectedProduct}
-      />
+      <ProductFilterModal show={show} handleClose={handleClose} handleShow={handleShow} />
       {/* MAP TIPIPRODOTTI */}
       {productsByType &&
         Object.entries(productsByType).map(([tipo, prodotti], index: number) => (

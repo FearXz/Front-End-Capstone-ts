@@ -1,53 +1,24 @@
 import { Accordion, Button, Col, Modal, Row } from "react-bootstrap";
-import { CartProduct, LocaleIdResponse, ProdottiLocale } from "../../../../interfaces/interfaces";
+import { CartProduct, LocaleIdResponse } from "../../../../interfaces/interfaces";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store/store";
-import { useEffect, useState } from "react";
 
 interface ProductFilterModalProps {
   show: boolean;
   handleShow: () => void;
   handleClose: () => void;
-  selectedProduct: ProdottiLocale | null;
 }
 
 function ProductFilterModal(p: ProductFilterModalProps) {
   const locale: LocaleIdResponse | null = useSelector((state: RootState) => state.searchRistorante.localeById);
-
-  const [newProduct, setNewProduct] = useState<CartProduct | null>(null);
-
-  useEffect(() => {
-    if (p.selectedProduct) {
-      const newProduct: CartProduct = {
-        idProdotto: p.selectedProduct.idProdottoRistorante,
-        nomeProdotto: p.selectedProduct.nomeProdotto,
-        prezzoProdotto: p.selectedProduct.prezzoProdotto,
-        quantita: 1,
-        uniqueId: `${p.selectedProduct.idProdottoRistorante}-${Date.now()}`,
-        ingredienti: [],
-      };
-      // popolo l'array ingredienti con gli ingredienti del prodotto selezionato
-      p.selectedProduct.ingredienti?.forEach((ingrediente) =>
-        newProduct.ingredienti?.push({
-          idIngrediente: ingrediente.idIngrediente,
-          nomeIngrediente: ingrediente.nomeIngrediente,
-          prezzoIngrediente: ingrediente.prezzoIngrediente,
-          quantita: 1,
-          isExtra: false,
-        })
-      );
-
-      console.log(newProduct);
-      setNewProduct(newProduct);
-    }
-  }, [p.selectedProduct]);
+  const newProduct: CartProduct | null = useSelector((state: RootState) => state.order.newProduct);
 
   return (
     <div>
-      {p.selectedProduct && (
+      {newProduct && (
         <Modal dialogClassName="rounded-0" show={p.show} onHide={p.handleClose} backdrop="static" keyboard={false}>
           <Modal.Header closeButton>
-            <Modal.Title className=" font-breef">{p.selectedProduct.nomeProdotto}</Modal.Title>
+            <Modal.Title className=" font-breef">{newProduct.nomeProdotto}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Accordion defaultActiveKey="0" flush>
@@ -92,7 +63,7 @@ function ProductFilterModal(p: ProductFilterModalProps) {
                     Seleziona gli ingredienti da <span className="fw-bold text-danger">rimuovere</span>
                   </div>
                   <div>
-                    {p.selectedProduct.ingredienti?.map((ingrediente, index) => (
+                    {newProduct.ingredienti?.map((ingrediente, index) => (
                       <Row key={`ingredientiProdotto-${index}`} className=" py-1">
                         <Col className="col-12">
                           <label className="form-check-label w-100 fs-5" typeof="">
