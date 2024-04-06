@@ -1,7 +1,8 @@
 import { Accordion, Button, Col, Modal, Row } from "react-bootstrap";
-import { CartProduct, LocaleIdResponse } from "../../../../interfaces/interfaces";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store/store";
+import { CartProduct, IngredientiProdottiLocale, LocaleIdResponse } from "../../../../interfaces/interfaces";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../redux/store/store";
+import { addExtraIngredient, removeExtraIngredient } from "../../../../redux/reducers/orderReducer";
 
 interface ProductFilterModalProps {
   show: boolean;
@@ -12,6 +13,8 @@ interface ProductFilterModalProps {
 function ProductFilterModal(p: ProductFilterModalProps) {
   const locale: LocaleIdResponse | null = useSelector((state: RootState) => state.searchRistorante.localeById);
   const newProduct: CartProduct | null = useSelector((state: RootState) => state.order.newProduct);
+  const dispatch: AppDispatch = useDispatch();
+  console.log(newProduct);
 
   return (
     <div>
@@ -27,7 +30,7 @@ function ProductFilterModal(p: ProductFilterModalProps) {
                   <span className="text-leaf-500 me-1 fw-bold">EXTRA INGREDIENTI</span>
                 </Accordion.Header>
                 <Accordion.Body>
-                  {locale?.ingredientiRistorante.map((ingrediente, index) => (
+                  {locale?.ingredientiRistorante.map((ingrediente: IngredientiProdottiLocale, index) => (
                     <div key={`ingredientiRistorante-${index}`} className=" row py-1 ">
                       <div className="col-12">
                         <Row className=" border-bottom border-success ">
@@ -38,13 +41,28 @@ function ProductFilterModal(p: ProductFilterModalProps) {
                           <Col className="offset-sm-0 offset-6 col-sm-3 col-6 d-flex align-items-end ">
                             <Row>
                               <Col className="col-4 px-0 d-flex align-items-end">
-                                <button className="btn btn-outline-success w-100  rounded-0"> + </button>
+                                <button
+                                  className="btn btn-outline-success w-100  rounded-0"
+                                  onClick={() => dispatch(addExtraIngredient(ingrediente))}
+                                >
+                                  {" "}
+                                  +{" "}
+                                </button>
                               </Col>
                               <Col className="col-4 px-0 d-flex align-items-end">
-                                <input type="numeric" className="form-control w-100  border-secondary rounded-0 " />
+                                <button className="w-100 h-100 btn btn-light rounded-0 ">
+                                  {newProduct.ingredienti?.find(
+                                    (ing) => ing.idIngrediente === ingrediente.idIngrediente && ing.isExtra
+                                  )?.quantita || 0}
+                                </button>
                               </Col>
                               <Col className="col-4 px-0 d-flex align-items-end">
-                                <button className="btn btn-outline-danger w-100  rounded-0">-</button>
+                                <button
+                                  className="btn btn-outline-danger w-100  rounded-0"
+                                  onClick={() => dispatch(removeExtraIngredient(ingrediente))}
+                                >
+                                  -
+                                </button>
                               </Col>
                             </Row>
                           </Col>
