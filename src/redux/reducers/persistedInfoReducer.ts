@@ -1,6 +1,7 @@
 //slice reducer
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CartProduct, CoordinateSearch } from "../../interfaces/interfaces";
+import { add } from "date-fns";
 
 interface persistedInfoState {
   indirizzoCercato: CoordinateSearch | null;
@@ -27,8 +28,13 @@ const persistedInfoReducer = createSlice({
         (cartProduct: CartProduct) =>
           cartProduct.idProdotto === addedProduct.idProdotto &&
           cartProduct.ingredienti.length === addedProduct.ingredienti.length &&
-          addedProduct.ingredienti.every((addedIng) =>
-            cartProduct.ingredienti.some((cartIng) => cartIng.idIngrediente === addedIng.idIngrediente)
+          cartProduct.ingredienti.every((cartIng) =>
+            addedProduct.ingredienti.some(
+              (addedIng) =>
+                addedIng.idIngrediente === cartIng.idIngrediente &&
+                addedIng.quantita === cartIng.quantita &&
+                addedIng.isExtra === cartIng.isExtra
+            )
           )
       );
 
