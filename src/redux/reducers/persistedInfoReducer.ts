@@ -1,7 +1,6 @@
 //slice reducer
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CartProduct, CoordinateSearch } from "../../interfaces/interfaces";
-import { add } from "date-fns";
 
 interface persistedInfoState {
   indirizzoCercato: CoordinateSearch | null;
@@ -47,11 +46,32 @@ const persistedInfoReducer = createSlice({
       }
     },
     removeFromCart: (state, action: PayloadAction<CartProduct>) => {
-      state.cart = state.cart.filter((item: CartProduct) => item.idProdotto !== action.payload.idProdotto);
+      state.cart = state.cart.filter((item: CartProduct) => item.uniqueId !== action.payload.uniqueId);
+    },
+    plusQuantityProduct: (state, action: PayloadAction<CartProduct>) => {
+      const index: number = state.cart.findIndex(
+        (cartProduct: CartProduct) => cartProduct.uniqueId === action.payload.uniqueId
+      );
+      if (index !== -1) {
+        state.cart[index].quantita += 1;
+      }
+    },
+    minusQuantityProduct: (state, action: PayloadAction<CartProduct>) => {
+      const index: number = state.cart.findIndex(
+        (cartProduct: CartProduct) => cartProduct.uniqueId === action.payload.uniqueId
+      );
+      if (index !== -1) {
+        if (state.cart[index].quantita === 1) {
+          state.cart = state.cart.filter((item: CartProduct) => item.uniqueId !== action.payload.uniqueId);
+        } else {
+          state.cart[index].quantita -= 1;
+        }
+      }
     },
   },
 });
 
 // Esporto solo l'azione definita nello slice
-export const { setIndirizzoCercato, addToCart, removeFromCart } = persistedInfoReducer.actions;
+export const { setIndirizzoCercato, addToCart, removeFromCart, plusQuantityProduct, minusQuantityProduct } =
+  persistedInfoReducer.actions;
 export default persistedInfoReducer.reducer;
