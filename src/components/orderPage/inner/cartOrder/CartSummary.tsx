@@ -14,7 +14,10 @@ function CartSummary() {
           <div className="d-flex justify-content-between px-xxl-5 px-3 fs-5">
             <span className="fw-bold">Totale</span>
             <span className="cart-total fw-bold">
-              € {cart.reduce((total, product) => total + (product.totale ? product.totale * product.quantita : 0), 0)}
+              €{" "}
+              {cart
+                .reduce((total, product) => total + (product.totale ? product.totale * product.quantita : 0), 0)
+                .toFixed(2)}
             </span>
           </div>
           <div className="d-flex justify-content-between px-xxl-5 px-3 fs-5 pt-xxl-5 pt-3">
