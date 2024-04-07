@@ -61,17 +61,18 @@ const persistedInfoReducer = createSlice({
         (cartProduct: CartProduct) => cartProduct.uniqueId === action.payload.uniqueId
       );
       if (index !== -1) {
-        if (state.cart[index].quantita === 1) {
-          state.cart = state.cart.filter((item: CartProduct) => item.uniqueId !== action.payload.uniqueId);
-        } else {
+        if (state.cart[index].quantita > 1) {
           state.cart[index].quantita -= 1;
         }
       }
+    },
+    clearCart: (state) => {
+      state.cart = [];
     },
   },
 });
 
 // Esporto solo l'azione definita nello slice
-export const { setIndirizzoCercato, addToCart, removeFromCart, plusQuantityProduct, minusQuantityProduct } =
+export const { setIndirizzoCercato, addToCart, removeFromCart, plusQuantityProduct, minusQuantityProduct, clearCart } =
   persistedInfoReducer.actions;
 export default persistedInfoReducer.reducer;
