@@ -29,7 +29,9 @@ function MobileOrder() {
                   <button className="btn btn-leaf-500  w-100 border-0 py-0">
                     <div className="d-flex justify-content-between align-items-center">
                       <p className=" fw-bold py-1 mb-0 text-start">
-                        <span className=" text-white">{cart.length}</span>{" "}
+                        <span className=" text-white">
+                          {cart.reduce((total, product) => total + product.quantita, 0)}
+                        </span>{" "}
                         <span className="text-white text-white">{cart.length > 1 ? "PRODOTTI" : "PRODOTTO"}</span>
                       </p>
                       <strong>
