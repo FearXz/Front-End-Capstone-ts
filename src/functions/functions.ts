@@ -38,6 +38,7 @@ export function groupProductsByType(locale: LocaleIdResponse | null): object {
 
   return groupedProducts;
 }
+
 export function getTotalPrice(newProduct: CartProduct): number {
   let total: number = newProduct.prezzoProdotto;
 

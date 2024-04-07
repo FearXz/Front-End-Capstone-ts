@@ -181,3 +181,7 @@ footer {
   left: 16px;
 }
 /*  ORDER PAGE  */
+.list-group-item-action:hover {
+  background-color: #63b34a;
+  color: #fff;
+}
