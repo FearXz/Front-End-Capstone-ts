@@ -1,3 +1,6 @@
+export interface LastLocation {
+  pathname: string;
+}
 export interface LoginDto {
   email: string;
   password: string;

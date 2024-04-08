@@ -2,11 +2,11 @@ import { setLoggedProfile } from "../reducers/authReducer";
 import { url } from "../../functions/config";
 import { toast } from "react-toastify";
 import { setIsLoading } from "../reducers/stateReducer";
-import { LoginDto, LoginResponse, RegisterDto } from "../../interfaces/interfaces";
+import { LastLocation, LoginDto, LoginResponse, RegisterDto } from "../../interfaces/interfaces";
 import { AppDispatch } from "../store/store";
 // auth/login endpoint
 export const loginPost =
-  (loginObj: LoginDto, navigate: Function, from: { pathname: string }) => async (dispatch: AppDispatch) => {
+  (loginObj: LoginDto, navigate: Function, from: LastLocation) => async (dispatch: AppDispatch) => {
     try {
       dispatch(setIsLoading(true));
       const response = await fetch(url + "auth/login", {
@@ -36,40 +36,39 @@ export const loginPost =
     }
   };
 // auth/register endpoint
-export const registerPost =
-  (registerObj: RegisterDto, navigate: Function, from: { pathname: string }) => async (dispatch: AppDispatch) => {
-    try {
-      dispatch(setIsLoading(true));
-      const response = await fetch(url + "auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(registerObj),
-      });
+export const registerPost = (registerObj: RegisterDto, navigate: Function) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetch(url + "auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(registerObj),
+    });
 
-      if (response.ok) {
-        toast.success("Registrazione effettuata con successo");
+    if (response.ok) {
+      toast.success("Registrazione effettuata con successo");
 
-        const loginObj: LoginDto = {
-          email: registerObj.email,
-          password: registerObj.password,
-        };
+      const loginObj: LoginDto = {
+        email: registerObj.email,
+        password: registerObj.password,
+      };
 
-        dispatch(loginPost(loginObj, navigate, { pathname: "/" }));
-        navigate("/");
+      dispatch(loginPost(loginObj, navigate, { pathname: "/" }));
+      navigate("/");
+    } else {
+      if (response.status === 409) {
+        toast.error("Email già registrata");
       } else {
-        if (response.status === 409) {
-          toast.error("Email già registrata");
-        } else {
-          toast.error("Errore nel registrazione");
-          throw new Error("Errore nel recupero dei risultati");
-        }
+        toast.error("Errore nel registrazione");
+        throw new Error("Errore nel recupero dei risultati");
       }
-    } catch (error) {
-      // Puoi gestire gli errori qui, se necessario
-      toast.error("Errore nel registrazione");
-    } finally {
-      dispatch(setIsLoading(false));
     }
-  };
+  } catch (error) {
+    // Puoi gestire gli errori qui, se necessario
+    toast.error("Errore nel registrazione");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
