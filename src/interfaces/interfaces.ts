@@ -119,3 +119,11 @@ export interface CartProduct {
   totale?: number;
   ingredienti: CartIngredient[];
 }
+export interface CartOrderDto {
+  idRistorante: number;
+  indirizzoDiConsegna: string;
+  orarioConsegnaPrevista: string;
+  note?: string;
+  totale?: number;
+  prodotti: CartProduct[];
+}

@@ -5,11 +5,13 @@ import { CartProduct, CoordinateSearch } from "../../interfaces/interfaces";
 interface persistedInfoState {
   indirizzoCercato: CoordinateSearch | null;
   cart: CartProduct[];
+  selectedHour: string | null;
 }
 
 const initialState: persistedInfoState = {
   indirizzoCercato: null,
   cart: [],
+  selectedHour: null,
 };
 
 const persistedInfoReducer = createSlice({
@@ -69,10 +71,20 @@ const persistedInfoReducer = createSlice({
     clearCart: (state) => {
       state.cart = [];
     },
+    setSelectedHour: (state, action: PayloadAction<string | null>) => {
+      state.selectedHour = action.payload;
+    },
   },
 });
 
 // Esporto solo l'azione definita nello slice
-export const { setIndirizzoCercato, addToCart, removeFromCart, plusQuantityProduct, minusQuantityProduct, clearCart } =
-  persistedInfoReducer.actions;
+export const {
+  setIndirizzoCercato,
+  addToCart,
+  removeFromCart,
+  plusQuantityProduct,
+  minusQuantityProduct,
+  clearCart,
+  setSelectedHour,
+} = persistedInfoReducer.actions;
 export default persistedInfoReducer.reducer;
