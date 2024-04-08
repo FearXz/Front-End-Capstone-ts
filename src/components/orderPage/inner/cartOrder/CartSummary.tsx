@@ -1,21 +1,45 @@
 import { useDispatch, useSelector } from "react-redux";
-import { CartProduct } from "../../../../interfaces/interfaces";
+import { CartOrderDto, CartProduct, CoordinateSearch, LocaleIdResponse } from "../../../../interfaces/interfaces";
 import { AppDispatch, RootState } from "../../../../redux/store/store";
-import { clearCart } from "../../../../redux/reducers/persistedInfoReducer";
+import { clearCart, setCartOrder } from "../../../../redux/reducers/persistedInfoReducer";
 import { isAfter, parse } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function CartSummary() {
   const cart: CartProduct[] = useSelector((state: RootState) => state.persist.cart);
+  const locale: LocaleIdResponse | null = useSelector((state: RootState) => state.searchRistorante.localeById);
+  const luogoConsegna: CoordinateSearch | null = useSelector((state: RootState) => state.persist.indirizzoCercato);
   const selectedHour: string | null = useSelector((state: RootState) => state.persist.selectedHour);
+
   const dispatch: AppDispatch = useDispatch();
   const navigate: Function = useNavigate();
 
   function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (cart.length > 0 && selectedHour && isAfter(parse(selectedHour, "HH:mm", new Date()), new Date())) {
-      // Handle the submission
-      navigate("/checkout");
+    if (cart.length > 0) {
+      if (selectedHour && isAfter(parse(selectedHour, "HH:mm", new Date()), new Date())) {
+        if (locale && luogoConsegna) {
+          const cartOrderDto: CartOrderDto = {
+            idRistorante: locale.idRistorante,
+            indirizzoDiConsegna: luogoConsegna.display_name,
+            orarioConsegnaPrevista: selectedHour,
+            note: "asdasdasd",
+            totale: cart.reduce(
+              (total, product) => total + (product.totale ? product.totale * product.quantita : 0),
+              0
+            ),
+            prodotti: cart,
+          };
+          console.log(cartOrderDto);
+          dispatch(setCartOrder(cartOrderDto));
+          navigate("/checkout");
+        }
+      } else {
+        toast.error("Errore: inserisci un orario valido!");
+      }
+    } else {
+      toast.error("Errore: inserisci almeno un prodotto nel carrello!");
     }
   }
   return (

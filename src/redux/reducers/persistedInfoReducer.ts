@@ -1,17 +1,19 @@
 //slice reducer
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { CartProduct, CoordinateSearch } from "../../interfaces/interfaces";
+import { CartOrderDto, CartProduct, CoordinateSearch } from "../../interfaces/interfaces";
 
 interface persistedInfoState {
   indirizzoCercato: CoordinateSearch | null;
   cart: CartProduct[];
   selectedHour: string | null;
+  cartOrder: CartOrderDto | null;
 }
 
 const initialState: persistedInfoState = {
   indirizzoCercato: null,
   cart: [],
   selectedHour: null,
+  cartOrder: null,
 };
 
 const persistedInfoReducer = createSlice({
@@ -74,6 +76,9 @@ const persistedInfoReducer = createSlice({
     setSelectedHour: (state, action: PayloadAction<string | null>) => {
       state.selectedHour = action.payload;
     },
+    setCartOrder: (state, action: PayloadAction<CartOrderDto | null>) => {
+      state.cartOrder = action.payload;
+    },
   },
 });
 
@@ -86,5 +91,6 @@ export const {
   minusQuantityProduct,
   clearCart,
   setSelectedHour,
+  setCartOrder,
 } = persistedInfoReducer.actions;
 export default persistedInfoReducer.reducer;
