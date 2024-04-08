@@ -4,10 +4,12 @@ import { CartIngredient, CartProduct, IngredientiProdottiLocale, ProdottiLocale 
 
 interface OrderState {
   newProduct: CartProduct | null;
+  sessionId: string | null;
 }
 
 const initialState: OrderState = {
   newProduct: null,
+  sessionId: null,
 };
 
 const orderReducer = createSlice({
@@ -84,7 +86,9 @@ const orderReducer = createSlice({
         }
       }
     },
-
+    setSessionId: (state, action: PayloadAction<string | null>) => {
+      state.sessionId = action.payload;
+    },
     toggleIngredient: (state, action: PayloadAction<IngredientiProdottiLocale>) => {
       if (state.newProduct === null) {
         return;
@@ -104,5 +108,6 @@ const orderReducer = createSlice({
 });
 
 // Esporto solo l'azione definita nello slice
-export const { setNewProduct, addExtraIngredient, removeExtraIngredient, toggleIngredient } = orderReducer.actions;
+export const { setNewProduct, addExtraIngredient, removeExtraIngredient, toggleIngredient, setSessionId } =
+  orderReducer.actions;
 export default orderReducer.reducer;

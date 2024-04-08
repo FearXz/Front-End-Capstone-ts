@@ -21,6 +21,11 @@ function MultiSelectOrderHour() {
   let fixedClosingTime: Date = closingTime;
 
   function checkSelectedHour(selectedHour: string | null): boolean {
+    if (timeOptions.length === 0) {
+      dispatch(setSelectedHour(null));
+      return false;
+    }
+
     if (!selectedHour) {
       dispatch(setSelectedHour(timeOptions[0]));
       return false;
