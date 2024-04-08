@@ -11,6 +11,8 @@ import Loader from "./components/modularComponent/Loader";
 import SearchPage from "./components/SearchPage/SearchPage";
 import OrderPage from "./components/orderPage/OrderPage";
 import CheckoutForm from "./components/checkoutPage/CheckoutForm";
+import AuthRoute from "./components/modularComponent/AuthRoute";
+import { ADMIN, UTENTE } from "./functions/config";
 
 function App() {
   return (
@@ -25,7 +27,14 @@ function App() {
         </Route>
         <Route path="/searchlocal/:address" element={<SearchPage />} />
         <Route path="/local/:id" element={<OrderPage />} />
-        <Route path="/checkout" element={<CheckoutForm />} />
+        <Route
+          path="/checkout"
+          element={
+            <AuthRoute role={[UTENTE, ADMIN]}>
+              <CheckoutForm />
+            </AuthRoute>
+          }
+        />
       </Routes>
       <MyFooter />
     </BrowserRouter>

@@ -2,11 +2,14 @@ import { Button, Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { loginPost } from "../../redux/actions/authAction";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LoginDto } from "../../interfaces/interfaces";
 import { AppDispatch } from "../../redux/store/store";
 
 function LoginForm() {
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: "/" } };
+
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const {
@@ -20,7 +23,7 @@ function LoginForm() {
       email: data.email,
       password: data.password,
     };
-    dispatch(loginPost(loginObj, navigate));
+    dispatch(loginPost(loginObj, navigate, from));
 
     console.log(data);
   }
