@@ -1,10 +1,11 @@
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
-import { RootState } from "../../redux/store/store";
+import { AppDispatch, RootState } from "../../redux/store/store";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
 import { OSMResponse } from "../../interfaces/interfaces";
+import { setRestaurantId } from "../../redux/reducers/persistedInfoReducer";
 
 function HeroSearchForm() {
   const profile = useSelector((state: RootState) => state.auth.loggedProfile);
@@ -15,6 +16,7 @@ function HeroSearchForm() {
   const [suggestions, setSuggestions] = useState<OSMResponse[]>([]);
   const [searchTimeout, setSearchTimeout] = useState<null | number>(null);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
+  const dispatch: AppDispatch = useDispatch();
 
   const searchBarRef = useRef<HTMLInputElement>(null);
 
@@ -66,7 +68,7 @@ function HeroSearchForm() {
   // Funzione per gestire l'invio del form
   const handleSubmit = (e: any) => {
     e.preventDefault();
-
+    dispatch(setRestaurantId(null));
     navigate(`/searchlocal/${address}`);
   };
   // Funzione per resettare il campo di ricerca
