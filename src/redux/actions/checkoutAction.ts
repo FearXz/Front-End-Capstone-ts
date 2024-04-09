@@ -5,6 +5,11 @@ import { setIsLoading } from "../reducers/stateReducer";
 import { AppDispatch } from "../store/store";
 import { CartOrderDto } from "../../interfaces/interfaces";
 import { setSessionId } from "../reducers/orderReducer";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(
+  "pk_test_51OwoZDDVSoH1622rTfzqeYLrq9gPwqYQ69doGhv0t4Ur1QcG3obWiyk1Wu0c1ZJI0rr0EerTgAiWAzuqz5Oq12Wv00wPiYGWlg"
+);
 
 export const createSession = (order: CartOrderDto | null) => async (dispatch: AppDispatch) => {
   try {
@@ -21,6 +26,25 @@ export const createSession = (order: CartOrderDto | null) => async (dispatch: Ap
       const data = await response.json();
       toast.success("Sessione creata con successo");
       dispatch(setSessionId(data.sessionId));
+
+      try {
+        dispatch(setIsLoading(true));
+        const stripe = await stripePromise;
+        if (!stripe) {
+          return;
+        }
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: data.sessionId,
+        });
+        if (error) {
+          console.error(error);
+        }
+      } catch (error) {
+        toast.error("Errore nel checkout");
+        console.log(error);
+      } finally {
+        dispatch(setIsLoading(false));
+      }
     } else {
       toast.error("Errore nel recupero delle categorie");
 

@@ -1,5 +1,5 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo-official.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogout } from "../../redux/reducers/authReducer";
@@ -7,7 +7,9 @@ import { AppDispatch, RootState } from "../../redux/store/store";
 
 function MyNavbar() {
   const profile = useSelector((state: RootState) => state.auth.loggedProfile);
+  const lastRestaurant = useSelector((state: RootState) => state.persist.restaurantId);
   const dispatch: AppDispatch = useDispatch();
+  const navigate: Function = useNavigate();
 
   return (
     <header className=" sticky-top z-3 bg-light section-nav">
@@ -54,7 +56,10 @@ function MyNavbar() {
               </Link>
             </div>
             <div className="d-flex align-items-center border-start border-1 fix-h-50">
-              <button className="btn btn-link  position-relative">
+              <button
+                className="btn btn-link  position-relative"
+                onClick={() => (lastRestaurant ? navigate("local/" + lastRestaurant) : "")}
+              >
                 <i className="bi bi-basket3-fill  text-green fs-3"></i>
                 <span className="position-absolute translate-middle badge rounded-pill bg-success total-products-cart"></span>
               </button>

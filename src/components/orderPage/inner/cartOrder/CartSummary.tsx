@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { CartOrderDto, CartProduct, CoordinateSearch, LocaleIdResponse } from "../../../../interfaces/interfaces";
+import { CartProduct, CoordinateSearch, LocaleIdResponse } from "../../../../interfaces/interfaces";
 import { AppDispatch, RootState } from "../../../../redux/store/store";
-import { clearCart, setCartOrder } from "../../../../redux/reducers/persistedInfoReducer";
+import { clearCart } from "../../../../redux/reducers/persistedInfoReducer";
 import { isAfter, parse } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -20,19 +20,6 @@ function CartSummary() {
     if (cart.length > 0) {
       if (selectedHour && isAfter(parse(selectedHour, "HH:mm", new Date()), new Date())) {
         if (locale && luogoConsegna) {
-          const cartOrderDto: CartOrderDto = {
-            idRistorante: locale.idRistorante,
-            indirizzoDiConsegna: luogoConsegna.display_name,
-            orarioConsegnaPrevista: selectedHour,
-            note: "asdasdasd",
-            totale: cart.reduce(
-              (total, product) => total + (product.totale ? product.totale * product.quantita : 0),
-              0
-            ),
-            prodotti: cart,
-          };
-          console.log(cartOrderDto);
-          dispatch(setCartOrder(cartOrderDto));
           navigate("/checkout");
         }
       } else {
