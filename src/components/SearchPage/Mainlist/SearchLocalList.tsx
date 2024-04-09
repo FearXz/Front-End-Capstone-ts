@@ -37,7 +37,7 @@ function SearchLocalList() {
               <div className="py-2 px-2 my-3 shadow ">
                 <Link
                   to={`/local/${ristorante.idRistorante}`}
-                  onClick={() => dispatch(setRestaurantId(ristorante.idRistorante))}
+                  onClick={() => dispatch(setRestaurantId(ristorante))}
                   className="d-block restaurant-img fix-h-230  rounded-3 position-relative "
                   style={
                     ristorante.giorniDiChiusura.some((giorno) => giorno.numeroGiorno == currentDay)

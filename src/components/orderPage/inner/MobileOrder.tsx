@@ -1,11 +1,32 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { CartProduct, CoordinateSearch } from "../../../interfaces/interfaces";
+import { CartProduct, CoordinateSearch, LocaleIdResponse } from "../../../interfaces/interfaces";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
+import { isAfter, parse } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function MobileOrder() {
   const cart: CartProduct[] = useSelector((state: RootState) => state.persist.cart);
-  const indirizzoCercato: CoordinateSearch | null = useSelector((state: RootState) => state.persist.indirizzoCercato);
+  const locale: LocaleIdResponse | null = useSelector((state: RootState) => state.searchRistorante.localeById);
+  const luogoConsegna: CoordinateSearch | null = useSelector((state: RootState) => state.persist.indirizzoCercato);
+  const selectedHour: string | null = useSelector((state: RootState) => state.persist.selectedHour);
+  const navigate: Function = useNavigate();
+
+  function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    if (cart.length > 0) {
+      if (selectedHour && isAfter(parse(selectedHour, "HH:mm", new Date()), new Date())) {
+        if (locale && luogoConsegna) {
+          navigate("/checkout");
+        }
+      } else {
+        toast.error("Errore: inserisci un orario valido!");
+      }
+    } else {
+      toast.error("Errore: inserisci almeno un prodotto nel carrello!");
+    }
+  }
 
   return (
     <div className=" bg-leaf-500 d-lg-none d-block shadow py-1 mobile-checkout">
@@ -13,7 +34,7 @@ function MobileOrder() {
         <Row>
           <Col className="col-sm-6 col-12 d-flex align-items-center flex-wrap">
             <div className="text-white d-flex align-content-center">
-              <p className="ms-3 mb-0">{indirizzoCercato?.display_name ? indirizzoCercato.display_name : ""}</p>
+              <p className="ms-3 mb-0">{luogoConsegna?.display_name ? luogoConsegna.display_name : ""}</p>
             </div>
           </Col>
           <Col className="col-sm-6 col-12 d-flex align-content-center">
@@ -25,7 +46,7 @@ function MobileOrder() {
               </Col>
               <Col className="col-10  px-0 ">
                 {cart && (
-                  <button className="btn btn-leaf-500  w-100 border-0 py-0">
+                  <button className="btn btn-leaf-500  w-100 border-0 py-0" onClick={handleSubmit}>
                     <div className="d-flex justify-content-between align-items-center">
                       <p className=" fw-bold py-1 mb-0 text-start">
                         <span className=" text-white">

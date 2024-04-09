@@ -4,11 +4,11 @@ import logo from "../../assets/images/logo-official.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogout } from "../../redux/reducers/authReducer";
 import { AppDispatch, RootState } from "../../redux/store/store";
-import { CartProduct, LoginResponse } from "../../interfaces/interfaces";
+import { CartProduct, ListaRistorantiResponse, LoginResponse } from "../../interfaces/interfaces";
 
 function MyNavbar() {
   const profile: LoginResponse | null = useSelector((state: RootState) => state.auth.loggedProfile);
-  const lastRestaurant: number | null = useSelector((state: RootState) => state.persist.restaurantId);
+  const lastRestaurant: ListaRistorantiResponse | null = useSelector((state: RootState) => state.persist.restaurantId);
   const cart: CartProduct[] = useSelector((state: RootState) => state.persist.cart);
   const dispatch: AppDispatch = useDispatch();
   const navigate: Function = useNavigate();
@@ -60,11 +60,11 @@ function MyNavbar() {
             <div className="d-flex align-items-center border-start border-1 fix-h-50">
               <button
                 className="btn btn-link  position-relative"
-                onClick={() => (lastRestaurant ? navigate("local/" + lastRestaurant) : "")}
+                onClick={() => (lastRestaurant?.idRistorante ? navigate("/local/" + lastRestaurant.idRistorante) : "")}
               >
                 <i className="bi bi-basket3-fill  text-green fs-3"></i>
                 {cart && cart.length > 0 && (
-                  <span className="position-absolute translate-middle badge rounded-pill bg-success total-products-cart">
+                  <span className="position-absolute translate-middle badge rounded-pill bg-leaf-500 total-products-cart">
                     {cart.reduce((acc, item) => acc + item.quantita, 0)}
                   </span>
                 )}

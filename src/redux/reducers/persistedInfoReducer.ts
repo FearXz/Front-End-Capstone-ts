@@ -1,10 +1,10 @@
 //slice reducer
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { CartOrderDto, CartProduct, CoordinateSearch } from "../../interfaces/interfaces";
+import { CartOrderDto, CartProduct, CoordinateSearch, ListaRistorantiResponse } from "../../interfaces/interfaces";
 
 interface persistedInfoState {
   indirizzoCercato: CoordinateSearch | null;
-  restaurantId: number | null;
+  restaurantId: ListaRistorantiResponse | null;
   cart: CartProduct[];
   selectedHour: string | null;
   cartOrder: CartOrderDto | null;
@@ -82,8 +82,8 @@ const persistedInfoReducer = createSlice({
     setCartOrder: (state, action: PayloadAction<CartOrderDto | null>) => {
       state.cartOrder = action.payload;
     },
-    setRestaurantId: (state, action: PayloadAction<number | null>) => {
-      if (state.restaurantId !== action.payload) {
+    setRestaurantId: (state, action: PayloadAction<ListaRistorantiResponse | null>) => {
+      if (state.restaurantId?.idRistorante !== action.payload?.idRistorante) {
         state.cart = [];
         state.cartOrder = null;
       }
