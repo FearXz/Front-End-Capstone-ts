@@ -13,6 +13,7 @@ import OrderPage from "./components/orderPage/OrderPage";
 import CheckoutForm from "./components/checkoutPage/CheckoutForm";
 import AuthRoute from "./components/modularComponent/AuthRoute";
 import { ADMIN, UTENTE } from "./functions/config";
+import Success from "./components/success/Success";
 
 function App() {
   return (
@@ -32,6 +33,14 @@ function App() {
           element={
             <AuthRoute role={[UTENTE, ADMIN]}>
               <CheckoutForm />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/success"
+          element={
+            <AuthRoute role={[UTENTE, ADMIN]}>
+              <Success />
             </AuthRoute>
           }
         />
