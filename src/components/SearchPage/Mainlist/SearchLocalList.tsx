@@ -1,16 +1,18 @@
 import { Col, Row } from "react-bootstrap";
 import MobileFilterCategory from "./inner/MobileFilterCategory";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../redux/store/store";
 import { ListaRistorantiResponse } from "../../../interfaces/interfaces";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Link } from "react-router-dom";
+import { setRestaurantId } from "../../../redux/reducers/persistedInfoReducer";
 
 function SearchLocalList() {
   const listaRistoranti = useSelector((state: RootState) => state.searchRistorante.listaRistoranti);
   const filtroSearchBar = useSelector((state: RootState) => state.searchRistorante.filtroSearchBar);
   const filtroCheckBox = useSelector((state: RootState) => state.searchRistorante.filtroCheckBox);
   const filtroRange = useSelector((state: RootState) => state.searchRistorante.filtroRange);
+  const dispatch: AppDispatch = useDispatch();
 
   const currentDay = new Date().getDay();
 
@@ -35,6 +37,7 @@ function SearchLocalList() {
               <div className="py-2 px-2 my-3 shadow ">
                 <Link
                   to={`/local/${ristorante.idRistorante}`}
+                  onClick={() => dispatch(setRestaurantId(ristorante.idRistorante))}
                   className="d-block restaurant-img fix-h-230  rounded-3 position-relative "
                   style={
                     ristorante.giorniDiChiusura.some((giorno) => giorno.numeroGiorno == currentDay)

@@ -13,9 +13,9 @@ const stripePromise = loadStripe(
 );
 
 const CheckoutForm = () => {
-  const order: CartOrderDto | null = useSelector((state: RootState) => state.persist.cartOrder);
-  const sessionId: string | null = useSelector((state: RootState) => state.order.sessionId);
   const dispatch: AppDispatch = useDispatch();
+  const sessionId: string | null = useSelector((state: RootState) => state.order.sessionId);
+  const order: CartOrderDto | null = useSelector((state: RootState) => state.persist.cartOrder);
   const navigate: Function = useNavigate();
 
   async function handleCheckout(sessionId: string) {

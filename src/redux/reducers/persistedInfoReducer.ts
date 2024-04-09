@@ -4,6 +4,7 @@ import { CartOrderDto, CartProduct, CoordinateSearch } from "../../interfaces/in
 
 interface persistedInfoState {
   indirizzoCercato: CoordinateSearch | null;
+  restaurantId: number | null;
   cart: CartProduct[];
   selectedHour: string | null;
   cartOrder: CartOrderDto | null;
@@ -11,6 +12,7 @@ interface persistedInfoState {
 
 const initialState: persistedInfoState = {
   indirizzoCercato: null,
+  restaurantId: null,
   cart: [],
   selectedHour: null,
   cartOrder: null,
@@ -72,12 +74,20 @@ const persistedInfoReducer = createSlice({
     },
     clearCart: (state) => {
       state.cart = [];
+      state.cartOrder = null;
     },
     setSelectedHour: (state, action: PayloadAction<string | null>) => {
       state.selectedHour = action.payload;
     },
     setCartOrder: (state, action: PayloadAction<CartOrderDto | null>) => {
       state.cartOrder = action.payload;
+    },
+    setRestaurantId: (state, action: PayloadAction<number | null>) => {
+      if (state.restaurantId !== action.payload) {
+        state.cart = [];
+        state.cartOrder = null;
+      }
+      state.restaurantId = action.payload;
     },
   },
 });
@@ -92,5 +102,6 @@ export const {
   clearCart,
   setSelectedHour,
   setCartOrder,
+  setRestaurantId,
 } = persistedInfoReducer.actions;
 export default persistedInfoReducer.reducer;
