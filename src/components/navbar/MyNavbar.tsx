@@ -4,10 +4,12 @@ import logo from "../../assets/images/logo-official.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogout } from "../../redux/reducers/authReducer";
 import { AppDispatch, RootState } from "../../redux/store/store";
+import { CartProduct, LoginResponse } from "../../interfaces/interfaces";
 
 function MyNavbar() {
-  const profile = useSelector((state: RootState) => state.auth.loggedProfile);
-  const lastRestaurant = useSelector((state: RootState) => state.persist.restaurantId);
+  const profile: LoginResponse | null = useSelector((state: RootState) => state.auth.loggedProfile);
+  const lastRestaurant: number | null = useSelector((state: RootState) => state.persist.restaurantId);
+  const cart: CartProduct[] = useSelector((state: RootState) => state.persist.cart);
   const dispatch: AppDispatch = useDispatch();
   const navigate: Function = useNavigate();
 
@@ -61,7 +63,11 @@ function MyNavbar() {
                 onClick={() => (lastRestaurant ? navigate("local/" + lastRestaurant) : "")}
               >
                 <i className="bi bi-basket3-fill  text-green fs-3"></i>
-                <span className="position-absolute translate-middle badge rounded-pill bg-success total-products-cart"></span>
+                {cart && cart.length > 0 && (
+                  <span className="position-absolute translate-middle badge rounded-pill bg-success total-products-cart">
+                    {cart.reduce((acc, item) => acc + item.quantita, 0)}
+                  </span>
+                )}
               </button>
             </div>
           </Col>
