@@ -7,6 +7,7 @@ import authReducer from "../reducers/authReducer";
 import searchRistoranteReducer from "../reducers/searchRistoranteReducer";
 import persistedInfoReducer from "../reducers/persistedInfoReducer";
 import orderReducer from "../reducers/orderReducer";
+import utenteReducer from "../reducers/utenteReducer";
 
 const persistConfig = {
   key: "root",
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   searchRistorante: searchRistoranteReducer,
   persist: persistedInfoReducer,
   order: orderReducer,
+  utente: utenteReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

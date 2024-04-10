@@ -185,3 +185,14 @@ footer {
   background-color: #63b34a;
   color: #fff;
 }
+/*  UTENTE PAGE*/
+
+.sideHover:hover {
+  background-color: #65b244;
+  color: #fff !important;
+  cursor: pointer;
+}
+.selectedSide {
+  background-color: #65b244;
+  color: #fff !important;
+}
