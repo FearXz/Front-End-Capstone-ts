@@ -14,6 +14,7 @@ import CheckoutForm from "./components/checkoutPage/CheckoutForm";
 import AuthRoute from "./components/modularComponent/AuthRoute";
 import { ADMIN, UTENTE } from "./functions/config";
 import Success from "./components/success/Success";
+import UtentePage from "./components/utentePage/UtentePage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <MyNavbar />
       <Routes>
         <Route path="/" element={<MyMain />} />
+
         <Route path="/auth">
           <Route path="login" element={<AuthPage />} />
         </Route>
@@ -41,6 +43,14 @@ function App() {
           element={
             <AuthRoute role={[UTENTE, ADMIN]}>
               <Success />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/utente"
+          element={
+            <AuthRoute role={[UTENTE, ADMIN]}>
+              <UtentePage />
             </AuthRoute>
           }
         />

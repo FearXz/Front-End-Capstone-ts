@@ -10,7 +10,6 @@ function MyNavbar() {
   const profile: LoginResponse | null = useSelector((state: RootState) => state.auth.loggedProfile);
   const lastRestaurant: ListaRistorantiResponse | null = useSelector((state: RootState) => state.persist.restaurantId);
   const cart: CartProduct[] = useSelector((state: RootState) => state.persist.cart);
-  const dispatch: AppDispatch = useDispatch();
   const navigate: Function = useNavigate();
 
   return (
@@ -37,12 +36,7 @@ function MyNavbar() {
           <Col className="col-xxl-10 col-md-9 col-2 d-flex justify-content-end align-items-center px-sm-3 px-0">
             <div className="d-md-flex d-none align-items-center border-start border-1 fix-h-50">
               {profile ? (
-                <Link
-                  to={"/"}
-                  onClick={() => dispatch(setLogout())}
-                  className="btn btn-link text-black text-decoration-none"
-                  rel="nofollow"
-                >
+                <Link to={"/utente"} className="btn btn-link text-black text-decoration-none" rel="nofollow">
                   <i className="bi bi-person-circle text-leaf-500 fs-4"></i>&nbsp;&nbsp;
                   <span className=" text-uppercase text-leaf-500">{profile.utente.nome}</span>{" "}
                 </Link>
