@@ -17,13 +17,24 @@ function MyNavbar() {
       <Container fluid>
         <Row>
           <Col className="col-3 d-md-none d-flex align-items-center px-sm-3 px-0">
-            <Link
-              to={"/auth/login"}
-              className="btn btn-link btn-lg rounded-0 border-end px-sm-3 px-2 my-1"
-              rel="nofollow"
-            >
-              <i className="bi bi-person-circle  text-gray-800 fs-4"></i>
-            </Link>
+            {profile ? (
+              <Link
+                to={"/utente"}
+                className="btn btn-link btn-lg rounded-0 border-end px-sm-3 px-2 my-1"
+                rel="nofollow"
+              >
+                <i className="bi bi-person-circle  text-leaf-500 fs-4"></i>
+              </Link>
+            ) : (
+              <Link
+                to={"/auth/login"}
+                className="btn btn-link btn-lg rounded-0 border-end px-sm-3 px-2 my-1"
+                rel="nofollow"
+              >
+                <i className="bi bi-person-circle  text-gray-800 fs-4"></i>
+              </Link>
+            )}
+
             <Link to={"/contatti"} className="btn btn-link rounded-0 btn-lg border-end px-sm-3 px-2 ">
               <i className="bi bi-chat-dots text-gray-800 fs-4"></i>
             </Link>
