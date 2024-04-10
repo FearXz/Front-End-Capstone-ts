@@ -1,8 +1,18 @@
 import { Col, Container, Row } from "react-bootstrap";
 import UtenteSidebar from "./inner/UtenteSidebar";
 import UtenteMainSection from "./inner/UtenteMainSection";
+import { useEffect } from "react";
+import { AppDispatch } from "../../redux/store/store";
+import { useDispatch } from "react-redux";
+import { getUtente } from "../../redux/actions/utenteAction";
 
 function UtentePage() {
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUtente());
+  }, []);
+
   return (
     <main>
       <Container fluid>

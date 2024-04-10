@@ -10,6 +10,7 @@ export interface UserData {
   nome: string;
   cognome: string;
   email: string;
+  cellulare: string;
   citta: string;
   indirizzo: string;
   cap: string;
@@ -129,4 +130,16 @@ export interface CartOrderDto {
   note?: string;
   totale?: number;
   prodotti: CartProduct[];
+}
+export interface UtenteProfileDto {
+  nome: string;
+  cognome: string;
+  email: string;
+  cellulare: string;
+  indirizzo: string;
+  citta: string;
+  cap: string;
+  oldPassword?: string;
+  newPassword?: string;
+  confirmNewPassword?: string;
 }

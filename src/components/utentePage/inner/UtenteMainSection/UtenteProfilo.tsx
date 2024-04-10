@@ -1,40 +1,63 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-
-interface FormData {
-  nome: string;
-  cognome: string;
-  email: string;
-  cellulare: string;
-  indirizzo: string;
-  citta: string;
-  cap: string;
-  oldPassword?: string;
-  newPassword?: string;
-  confirmNewPassword?: string;
-}
+import { AppDispatch, RootState } from "../../../../redux/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { UserData, UtenteProfileDto } from "../../../../interfaces/interfaces";
+import { updateutente } from "../../../../redux/actions/utenteAction";
 
 function UtenteProfilo() {
   const [checkbox, setCheckbox] = useState<boolean>(false);
+  const myProfile: UserData | null = useSelector((state: RootState) => state.utente.myProfile);
+  const dispatch: AppDispatch = useDispatch();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+    getValues,
+    setValue,
+  } = useForm<UtenteProfileDto>();
 
-  async function onSubmit(data: FormData) {
-    const accountDetails = {
+  async function onSubmit(data: UtenteProfileDto) {
+    let accountDetails: UtenteProfileDto = {
+      nome: data.nome,
+      cognome: data.cognome,
       email: data.email,
+      cellulare: data.cellulare,
+      indirizzo: data.indirizzo,
+      citta: data.citta,
+      cap: data.cap,
     };
 
-    console.log(data);
+    if (checkbox) {
+      accountDetails = {
+        ...accountDetails,
+        oldPassword: data.oldPassword,
+        newPassword: data.newPassword,
+        confirmNewPassword: data.confirmNewPassword,
+      };
+    }
+    console.log(accountDetails);
+    dispatch(updateutente(accountDetails));
   }
 
   function toggleInputPassword(e: React.ChangeEvent<HTMLInputElement>) {
     setCheckbox(e.currentTarget.checked);
   }
+
+  useEffect(() => {
+    if (myProfile) {
+      setValue("nome", myProfile.nome);
+      setValue("cognome", myProfile.cognome);
+      setValue("email", myProfile.email);
+      setValue("cellulare", myProfile.cellulare);
+      setValue("indirizzo", myProfile.indirizzo);
+      setValue("citta", myProfile.citta);
+      setValue("cap", myProfile.cap);
+    }
+  }, [myProfile]);
+
   return (
     <div>
       <h2 className=" font-breef"> Il tuo profilo</h2>
@@ -54,7 +77,7 @@ function UtenteProfilo() {
               type="text"
               placeholder="Nome"
             />
-            {errors?.nome?.message && <p className="text-danger">{errors.nome.message as string}</p>}
+            {errors?.nome?.message && <p className="text-danger mb-0">{errors.nome.message as string}</p>}
           </Col>
           <Col xs={12} sm={6} className="mb-3 ">
             <Form.Label>Cognome</Form.Label>
@@ -62,7 +85,7 @@ function UtenteProfilo() {
               {...register("cognome", {
                 required: `Il cognome è obbligatorio`,
                 pattern: {
-                  value: /^[A-Za-z]{2,}$/,
+                  value: /^[A-Za-z]/,
                   message: "Formato cognome non valido ",
                 },
               })}
@@ -70,7 +93,7 @@ function UtenteProfilo() {
               type="text"
               placeholder="Cognome"
             />
-            {errors?.cognome?.message && <p className="text-danger">{errors.cognome.message as string}</p>}
+            {errors?.cognome?.message && <p className="text-danger mb-0">{errors.cognome.message as string}</p>}
           </Col>
         </Row>
         <Row>
@@ -88,7 +111,7 @@ function UtenteProfilo() {
               type="email"
               placeholder="Email"
             />
-            {errors?.email?.message && <p className="text-danger">{errors.email.message as string}</p>}
+            {errors?.email?.message && <p className="text-danger mb-0">{errors.email.message as string}</p>}
           </Col>
           <Col xs={12} sm={6} className="mb-3 ">
             <Form.Label>Cellulare</Form.Label>
@@ -104,29 +127,29 @@ function UtenteProfilo() {
               type="text"
               placeholder="Cellulare"
             />
-            {errors?.cellulare?.message && <p className="text-danger">{errors.cellulare.message as string}</p>}
+            {errors?.cellulare?.message && <p className="text-danger mb-0">{errors.cellulare.message as string}</p>}
           </Col>
         </Row>
         <Row>
           <Col xs={12} sm={6} className="mb-3 ">
             <Form.Label>Indirizzo</Form.Label>
             <Form.Control
-              {...register("indirizzo", { required: true })}
+              {...register("indirizzo", { required: "L'indirizzo è obbligatorio" })}
               className="rounded-0 focus"
               type="text"
               placeholder="Indirizzo"
             />
-            {errors?.indirizzo?.message && <p className="text-danger">{errors.indirizzo.message as string}</p>}
+            {errors?.indirizzo?.message && <p className="text-danger mb-0">{errors.indirizzo.message as string}</p>}
           </Col>
           <Col xs={12} sm={6} className="mb-3 ">
             <Form.Label>Citta</Form.Label>
             <Form.Control
-              {...register("citta", { required: true })}
+              {...register("citta", { required: "La Città è obbligatoria" })}
               className="rounded-0 focus"
               type="text"
               placeholder="Citta"
             />
-            {errors?.citta?.message && <p className="text-danger">{errors.citta.message as string}</p>}
+            {errors?.citta?.message && <p className="text-danger mb-0">{errors.citta.message as string}</p>}
           </Col>
         </Row>
         <Row>
@@ -141,7 +164,7 @@ function UtenteProfilo() {
               type="text"
               placeholder="CAP"
             />
-            {errors?.cap?.message && <p className="text-danger">{errors.cap.message as string}</p>}
+            {errors?.cap?.message && <p className="text-danger mb-0">{errors.cap.message as string}</p>}
           </Col>
           <Col xs={12} sm={6} className="mb-3 d-flex align-items-center">
             <div className="mt-5">
@@ -149,7 +172,44 @@ function UtenteProfilo() {
             </div>
           </Col>
         </Row>
-
+        {checkbox && (
+          <Row>
+            <Col xs={12} sm={6} className="mb-3 ">
+              <Form.Label>Vecchia Password</Form.Label>
+              <Form.Control
+                {...register("oldPassword", { required: true })}
+                className="rounded-0 focus"
+                type="password"
+                placeholder="Old Password"
+              />
+              {errors.oldPassword && <p className="text-danger mb-0">La Password è obbligatoria</p>}
+            </Col>
+            <Col xs={12} sm={6} className="mb-3 d-flex align-items-center"></Col>
+            <Col xs={12} sm={6} className="mb-3 ">
+              <Form.Label>Nuova Password</Form.Label>
+              <Form.Control
+                {...register("newPassword", { required: true })}
+                className="rounded-0 focus"
+                type="password"
+                placeholder="New Password"
+              />
+              {errors.newPassword && <p className="text-danger mb-0">La Password è obbligatoria</p>}
+            </Col>
+            <Col xs={12} sm={6} className="mb-3 ">
+              <Form.Label>Conferma nuova Password</Form.Label>
+              <Form.Control
+                {...register("confirmNewPassword", {
+                  required: "Devi confermare la password",
+                  validate: (value) => value === getValues("newPassword") || "Le password non corrispondono",
+                })}
+                className="rounded-0 focus"
+                type="password"
+                placeholder=""
+              />
+              {errors.confirmNewPassword && <p className="text-danger mb-0">La Password è obbligatoria</p>}
+            </Col>
+          </Row>
+        )}
         <Row>
           <Col xs={12} className="pt-3">
             <Button type="submit" className="rounded-0 btn btn-leaf-500 text-white button-border-success fw-semibold">
