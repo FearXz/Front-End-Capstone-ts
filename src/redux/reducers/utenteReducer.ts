@@ -1,10 +1,10 @@
 //slice reducer
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { UserData } from "../../interfaces/interfaces";
+import { GetUtenteResponse } from "../../interfaces/interfaces";
 
 interface utenteState {
   selectedOption: string;
-  myProfile: UserData | null;
+  myProfile: GetUtenteResponse | null;
 }
 
 const initialState: utenteState = {
@@ -20,7 +20,7 @@ const utenteReducer = createSlice({
     setSelectedOption: (state, action: PayloadAction<string>) => {
       state.selectedOption = action.payload;
     },
-    setMyProfile: (state, action: PayloadAction<UserData>) => {
+    setMyProfile: (state, action: PayloadAction<GetUtenteResponse>) => {
       state.myProfile = action.payload;
     },
   },

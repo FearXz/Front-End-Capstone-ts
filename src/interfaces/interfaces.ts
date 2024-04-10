@@ -143,3 +143,24 @@ export interface UtenteProfileDto {
   newPassword?: string;
   confirmNewPassword?: string;
 }
+export interface GetUtenteOrdini {
+  idOrdini: number;
+  dataOrdine: string;
+  orarioConsegnaPrevista: string;
+  nomeRistorante: string;
+  totaleOrdine: number;
+  isOrdineEvaso: boolean;
+  isOrdineConsegnato: boolean;
+}
+export interface GetUtenteResponse {
+  idUtente: number;
+  nome: string;
+  cognome: string;
+  email: string;
+  cellulare: string;
+  citta: string;
+  indirizzo: string;
+  cap: string;
+  role: string;
+  ordini: GetUtenteOrdini[];
+}

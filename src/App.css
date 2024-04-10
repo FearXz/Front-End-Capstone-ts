@@ -9,6 +9,9 @@ body {
 main {
   min-height: 61.5vh;
 }
+.vh-615 {
+  min-height: 61.5vh;
+}
 .font-breef {
   font-family: "Bree Serif", serif;
 }

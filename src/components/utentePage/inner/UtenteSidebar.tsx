@@ -8,7 +8,7 @@ function UtenteSidebar() {
   const selectedOption: string = useSelector((state: RootState) => state.utente.selectedOption);
 
   return (
-    <div>
+    <div className=" sticky-top top-90">
       <div
         className={
           selectedOption == "profilo"

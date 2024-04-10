@@ -15,12 +15,12 @@ function UtentePage() {
 
   return (
     <main>
-      <Container fluid>
-        <Row className="">
-          <Col className="col-3  bg-gray p-0 d-none d-sm-block ">
+      <Container fluid className="">
+        <Row className="vh-615">
+          <Col className="col-3 col-xxl-2  bg-gray p-0 d-none d-sm-block ">
             <UtenteSidebar />
           </Col>
-          <Col className="col-12 col-sm-9 pb-20">
+          <Col className="col-12 col-sm-9 col-xxl-10 pb-20">
             <UtenteMainSection />
           </Col>
         </Row>

@@ -3,14 +3,14 @@ import { url } from "../../functions/config";
 import { fetchWithAuth } from "../../functions/interceptor";
 import { setIsLoading } from "../reducers/stateReducer";
 import { AppDispatch } from "../store/store";
-import { UserData, UtenteProfileDto } from "../../interfaces/interfaces";
+import { GetUtenteResponse, UtenteProfileDto } from "../../interfaces/interfaces";
 import { setMyProfile } from "../reducers/utenteReducer";
 
 export const updateutente = (userData: UtenteProfileDto) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsLoading(true));
-    const response = await fetchWithAuth(url + "utente/changeData", {
-      method: "POST",
+    const response = await fetchWithAuth(url + "utente/updateutente", {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -34,7 +34,7 @@ export const getUtente = () => async (dispatch: AppDispatch) => {
     dispatch(setIsLoading(true));
     const response = await fetchWithAuth(url + "utente/getutente");
     if (response.ok) {
-      const data: UserData = await response.json();
+      const data: GetUtenteResponse = await response.json();
       dispatch(setMyProfile(data));
       console.log(data);
 
