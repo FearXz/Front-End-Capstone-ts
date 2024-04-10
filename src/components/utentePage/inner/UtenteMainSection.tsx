@@ -4,7 +4,7 @@ import UtenteProfilo from "./UtenteMainSection/UtenteProfilo";
 import UtenteOrdini from "./UtenteMainSection/UtenteOrdini";
 
 function UtenteMainSection() {
-  const selectedOption: string = useSelector((state: RootState) => state.utente.selectedOption);
+  const selectedOption: string = useSelector((state: RootState) => state.persist.selectedOption);
 
   if (selectedOption === "profilo") {
     return <UtenteProfilo />;

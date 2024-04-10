@@ -1,23 +1,46 @@
-import { Col, Container, Row } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Col, Container, Dropdown, Row } from "react-bootstrap";
+import { Link, useLocation, useNavigate, Location } from "react-router-dom";
 import logo from "../../assets/images/logo-official.png";
 import { useDispatch, useSelector } from "react-redux";
-import { setLogout } from "../../redux/reducers/authReducer";
-import { AppDispatch, RootState } from "../../redux/store/store";
 import { CartProduct, ListaRistorantiResponse, LoginResponse } from "../../interfaces/interfaces";
+import { AppDispatch, RootState } from "../../redux/store/store";
+import { setSelectedOption } from "../../redux/reducers/persistedInfoReducer";
+import { setLogout } from "../../redux/reducers/authReducer";
 
 function MyNavbar() {
   const profile: LoginResponse | null = useSelector((state: RootState) => state.auth.loggedProfile);
   const lastRestaurant: ListaRistorantiResponse | null = useSelector((state: RootState) => state.persist.restaurantId);
   const cart: CartProduct[] = useSelector((state: RootState) => state.persist.cart);
   const navigate: Function = useNavigate();
+  const location: Location = useLocation();
+  const dispatch: AppDispatch = useDispatch();
 
   return (
     <header className=" sticky-top z-3 bg-light section-nav">
       <Container fluid>
         <Row>
           <Col className="col-3 d-md-none d-flex align-items-center px-sm-3 px-0">
-            {profile ? (
+            {location.pathname == "/utente" ? (
+              <div className="d-flex d-sm-none align-items-center border-end border-1 fix-h-50  order-0">
+                <Dropdown>
+                  <Dropdown.Toggle className="btn btn-link bg-light custom-dropdown-toggle" id="dropdown-basic">
+                    <i className="bi bi-list text-green fs-3"></i>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu className=" rounded-0">
+                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedOption("profilo"))}>
+                      Profilo
+                    </Dropdown.Item>
+                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedOption("ordini"))}>
+                      Ordini
+                    </Dropdown.Item>
+                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setLogout())}>
+                      Logout
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+            ) : profile ? (
               <Link
                 to={"/utente"}
                 className="btn btn-link btn-lg rounded-0 border-end px-sm-3 px-2 my-1"

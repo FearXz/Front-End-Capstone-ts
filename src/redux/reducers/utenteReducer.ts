@@ -3,12 +3,10 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { GetUtenteResponse } from "../../interfaces/interfaces";
 
 interface utenteState {
-  selectedOption: string;
   myProfile: GetUtenteResponse | null;
 }
 
 const initialState: utenteState = {
-  selectedOption: "profilo",
   myProfile: null,
 };
 
@@ -17,9 +15,6 @@ const utenteReducer = createSlice({
   initialState,
   reducers: {
     // Azione definita nello slice
-    setSelectedOption: (state, action: PayloadAction<string>) => {
-      state.selectedOption = action.payload;
-    },
     setMyProfile: (state, action: PayloadAction<GetUtenteResponse>) => {
       state.myProfile = action.payload;
     },
@@ -27,5 +22,5 @@ const utenteReducer = createSlice({
 });
 
 // Esporto solo l'azione definita nello slice
-export const { setSelectedOption, setMyProfile } = utenteReducer.actions;
+export const { setMyProfile } = utenteReducer.actions;
 export default utenteReducer.reducer;

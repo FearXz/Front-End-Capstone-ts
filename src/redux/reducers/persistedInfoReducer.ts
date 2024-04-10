@@ -8,6 +8,7 @@ interface persistedInfoState {
   cart: CartProduct[];
   selectedHour: string | null;
   cartOrder: CartOrderDto | null;
+  selectedOption: string;
 }
 
 const initialState: persistedInfoState = {
@@ -16,6 +17,7 @@ const initialState: persistedInfoState = {
   cart: [],
   selectedHour: null,
   cartOrder: null,
+  selectedOption: "profilo",
 };
 
 const persistedInfoReducer = createSlice({
@@ -89,6 +91,9 @@ const persistedInfoReducer = createSlice({
       }
       state.restaurantId = action.payload;
     },
+    setSelectedOption: (state, action: PayloadAction<string>) => {
+      state.selectedOption = action.payload;
+    },
   },
 });
 
@@ -103,5 +108,6 @@ export const {
   setSelectedHour,
   setCartOrder,
   setRestaurantId,
+  setSelectedOption,
 } = persistedInfoReducer.actions;
 export default persistedInfoReducer.reducer;

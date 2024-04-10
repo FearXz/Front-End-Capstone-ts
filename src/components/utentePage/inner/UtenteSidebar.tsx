@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store/store";
 import { setLogout } from "../../../redux/reducers/authReducer";
-import { setSelectedOption } from "../../../redux/reducers/utenteReducer";
+import { setSelectedOption } from "../../../redux/reducers/persistedInfoReducer";
 
 function UtenteSidebar() {
   const dispatch: AppDispatch = useDispatch();
-  const selectedOption: string = useSelector((state: RootState) => state.utente.selectedOption);
+  const selectedOption: string = useSelector((state: RootState) => state.persist.selectedOption);
 
   return (
     <div className=" sticky-top top-90">
