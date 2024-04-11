@@ -11,6 +11,7 @@ import { CoordinateSearch, GiorniDiChiusura, ListaRistorantiResponse } from "../
 import { clearCart } from "../../redux/reducers/persistedInfoReducer";
 import { addDays, isAfter, isBefore, setHours, setMinutes, setSeconds } from "date-fns";
 import { setIsChiuso } from "../../redux/reducers/orderReducer";
+import { isChiuso } from "../../functions/functions";
 
 function OrderPage() {
   const dispatch: AppDispatch = useDispatch();
@@ -46,14 +47,14 @@ function OrderPage() {
       navigate("/");
     }
     if (
-      isAfter(now, oraChiusura) ||
-      isBefore(now, sixAM) ||
+      isChiuso(lastLocale?.orarioApertura || "", lastLocale?.orarioChiusura || "") ||
       giornoChiusura.some((giorno) => giorno.numeroGiorno === now.getDay())
     ) {
       dispatch(setIsChiuso(true));
     } else {
       dispatch(setIsChiuso(false));
     }
+
     dispatch(fetchLocaleId(id));
   }, []);
 

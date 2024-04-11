@@ -5,7 +5,6 @@ import { RootState } from "../../redux/store/store";
 
 function Loader() {
   const isLoading = useSelector((state: RootState) => state.global.isLoading);
-  console.log(isLoading);
 
   if (isLoading) {
     return (

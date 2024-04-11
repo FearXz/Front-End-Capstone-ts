@@ -54,11 +54,12 @@ export function getTotalPrice(newProduct: CartProduct): number {
 
 export function isChiuso(orarioApertura: string, orarioChiusura: string): boolean {
   const now = new Date();
+
   let sixAM = setSeconds(setMinutes(setHours(now, 6), 0), 0);
-  if (isBefore(now, sixAM)) {
+
+  if (isAfter(now, sixAM)) {
     sixAM = addDays(sixAM, 1);
   }
-
   const [hoursOpen, minutesOpen, secondsOpen] = orarioApertura.split(":").map(Number);
   let oraApertura = setSeconds(setMinutes(setHours(now, hoursOpen), minutesOpen), secondsOpen);
 
@@ -69,5 +70,12 @@ export function isChiuso(orarioApertura: string, orarioChiusura: string): boolea
     oraChiusura = addDays(oraChiusura, 1);
   }
 
-  return isAfter(now, oraChiusura) || isBefore(now, sixAM);
+  if (isAfter(now, oraChiusura) && isBefore(now, orarioApertura)) {
+    if (isAfter(now, sixAM) && isBefore(now, oraApertura)) {
+      return false;
+    }
+    return true;
+  }
+
+  return isAfter(now, oraChiusura) && isBefore(now, orarioApertura);
 }

@@ -23,11 +23,10 @@ function ProductFilterModal(p: ProductFilterModalProps) {
   const newProduct: CartProduct | null = useSelector((state: RootState) => state.order.newProduct);
 
   const dispatch: AppDispatch = useDispatch();
-  console.log(newProduct);
 
   function handleAddToCart(newProduct: CartProduct) {
     newProduct = { ...newProduct, totale: getTotalPrice(newProduct) };
-    console.log(newProduct);
+
     dispatch(addToCart(newProduct));
     p.handleClose();
   }

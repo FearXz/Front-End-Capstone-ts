@@ -33,11 +33,9 @@ const stateReducer = createSlice({
 
       if (action.payload == true) {
         state.isLoadingCounter = state.isLoadingCounter + 1;
-        console.log(state.isLoadingCounter);
       } else {
         if (state.isLoadingCounter > 0) {
           state.isLoadingCounter = state.isLoadingCounter - 1;
-          console.log(state.isLoadingCounter);
         }
       }
       // se isLoadingCounter è > 0 allora isLoading è true
