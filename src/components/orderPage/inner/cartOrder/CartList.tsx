@@ -34,15 +34,15 @@ function CartList() {
                 <div className="d-flex align-items-start px-xl-2 px-sm-1">
                   <button className="btn btn-link py-0 px-1">
                     <i
-                      className="bi bi-plus-circle text-black"
-                      onClick={() => dispatch(plusQuantityProduct(product))}
+                      className="bi bi-dash-circle text-black"
+                      onClick={() => dispatch(minusQuantityProduct(product))}
                     ></i>
                   </button>
                   <span className=" px-1">{product.quantita}</span>
                   <button className="btn btn-link py-0 px-1">
                     <i
-                      className="bi bi-dash-circle text-black"
-                      onClick={() => dispatch(minusQuantityProduct(product))}
+                      className="bi bi-plus-circle text-black"
+                      onClick={() => dispatch(plusQuantityProduct(product))}
                     ></i>
                   </button>
                 </div>

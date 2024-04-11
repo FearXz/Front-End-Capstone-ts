@@ -47,7 +47,7 @@ const persistedInfoReducer = createSlice({
 
       if (index !== -1) {
         // Se il prodotto esiste, aumenta la sua quantità di 1
-        state.cart[index].quantita += 1;
+        state.cart[index].quantita += addedProduct.quantita;
       } else {
         // Altrimenti, aggiungi un nuovo prodotto al carrello
         state.cart = [...state.cart, addedProduct];

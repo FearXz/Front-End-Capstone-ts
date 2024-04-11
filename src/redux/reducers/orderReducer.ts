@@ -43,6 +43,22 @@ const orderReducer = createSlice({
 
       state.newProduct = newProduct;
     },
+    plusQuantityNewProduct: (state) => {
+      if (state.newProduct === null) {
+        return;
+      }
+      state.newProduct.quantita += 1;
+    },
+    minusQuantityNewProduct: (state) => {
+      if (state.newProduct === null) {
+        return;
+      }
+      if (state.newProduct.quantita === 1) {
+        return;
+      }
+
+      state.newProduct.quantita -= 1;
+    },
     addExtraIngredient: (state, action: PayloadAction<IngredientiProdottiLocale>) => {
       if (state.newProduct === null) {
         return;
@@ -108,6 +124,13 @@ const orderReducer = createSlice({
 });
 
 // Esporto solo l'azione definita nello slice
-export const { setNewProduct, addExtraIngredient, removeExtraIngredient, toggleIngredient, setSessionId } =
-  orderReducer.actions;
+export const {
+  setNewProduct,
+  addExtraIngredient,
+  removeExtraIngredient,
+  toggleIngredient,
+  setSessionId,
+  plusQuantityNewProduct,
+  minusQuantityNewProduct,
+} = orderReducer.actions;
 export default orderReducer.reducer;
