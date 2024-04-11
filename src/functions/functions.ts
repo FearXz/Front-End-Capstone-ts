@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { CartProduct, LocaleIdResponse } from "../interfaces/interfaces";
+import { setHours, setMinutes, setSeconds, addDays, isAfter, isBefore } from "date-fns";
 
 export function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -49,4 +50,24 @@ export function getTotalPrice(newProduct: CartProduct): number {
     });
 
   return total;
+}
+
+export function isChiuso(orarioApertura: string, orarioChiusura: string): boolean {
+  const now = new Date();
+  let sixAM = setSeconds(setMinutes(setHours(now, 6), 0), 0);
+  if (isBefore(now, sixAM)) {
+    sixAM = addDays(sixAM, 1);
+  }
+
+  const [hoursOpen, minutesOpen, secondsOpen] = orarioApertura.split(":").map(Number);
+  let oraApertura = setSeconds(setMinutes(setHours(now, hoursOpen), minutesOpen), secondsOpen);
+
+  const [hours, minutes, seconds] = orarioChiusura.split(":").map(Number);
+  let oraChiusura = setSeconds(setMinutes(setHours(now, hours), minutes), seconds);
+
+  if (isAfter(oraApertura, oraChiusura)) {
+    oraChiusura = addDays(oraChiusura, 1);
+  }
+
+  return isAfter(now, oraChiusura) || isBefore(now, sixAM);
 }
