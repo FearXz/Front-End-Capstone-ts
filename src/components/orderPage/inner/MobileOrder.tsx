@@ -5,6 +5,8 @@ import { RootState } from "../../../redux/store/store";
 import { isAfter, parse } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useState } from "react";
+import MobileOrderModal from "./mobileOrder/MobileOrderModal";
 
 function MobileOrder() {
   const cart: CartProduct[] = useSelector((state: RootState) => state.persist.cart);
@@ -12,6 +14,10 @@ function MobileOrder() {
   const luogoConsegna: CoordinateSearch | null = useSelector((state: RootState) => state.persist.indirizzoCercato);
   const selectedHour: string | null = useSelector((state: RootState) => state.persist.selectedHour);
   const navigate: Function = useNavigate();
+
+  const [show, setShow] = useState<boolean>(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
   function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -31,6 +37,7 @@ function MobileOrder() {
   return (
     <div className=" bg-leaf-500 d-lg-none d-block shadow py-1 mobile-checkout">
       <Container fluid>
+        <MobileOrderModal show={show} handleClose={handleClose} handleShow={handleShow} />
         <Row>
           <Col className="col-sm-6 col-12 d-flex align-items-center flex-wrap">
             <div className="text-white d-flex align-content-center">
@@ -40,7 +47,8 @@ function MobileOrder() {
           <Col className="col-sm-6 col-12 d-flex align-content-center">
             <Row className=" align-items-center w-100">
               <Col className="col-2 px-0">
-                <button className="btn btn-leaf-500 w-100 h-100 p-0 border-0">
+                <button className="btn btn-leaf-500 w-100 h-100 p-0 border-0" onClick={handleShow}>
+                  {/*  */}
                   <i className="bi bi-basket3-fill text-white fs-3"></i>
                 </button>
               </Col>
