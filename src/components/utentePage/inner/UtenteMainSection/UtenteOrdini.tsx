@@ -6,7 +6,7 @@ import { format } from "date-fns";
 
 function UtenteOrdini() {
   const myProfile: GetUtenteResponse | null = useSelector((state: RootState) => state.utente.myProfile);
-  const ordini = myProfile?.ordini;
+  const ordini = [...(myProfile?.ordini || [])].reverse();
 
   return (
     <div className="mt-3">
