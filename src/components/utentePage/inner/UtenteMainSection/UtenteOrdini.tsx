@@ -21,7 +21,15 @@ function UtenteOrdini() {
                 <br />
                 Prezzo totale: {ordine.totaleOrdine} €
               </Card.Text>
-              <Button className="rounded-0 btn btn-leaf-500 button-border-success text-white">CONFERMA CONSEGNA</Button>
+              {ordine.isOrdineConsegnato ? (
+                <p className="mb-0 text-leaf-500">ORDINE CONFERMATO</p>
+              ) : ordine.isOrdineEvaso ? (
+                <Button className="rounded-0 btn btn-leaf-500 button-border-success text-white">
+                  CONFERMA CONSEGNA
+                </Button>
+              ) : (
+                <p className="mb-0 text-danger">ORDINE IN ATTESA</p>
+              )}
             </Card.Body>
           </Card>
         ))}
