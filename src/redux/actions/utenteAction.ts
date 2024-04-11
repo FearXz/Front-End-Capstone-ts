@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { url } from "../../functions/config";
 import { fetchWithAuth } from "../../functions/interceptor";
-import { setIsLoading } from "../reducers/stateReducer";
+import { setIsLoading, toggleRefresh } from "../reducers/stateReducer";
 import { AppDispatch } from "../store/store";
 import { GetUtenteResponse, UtenteProfileDto } from "../../interfaces/interfaces";
 import { setMyProfile } from "../reducers/utenteReducer";
@@ -44,6 +44,30 @@ export const getUtente = () => async (dispatch: AppDispatch) => {
     }
   } catch (error) {
     toast.error("Errore nel recupero dei dati utente");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
+
+export const confirmOrder = (idOrder: number) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "utente/confirmOrder", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(idOrder),
+    });
+
+    if (response.ok) {
+      dispatch(toggleRefresh());
+      toast.success("Ordine confermato con successo");
+    } else {
+      throw new Error("Errore nella conferma dell'ordine");
+    }
+  } catch (error) {
+    toast.error("Errore nella conferma dell'ordine");
   } finally {
     dispatch(setIsLoading(false));
   }

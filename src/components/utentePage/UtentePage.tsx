@@ -2,16 +2,17 @@ import { Col, Container, Row } from "react-bootstrap";
 import UtenteSidebar from "./inner/UtenteSidebar";
 import UtenteMainSection from "./inner/UtenteMainSection";
 import { useEffect } from "react";
-import { AppDispatch } from "../../redux/store/store";
-import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../redux/store/store";
+import { useDispatch, useSelector } from "react-redux";
 import { getUtente } from "../../redux/actions/utenteAction";
 
 function UtentePage() {
   const dispatch: AppDispatch = useDispatch();
+  const refresh: boolean = useSelector((state: RootState) => state.global.refresh);
 
   useEffect(() => {
     dispatch(getUtente());
-  }, []);
+  }, [refresh]);
 
   return (
     <main>

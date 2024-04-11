@@ -1,10 +1,12 @@
 import { Button, Card } from "react-bootstrap";
 import { GetUtenteResponse } from "../../../../interfaces/interfaces";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../redux/store/store";
 import { format } from "date-fns";
+import { confirmOrder } from "../../../../redux/actions/utenteAction";
 
 function UtenteOrdini() {
+  const dispatch: AppDispatch = useDispatch();
   const myProfile: GetUtenteResponse | null = useSelector((state: RootState) => state.utente.myProfile);
   const ordini = [...(myProfile?.ordini || [])].reverse();
 
@@ -24,9 +26,15 @@ function UtenteOrdini() {
               {ordine.isOrdineConsegnato ? (
                 <p className="mb-0 text-leaf-500">ORDINE CONFERMATO</p>
               ) : ordine.isOrdineEvaso ? (
-                <Button className="rounded-0 btn btn-leaf-500 button-border-success text-white">
-                  CONFERMA CONSEGNA
-                </Button>
+                <div>
+                  <p className="text-danger">ORDINE IN CONSEGNA</p>
+                  <Button
+                    className="rounded-0 btn btn-leaf-500 button-border-success text-white"
+                    onClick={() => dispatch(confirmOrder(ordine.idOrdini))}
+                  >
+                    CONFERMA CONSEGNA
+                  </Button>{" "}
+                </div>
               ) : (
                 <p className="mb-0 text-danger">ORDINE IN ATTESA</p>
               )}
