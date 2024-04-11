@@ -42,20 +42,20 @@ function MainOrderProductList() {
                 <Col key={`prodotto-${index}`} className="col-xxl-6 col-12 py-md-3 py-2 ">
                   <div className="shadow h-100 p-md-3 p-2 cursor-pointer" onClick={() => handleProductModal(prodotto)}>
                     <Row>
-                      <Col className="col-sm-4 col-12 ">
-                        <div className="" style={{ position: "relative", width: "100%", paddingBottom: "100%" }}>
+                      <Col className={prodotto.imgProdotto ? "col-sm-4 col-12 d-flex align-item-center" : "d-none"}>
+                        <div className="" style={{ position: "relative", width: "100%", paddingBottom: "50%" }}>
                           <img
                             src={
                               prodotto.imgProdotto
                                 ? prodotto.imgProdotto
                                 : "https://ralfvanveen.com/wp-content/uploads//2021/06/Placeholder-_-Begrippenlijst.svg"
                             }
-                            alt="Fornarina | Maxi Pizza"
+                            alt={prodotto.nomeProdotto}
                             className=" w-100 h-100 rounded-3 object-fit-cover position-absolute"
                           />
                         </div>
                       </Col>
-                      <Col className=" col-sm-8 col-12 mt-sm-0 mt-3 ">
+                      <Col className={prodotto.imgProdotto ? "col-sm-8 col-12 mt-sm-0 mt-3" : "col-12 mt-sm-0 mt-3"}>
                         <Row className=" product-info-container">
                           <Col className="col-8 d-flex flex-sm-nowrap flex-wrap">
                             <h4 className="h5 mb-0 fw-semibold">{prodotto.nomeProdotto}</h4>
