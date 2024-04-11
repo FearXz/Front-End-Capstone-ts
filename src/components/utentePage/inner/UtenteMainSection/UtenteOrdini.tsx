@@ -78,7 +78,7 @@ function UtenteOrdini() {
             </Card>
           ))}
       </div>
-      <div className="d-flex justify-content-center align-items-center fs-5">
+      <div className="d-flex justify-content-center align-items-center fs-5 ">
         <button
           className="btn btn-leaf-500 rounded-0 button-border-success text-white"
           onClick={() => setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage))}
@@ -86,7 +86,7 @@ function UtenteOrdini() {
           Previous
         </button>
         {!selectPage ? (
-          <p className="mb-0 px-3" onClick={handleSelectPageClick}>
+          <p className="mb-0 px-1 mx-3 cursor-pointer border border-black" onClick={handleSelectPageClick}>
             {currentPage} / {totalPages}
           </p>
         ) : (
