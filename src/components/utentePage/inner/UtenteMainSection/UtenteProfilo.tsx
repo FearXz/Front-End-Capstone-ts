@@ -191,7 +191,7 @@ function UtenteProfilo() {
                 {...register("newPassword", { required: true })}
                 className="rounded-0 focus"
                 type="password"
-                placeholder="New Password"
+                placeholder="Nuova Password"
               />
               {errors.newPassword && <p className="text-danger mb-0">La Password è obbligatoria</p>}
             </Col>
@@ -204,7 +204,7 @@ function UtenteProfilo() {
                 })}
                 className="rounded-0 focus"
                 type="password"
-                placeholder=""
+                placeholder="Conferma Password"
               />
               {errors.confirmNewPassword && <p className="text-danger mb-0">La Password è obbligatoria</p>}
             </Col>
