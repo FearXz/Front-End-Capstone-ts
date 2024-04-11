@@ -5,11 +5,13 @@ import { CartIngredient, CartProduct, IngredientiProdottiLocale, ProdottiLocale 
 interface OrderState {
   newProduct: CartProduct | null;
   sessionId: string | null;
+  isChiuso: boolean;
 }
 
 const initialState: OrderState = {
   newProduct: null,
   sessionId: null,
+  isChiuso: false,
 };
 
 const orderReducer = createSlice({
@@ -120,6 +122,9 @@ const orderReducer = createSlice({
         state.newProduct.ingredienti[index].quantita = state.newProduct.ingredienti[index].quantita === 0 ? 1 : 0;
       }
     },
+    setIsChiuso: (state, action: PayloadAction<boolean>) => {
+      state.isChiuso = action.payload;
+    },
   },
 });
 
@@ -132,5 +137,6 @@ export const {
   setSessionId,
   plusQuantityNewProduct,
   minusQuantityNewProduct,
+  setIsChiuso,
 } = orderReducer.actions;
 export default orderReducer.reducer;

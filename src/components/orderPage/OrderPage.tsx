@@ -7,8 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { fetchLocaleId } from "../../redux/actions/orderPageAction";
 import { useNavigate, useParams } from "react-router-dom";
-import { CoordinateSearch, ListaRistorantiResponse } from "../../interfaces/interfaces";
+import { CoordinateSearch, GiorniDiChiusura, ListaRistorantiResponse } from "../../interfaces/interfaces";
 import { clearCart } from "../../redux/reducers/persistedInfoReducer";
+import { addDays, isAfter, isBefore, setHours, setMinutes, setSeconds } from "date-fns";
+import { setIsChiuso } from "../../redux/reducers/orderReducer";
 
 function OrderPage() {
   const dispatch: AppDispatch = useDispatch();
@@ -18,6 +20,23 @@ function OrderPage() {
   const lastLocale: ListaRistorantiResponse | null = useSelector((state: RootState) => state.persist.restaurantId);
   const navigate: Function = useNavigate();
 
+  const now = new Date();
+  let sixAM = setSeconds(setMinutes(setHours(now, 6), 0), 0);
+  if (isBefore(now, sixAM)) {
+    sixAM = addDays(sixAM, 1);
+  }
+  const [hoursOpen, minutesOpen, secondsOpen] = (lastLocale?.orarioApertura || "").split(":").map(Number);
+  let oraApertura = setSeconds(setMinutes(setHours(now, hoursOpen), minutesOpen), secondsOpen);
+
+  const [hours, minutes, seconds] = (lastLocale?.orarioChiusura || "").split(":").map(Number);
+  let oraChiusura = setSeconds(setMinutes(setHours(now, hours), minutes), seconds);
+
+  const giornoChiusura: GiorniDiChiusura[] = lastLocale?.giorniDiChiusura || [];
+
+  if (isAfter(oraApertura, oraChiusura)) {
+    oraChiusura = addDays(oraChiusura, 1);
+  }
+
   useEffect(() => {
     if (!indirizzoCercato) {
       navigate("/");
@@ -26,7 +45,15 @@ function OrderPage() {
       dispatch(clearCart());
       navigate("/");
     }
-
+    if (
+      isAfter(now, oraChiusura) ||
+      isBefore(now, sixAM) ||
+      giornoChiusura.some((giorno) => giorno.numeroGiorno === now.getDay())
+    ) {
+      dispatch(setIsChiuso(true));
+    } else {
+      dispatch(setIsChiuso(false));
+    }
     dispatch(fetchLocaleId(id));
   }, []);
 
