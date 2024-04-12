@@ -74,21 +74,7 @@ export function isChiuso(orarioApertura: string, orarioChiusura: string): boolea
     oraChiusura = addDays(oraChiusura, 1);
     // console.log("oraChiusura+1: " + oraChiusura);
   }
-  /*   if (oraChiusura.getTime() >= midnight.getTime()) {
-    console.log("C > M");
-    // oraChiusura = addDays(oraChiusura, -1);
-            console.log("now: " + now);
-    console.log("oraApertura " + oraApertura);
-    console.log("oraChiusura-1: " + oraChiusura);
 
-    if (now.getTime() >= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime()) {
-      console.log("TEST CON MIDNIGHT");
-      if (now.getTime() >= sixAM.getTime()) {
-        return false;
-      }
-      return true;
-    }
-  } */
   console.log("NOW: " + now);
   console.log("oraChiusura: " + oraChiusura);
   console.log("oraApertura " + oraApertura);
