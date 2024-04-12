@@ -65,8 +65,20 @@ function SearchLocalList() {
                     className="img-logo border-light"
                     alt={ristorante.nomeRistorante}
                   />
-                  {ristorante.giorniDiChiusura.some((giorno) => giorno.numeroGiorno == currentDay) && (
-                    <div className="bg-danger text-white p-2 fw-bold restaurant-alert-absolute">Oggi chiuso</div>
+                  {ristorante.giorniDiChiusura.some((giorno) => giorno.numeroGiorno == currentDay) ? (
+                    <div className=" bg-danger text-white p-2 fw-bold restaurant-alert-absolute">Oggi chiuso</div>
+                  ) : isChiuso(ristorante.orarioApertura, ristorante.orarioChiusura) ? (
+                    <div className=" bg-white text-black fw-semibold p-2 restaurant-preorder-absolute">
+                      PREORDINA
+                      <br />
+                      {ristorante.orarioApertura}{" "}
+                    </div>
+                  ) : (
+                    <div className=" bg-white text-black fw-semibold p-2 restaurant-preorder-absolute">
+                      CHIUDE ALLE
+                      <br />
+                      {ristorante.orarioChiusura}{" "}
+                    </div>
                   )}
                 </Link>
                 <div className="pt-5">

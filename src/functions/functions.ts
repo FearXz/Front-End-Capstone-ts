@@ -69,39 +69,48 @@ export function isChiuso(orarioApertura: string, orarioChiusura: string): boolea
   const [hours, minutes, seconds] = orarioChiusura.split(":").map(Number);
   let oraChiusura = setSeconds(setMinutes(setHours(now, hours), minutes), seconds);
 
-  /*   console.log("midnight: " + midnight);
-  console.log("now: " + now);
-  console.log("oraAperturaOriginale: " + oraApertura);
-  console.log("oraChiusuraOriginale: " + oraChiusura); */
-
   if (oraApertura.getTime() >= oraChiusura.getTime()) {
+    console.log("A > C");
     oraChiusura = addDays(oraChiusura, 1);
     // console.log("oraChiusura+1: " + oraChiusura);
   }
-  if (oraChiusura.getTime() >= midnight.getTime()) {
-    oraChiusura = addDays(oraChiusura, -1);
-    /*     console.log("now: " + now);
+  /*   if (oraChiusura.getTime() >= midnight.getTime()) {
+    console.log("C > M");
+    // oraChiusura = addDays(oraChiusura, -1);
+            console.log("now: " + now);
     console.log("oraApertura " + oraApertura);
-    console.log("oraChiusura-1: " + oraChiusura); */
+    console.log("oraChiusura-1: " + oraChiusura);
 
     if (now.getTime() >= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime()) {
+      console.log("TEST CON MIDNIGHT");
       if (now.getTime() >= sixAM.getTime()) {
         return false;
       }
       return true;
     }
-  }
-
-  /*   console.log("oraChiusura: " + oraChiusura);
-  console.log("now: " + now);
-  console.log("oraApertura " + oraApertura); */
+  } */
+  console.log("NOW: " + now);
+  console.log("oraChiusura: " + oraChiusura);
+  console.log("oraApertura " + oraApertura);
 
   if (now.getTime() >= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime()) {
+    console.log("TEST > <");
     if (now.getTime() >= sixAM.getTime()) {
       return false;
     }
     return true;
   }
 
+  if (now.getTime() >= oraChiusura.getTime() && now.getTime() >= oraApertura.getTime()) {
+    console.log("TEST > > ");
+    return true;
+  }
+
+  if (now.getTime() <= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime()) {
+    console.log("TEST < <");
+    return true;
+  }
+
+  console.log("FINE");
   return now.getTime() >= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime();
 }
