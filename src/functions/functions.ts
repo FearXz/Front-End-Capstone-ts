@@ -5,7 +5,6 @@ import { setHours, setMinutes, setSeconds, addDays } from "date-fns";
 export function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
-
 export function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   function toRad(x: number): number {
     return (x * Math.PI) / 180;
@@ -51,7 +50,6 @@ export function getTotalPrice(newProduct: CartProduct): number {
 
   return total;
 }
-
 export function isChiuso(orarioApertura: string, orarioChiusura: string): boolean {
   const now = new Date();
 
@@ -70,17 +68,17 @@ export function isChiuso(orarioApertura: string, orarioChiusura: string): boolea
   let oraChiusura = setSeconds(setMinutes(setHours(now, hours), minutes), seconds);
 
   if (oraApertura.getTime() >= oraChiusura.getTime()) {
-    console.log("A > C");
+    // console.log("A > C");
     oraChiusura = addDays(oraChiusura, 1);
     // console.log("oraChiusura+1: " + oraChiusura);
   }
 
-  console.log("NOW: " + now);
+  /*   console.log("NOW: " + now);
   console.log("oraChiusura: " + oraChiusura);
-  console.log("oraApertura " + oraApertura);
+  console.log("oraApertura " + oraApertura); */
 
   if (now.getTime() >= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime()) {
-    console.log("TEST > <");
+    // console.log("TEST > <");
     if (now.getTime() >= sixAM.getTime()) {
       return false;
     }
@@ -88,15 +86,15 @@ export function isChiuso(orarioApertura: string, orarioChiusura: string): boolea
   }
 
   if (now.getTime() >= oraChiusura.getTime() && now.getTime() >= oraApertura.getTime()) {
-    console.log("TEST > > ");
+    // console.log("TEST > > ");
     return true;
   }
 
   if (now.getTime() <= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime()) {
-    console.log("TEST < <");
+    // console.log("TEST < <");
     return true;
   }
 
-  console.log("FINE");
+  // console.log("FINE");
   return now.getTime() >= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime();
 }
