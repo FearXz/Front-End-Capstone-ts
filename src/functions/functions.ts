@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { CartProduct, LocaleIdResponse } from "../interfaces/interfaces";
-import { setHours, setMinutes, setSeconds, addDays, isAfter, isBefore } from "date-fns";
+import { setHours, setMinutes, setSeconds, addDays } from "date-fns";
 
 export function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -55,27 +55,53 @@ export function getTotalPrice(newProduct: CartProduct): number {
 export function isChiuso(orarioApertura: string, orarioChiusura: string): boolean {
   const now = new Date();
 
-  let sixAM = setSeconds(setMinutes(setHours(now, 6), 0), 0);
+  let midnight = setSeconds(setMinutes(setHours(now, 0), 0), 0);
+  midnight = addDays(midnight, 1);
 
-  if (isAfter(now, sixAM)) {
+  let sixAM = setSeconds(setMinutes(setHours(now, 6), 0), 0);
+  console.log("sixAMNormale: " + sixAM);
+  if (now.getTime() >= sixAM.getTime()) {
     sixAM = addDays(sixAM, 1);
+    console.log("sixAM+1: " + sixAM);
   }
   const [hoursOpen, minutesOpen, secondsOpen] = orarioApertura.split(":").map(Number);
   let oraApertura = setSeconds(setMinutes(setHours(now, hoursOpen), minutesOpen), secondsOpen);
-
   const [hours, minutes, seconds] = orarioChiusura.split(":").map(Number);
   let oraChiusura = setSeconds(setMinutes(setHours(now, hours), minutes), seconds);
 
-  if (isAfter(oraApertura, oraChiusura)) {
+  console.log("midnight: " + midnight);
+  console.log("now: " + now);
+  console.log("oraAperturaOriginale: " + oraApertura);
+  console.log("oraChiusuraOriginale: " + oraChiusura);
+
+  if (oraApertura.getTime() >= oraChiusura.getTime()) {
     oraChiusura = addDays(oraChiusura, 1);
+    console.log("oraChiusura+1: " + oraChiusura);
+  }
+  if (oraChiusura.getTime() >= midnight.getTime()) {
+    oraChiusura = addDays(oraChiusura, -1);
+    console.log("now: " + now);
+    console.log("oraApertura " + oraApertura);
+    console.log("oraChiusura-1: " + oraChiusura);
+
+    if (now.getTime() >= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime()) {
+      if (now.getTime() >= sixAM.getTime()) {
+        return false;
+      }
+      return true;
+    }
   }
 
-  if (isAfter(now, oraChiusura) && isBefore(now, orarioApertura)) {
-    if (isAfter(now, sixAM) && isBefore(now, oraApertura)) {
+  console.log("oraChiusura: " + oraChiusura);
+  console.log("now: " + now);
+  console.log("oraApertura " + oraApertura);
+
+  if (now.getTime() >= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime()) {
+    if (now.getTime() >= sixAM.getTime()) {
       return false;
     }
     return true;
   }
 
-  return isAfter(now, oraChiusura) && isBefore(now, orarioApertura);
+  return now.getTime() >= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime();
 }
