@@ -11,6 +11,7 @@ function CartSummary() {
   const locale: LocaleIdResponse | null = useSelector((state: RootState) => state.searchRistorante.localeById);
   const luogoConsegna: CoordinateSearch | null = useSelector((state: RootState) => state.persist.indirizzoCercato);
   const selectedHour: string | null = useSelector((state: RootState) => state.persist.selectedHour);
+  const isChiuso: boolean = useSelector((state: RootState) => state.order.isChiuso);
 
   const dispatch: AppDispatch = useDispatch();
   const navigate: Function = useNavigate();
@@ -42,7 +43,14 @@ function CartSummary() {
                 .toFixed(2)}
             </span>
           </div>
-          <div className="d-flex justify-content-between px-xxl-5 px-3 fs-5 pt-xxl-5 pt-3">
+          <div
+            className="d-flex justify-content-between px-xxl-5 px-3 fs-5 pt-xxl-5 pt-3"
+            style={
+              isChiuso || locale?.giorniDiChiusura.some((giorno) => giorno.numeroGiorno === new Date().getDay())
+                ? { filter: "grayscale(100%)", opacity: "0.5", pointerEvents: "none" }
+                : {}
+            }
+          >
             <button
               className="btn btn-gray-500 button-border-gray rounded-0 text-white "
               onClick={() => dispatch(clearCart())}

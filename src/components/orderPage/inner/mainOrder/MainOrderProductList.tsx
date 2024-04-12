@@ -9,6 +9,7 @@ import { setNewProduct } from "../../../../redux/reducers/orderReducer";
 
 function MainOrderProductList() {
   const locale: LocaleIdResponse | null = useSelector((state: RootState) => state.searchRistorante.localeById);
+  const isChiuso: boolean = useSelector((state: RootState) => state.order.isChiuso);
   const productsByType = groupProductsByType(locale);
 
   const dispatch: AppDispatch = useDispatch();
@@ -39,7 +40,15 @@ function MainOrderProductList() {
             <Row>
               {/* MAP PRODOTTO */}
               {prodotti.map((prodotto: ProdottiLocale, index: number) => (
-                <Col key={`prodotto-${index}`} className="col-xxl-6 col-12 py-md-3 py-2 ">
+                <Col
+                  key={`prodotto-${index}`}
+                  className="col-xxl-6 col-12 py-md-3 py-2 "
+                  style={
+                    isChiuso || locale?.giorniDiChiusura.some((giorno) => giorno.numeroGiorno === new Date().getDay())
+                      ? { filter: "grayscale(100%)", opacity: "0.5", pointerEvents: "none" }
+                      : {}
+                  }
+                >
                   <div className="shadow h-100 p-md-3 p-2 cursor-pointer" onClick={() => handleProductModal(prodotto)}>
                     <Row>
                       <Col className={prodotto.imgProdotto ? "col-sm-4 col-12 d-flex align-item-center" : "d-none"}>

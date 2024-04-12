@@ -43,7 +43,7 @@ function SearchLocalList() {
                   style={
                     isChiuso(ristorante?.orarioApertura || "", ristorante?.orarioChiusura || "") ||
                     ristorante.giorniDiChiusura.some((giorno) => giorno.numeroGiorno === currentDay)
-                      ? { filter: "grayscale(100%)", opacity: "0.5", pointerEvents: "none" }
+                      ? { filter: "grayscale(100%)", opacity: "0.5" /* , pointerEvents: "none" */ }
                       : {}
                   }
                 >

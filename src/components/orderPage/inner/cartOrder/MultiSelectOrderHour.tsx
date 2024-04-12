@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { LocaleIdResponse } from "../../../../interfaces/interfaces";
 import { AppDispatch, RootState } from "../../../../redux/store/store";
-import { format, addMinutes, isAfter, parse, isBefore, addDays } from "date-fns";
+import { format, addMinutes, parse, isBefore, addDays, setSeconds, setMinutes, setHours } from "date-fns";
 import { useEffect, useState } from "react";
 import { toggleRefresh } from "../../../../redux/reducers/stateReducer";
 import { setSelectedHour } from "../../../../redux/reducers/persistedInfoReducer";
@@ -20,6 +20,9 @@ function MultiSelectOrderHour() {
   let currentTime: Date = openingTime;
   let fixedClosingTime: Date = closingTime;
 
+  let midnight = setSeconds(setMinutes(setHours(now, 0), 0), 0);
+  midnight = addDays(midnight, 1);
+
   function checkSelectedHour(selectedHour: string | null): boolean {
     if (timeOptions.length === 0) {
       dispatch(setSelectedHour(null));
@@ -30,18 +33,18 @@ function MultiSelectOrderHour() {
       dispatch(setSelectedHour(timeOptions[0]));
       return false;
     }
-    if (selectedHour && isBefore(parse(selectedHour, "HH:mm", new Date()), new Date())) {
+    if (selectedHour && new Date(selectedHour).getTime() < now.getTime()) {
       dispatch(setSelectedHour(timeOptions[0]));
       toast.error("L'orario selezionato non è più disponibile. Selezionato il primo orario disponibile.");
       return false;
     }
     return true;
   }
+
   useEffect(() => {
     checkSelectedHour(selectedHour);
     const intervalId = setInterval(() => {
-      const now = new Date();
-      if (isAfter(now, currentTime)) {
+      if (now.getTime() >= currentTime.getTime() && now.getTime() <= fixedClosingTime.getTime()) {
         // Trigger a re-render by updating the state
         dispatch(toggleRefresh());
       }
@@ -53,19 +56,29 @@ function MultiSelectOrderHour() {
   useEffect(() => {
     let newTimeOptions: string[] = [];
 
-    if (isBefore(closingTime, openingTime)) {
-      fixedClosingTime = addDays(closingTime, 1);
-    } else {
-      fixedClosingTime = closingTime;
+    if (currentTime.getTime() >= fixedClosingTime.getTime()) {
+      fixedClosingTime = addDays(fixedClosingTime, 1);
+    }
+    console.log("now: " + now);
+    console.log("currentTime: " + currentTime);
+    console.log("fixedClosingTime: " + fixedClosingTime);
+
+    if (fixedClosingTime.getTime() >= midnight.getTime()) {
+      fixedClosingTime = addDays(fixedClosingTime, -1);
+      currentTime = addDays(currentTime, -1);
+    }
+    if (fixedClosingTime.getTime() <= now.getTime()) {
+      currentTime = addDays(currentTime, 1);
+      fixedClosingTime = addDays(fixedClosingTime, 1);
     }
 
     // Ensure that the current time is not before the opening time
-    if (isBefore(currentTime, now)) {
+    if (currentTime.getTime() <= now.getTime()) {
       currentTime = addMinutes(currentTime, 10);
     }
 
-    while (isAfter(fixedClosingTime, currentTime)) {
-      if (isAfter(currentTime, now)) {
+    while (currentTime.getTime() <= fixedClosingTime.getTime()) {
+      if (currentTime.getTime() >= now.getTime()) {
         newTimeOptions.push(format(currentTime, "HH:mm"));
       }
       currentTime = addMinutes(currentTime, 10);

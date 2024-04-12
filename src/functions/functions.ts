@@ -59,30 +59,30 @@ export function isChiuso(orarioApertura: string, orarioChiusura: string): boolea
   midnight = addDays(midnight, 1);
 
   let sixAM = setSeconds(setMinutes(setHours(now, 6), 0), 0);
-  console.log("sixAMNormale: " + sixAM);
+  // console.log("sixAMNormale: " + sixAM);
   if (now.getTime() >= sixAM.getTime()) {
     sixAM = addDays(sixAM, 1);
-    console.log("sixAM+1: " + sixAM);
+    // console.log("sixAM+1: " + sixAM);
   }
   const [hoursOpen, minutesOpen, secondsOpen] = orarioApertura.split(":").map(Number);
   let oraApertura = setSeconds(setMinutes(setHours(now, hoursOpen), minutesOpen), secondsOpen);
   const [hours, minutes, seconds] = orarioChiusura.split(":").map(Number);
   let oraChiusura = setSeconds(setMinutes(setHours(now, hours), minutes), seconds);
 
-  console.log("midnight: " + midnight);
+  /*   console.log("midnight: " + midnight);
   console.log("now: " + now);
   console.log("oraAperturaOriginale: " + oraApertura);
-  console.log("oraChiusuraOriginale: " + oraChiusura);
+  console.log("oraChiusuraOriginale: " + oraChiusura); */
 
   if (oraApertura.getTime() >= oraChiusura.getTime()) {
     oraChiusura = addDays(oraChiusura, 1);
-    console.log("oraChiusura+1: " + oraChiusura);
+    // console.log("oraChiusura+1: " + oraChiusura);
   }
   if (oraChiusura.getTime() >= midnight.getTime()) {
     oraChiusura = addDays(oraChiusura, -1);
-    console.log("now: " + now);
+    /*     console.log("now: " + now);
     console.log("oraApertura " + oraApertura);
-    console.log("oraChiusura-1: " + oraChiusura);
+    console.log("oraChiusura-1: " + oraChiusura); */
 
     if (now.getTime() >= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime()) {
       if (now.getTime() >= sixAM.getTime()) {
@@ -92,9 +92,9 @@ export function isChiuso(orarioApertura: string, orarioChiusura: string): boolea
     }
   }
 
-  console.log("oraChiusura: " + oraChiusura);
+  /*   console.log("oraChiusura: " + oraChiusura);
   console.log("now: " + now);
-  console.log("oraApertura " + oraApertura);
+  console.log("oraApertura " + oraApertura); */
 
   if (now.getTime() >= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime()) {
     if (now.getTime() >= sixAM.getTime()) {
