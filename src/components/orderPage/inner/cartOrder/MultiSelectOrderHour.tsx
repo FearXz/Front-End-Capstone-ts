@@ -59,9 +59,6 @@ function MultiSelectOrderHour() {
     if (currentTime.getTime() >= fixedClosingTime.getTime()) {
       fixedClosingTime = addDays(fixedClosingTime, 1);
     }
-    console.log("now: " + now);
-    console.log("currentTime: " + currentTime);
-    console.log("fixedClosingTime: " + fixedClosingTime);
 
     if (fixedClosingTime.getTime() >= midnight.getTime()) {
       fixedClosingTime = addDays(fixedClosingTime, -1);
