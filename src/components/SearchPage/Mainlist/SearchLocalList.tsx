@@ -6,6 +6,7 @@ import { ListaRistorantiResponse } from "../../../interfaces/interfaces";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Link } from "react-router-dom";
 import { setRestaurantId } from "../../../redux/reducers/persistedInfoReducer";
+import { isChiuso } from "../../../functions/functions";
 
 function SearchLocalList() {
   const listaRistoranti = useSelector((state: RootState) => state.searchRistorante.listaRistoranti);
@@ -40,7 +41,8 @@ function SearchLocalList() {
                   onClick={() => dispatch(setRestaurantId(ristorante))}
                   className="d-block restaurant-img fix-h-230  rounded-3 position-relative "
                   style={
-                    ristorante.giorniDiChiusura.some((giorno) => giorno.numeroGiorno == currentDay)
+                    isChiuso(ristorante?.orarioApertura || "", ristorante?.orarioChiusura || "") ||
+                    ristorante.giorniDiChiusura.some((giorno) => giorno.numeroGiorno === currentDay)
                       ? { filter: "grayscale(100%)", opacity: "0.5", pointerEvents: "none" }
                       : {}
                   }

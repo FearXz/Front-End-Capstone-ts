@@ -20,7 +20,6 @@ function OrderPage() {
   const lastLocale: ListaRistorantiResponse | null = useSelector((state: RootState) => state.persist.restaurantId);
   const navigate: Function = useNavigate();
   const giornoChiusura: GiorniDiChiusura[] = lastLocale?.giorniDiChiusura || [];
-  const now = new Date();
 
   useEffect(() => {
     if (!indirizzoCercato) {
@@ -32,7 +31,7 @@ function OrderPage() {
     }
     if (
       isChiuso(lastLocale?.orarioApertura || "", lastLocale?.orarioChiusura || "") ||
-      giornoChiusura.some((giorno) => giorno.numeroGiorno === now.getDay())
+      giornoChiusura.some((giorno) => giorno.numeroGiorno === new Date().getDay())
     ) {
       dispatch(setIsChiuso(true));
     } else {
