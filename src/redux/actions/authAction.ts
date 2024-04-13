@@ -1,8 +1,15 @@
-import { setLoggedProfile } from "../reducers/authReducer";
+import { setLoggedAzienda, setLoggedProfile } from "../reducers/authReducer";
 import { url } from "../../functions/config";
 import { toast } from "react-toastify";
 import { setIsLoading } from "../reducers/stateReducer";
-import { LastLocation, LoginDto, LoginResponse, RegisterDto } from "../../interfaces/interfaces";
+import {
+  LastLocation,
+  LoginAziendaResponse,
+  LoginDto,
+  LoginResponse,
+  RegisterAziendaDto,
+  RegisterDto,
+} from "../../interfaces/interfaces";
 import { AppDispatch } from "../store/store";
 // auth/login endpoint
 export const loginPost =
@@ -79,7 +86,7 @@ export const loginAziendaPost =
   (loginObj: LoginDto, navigate: Function, from: LastLocation) => async (dispatch: AppDispatch) => {
     try {
       dispatch(setIsLoading(true));
-      const response = await fetch(url + "auth/login", {
+      const response = await fetch(url + "auth/loginazienda", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,10 +95,10 @@ export const loginAziendaPost =
       });
 
       if (response.ok) {
-        const dataProfile: LoginResponse = await response.json();
+        const dataProfile: LoginAziendaResponse = await response.json();
         console.log(dataProfile);
 
-        dispatch(setLoggedProfile(dataProfile));
+        dispatch(setLoggedAzienda(dataProfile));
         toast.success("Login effettuato con successo");
 
         navigate(from.pathname);
@@ -101,6 +108,45 @@ export const loginAziendaPost =
     } catch (error) {
       // You can handle errors here, if necessary
       toast.error("Errore nel login");
+    } finally {
+      dispatch(setIsLoading(false));
+    }
+  };
+
+//auth/registeraziendaPost endpoint
+export const registerAziendaPost =
+  (registerObj: RegisterAziendaDto, navigate: Function) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsLoading(true));
+      const response = await fetch(url + "auth/registerazienda", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(registerObj),
+      });
+
+      if (response.ok) {
+        toast.success("Registrazione effettuata con successo");
+
+        const loginObj: LoginDto = {
+          email: registerObj.email,
+          password: registerObj.password,
+        };
+
+        dispatch(loginAziendaPost(loginObj, navigate, { pathname: "/" }));
+        // navigate("/");
+      } else {
+        if (response.status === 409) {
+          toast.error("Email già registrata");
+        } else {
+          toast.error("Errore nel registrazione");
+          throw new Error("Errore nel recupero dei risultati");
+        }
+      }
+    } catch (error) {
+      // Puoi gestire gli errori qui, se necessario
+      toast.error("Errore nel registrazione");
     } finally {
       dispatch(setIsLoading(false));
     }

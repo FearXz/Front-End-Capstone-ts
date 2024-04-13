@@ -2,8 +2,8 @@ import { Button, Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, NavigateFunction, useNavigate } from "react-router-dom";
-import { registerPost } from "../../redux/actions/authAction";
-import { RegisterDto } from "../../interfaces/interfaces";
+import { registerAziendaPost } from "../../redux/actions/authAction";
+import { RegisterAziendaDto } from "../../interfaces/interfaces";
 import { AppDispatch } from "../../redux/store/store";
 
 function RegistrationFormAzienda() {
@@ -14,21 +14,21 @@ function RegistrationFormAzienda() {
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm();
+  } = useForm<RegisterAziendaDto>();
 
-  async function onSubmit(data: any) {
-    const registerObj: RegisterDto = {
+  async function onSubmit(data: RegisterAziendaDto) {
+    const registerObj: RegisterAziendaDto = {
       email: data.email,
       password: data.password,
-      nome: data.nome,
-      cognome: data.cognome,
-      cellulare: data.cellulare,
+      nomeAzienda: data.nomeAzienda,
+      partitaIva: data.partitaIva,
+      telefono: data.telefono,
       indirizzo: data.indirizzo,
       citta: data.citta,
       cap: data.cap,
     };
 
-    dispatch(registerPost(registerObj, navigate));
+    dispatch(registerAziendaPost(registerObj, navigate));
 
     console.log(data);
   }
@@ -43,41 +43,47 @@ function RegistrationFormAzienda() {
           <Form noValidate onSubmit={handleSubmit(onSubmit)} className="pt-lg-5 pt-md-4 py-3">
             <Row>
               <Col xs={12} xl={6} className="form-floating mb-3 ">
-                <FloatingLabel controlId="floatingNameRegister" label="Nome*" className="mb-3">
+                <FloatingLabel controlId="floatingNameRegister" label="Nome Azienda*" className="mb-3">
                   <Form.Control
-                    {...register("nome", { required: true })}
+                    {...register("nomeAzienda", { required: true })}
                     className="rounded-0 focus"
                     type="text"
                     placeholder=""
                   />
-                  {errors.nome && <p className="text-danger">Il Nome è obbligatorio</p>}
+                  {errors.nomeAzienda && <p className="text-danger">Il Nome dell'azienda è obbligatorio</p>}
                 </FloatingLabel>
               </Col>
 
               <Col xs={12} xl={6} className="form-floating mb-3 ">
-                <FloatingLabel controlId="floatingCognomeRegister" label="Cognome*">
+                <FloatingLabel controlId="floatingCognomeRegister" label="Partita Iva*">
                   <Form.Control
-                    {...register("cognome", { required: true })}
+                    {...register("partitaIva", {
+                      required: "La Partita iva è obbligatoria",
+                      pattern: {
+                        value: /^\d{11}$/,
+                        message: "La Partita IVA deve essere di 11 numeri",
+                      },
+                    })}
                     className="rounded-0 focus"
                     type="text"
                     placeholder=""
                   />
-                  {errors.cognome && <p className="text-danger">Il Cognome è obbligatorio</p>}
+                  {errors.partitaIva && <p className="text-danger">{errors.partitaIva.message as string}</p>}
                 </FloatingLabel>
               </Col>
 
               <Col xs={12} xxl={6} className="form-floating mb-3 ">
                 <FloatingLabel controlId="floatingCellulareRegister" label="Cellulare*">
                   <Form.Control
-                    {...register("cellulare", {
-                      required: "Numero di cellulare obbligatorio",
-                      pattern: { value: /^[0-9]{10}$/, message: "Numero di Cellulare non è valido" },
+                    {...register("telefono", {
+                      required: "Numero di Cellulare obbligatorio",
+                      pattern: { value: /^[0-9]{10}$/, message: "Numero di Telefono non è valido" },
                     })}
                     className="rounded-0 focus"
                     type="text"
                     placeholder=""
                   />
-                  {errors.cellulare && <p className="text-danger">{errors.cellulare.message as string}</p>}
+                  {errors.telefono && <p className="text-danger">{errors.telefono.message as string}</p>}
                 </FloatingLabel>
               </Col>
 

@@ -2,7 +2,7 @@ import { Col, Container, Dropdown, Row } from "react-bootstrap";
 import { Link, useLocation, useNavigate, Location } from "react-router-dom";
 import logo from "../../assets/images/logo-official.png";
 import { useDispatch, useSelector } from "react-redux";
-import { CartProduct, ListaRistorantiResponse, LoginResponse } from "../../interfaces/interfaces";
+import { CartProduct, ListaRistorantiResponse, LoginAziendaResponse, LoginResponse } from "../../interfaces/interfaces";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { setSelectedProfileSection } from "../../redux/reducers/persistedInfoReducer";
 import { setLogout } from "../../redux/reducers/authReducer";
@@ -10,6 +10,7 @@ import { ORDINI, PROFILO } from "../../functions/config";
 
 function MyNavbar() {
   const profile: LoginResponse | null = useSelector((state: RootState) => state.auth.loggedProfile);
+  const azienda: LoginAziendaResponse | null = useSelector((state: RootState) => state.auth.loggedAzienda);
   const lastRestaurant: ListaRistorantiResponse | null = useSelector((state: RootState) => state.persist.restaurantId);
   const cart: CartProduct[] = useSelector((state: RootState) => state.persist.cart);
   const navigate: Function = useNavigate();
@@ -49,6 +50,14 @@ function MyNavbar() {
               >
                 <i className="bi bi-person-circle  text-leaf-500 fs-4"></i>
               </Link>
+            ) : azienda ? (
+              <Link
+                to={"/azienda"}
+                className="btn btn-link btn-lg rounded-0 border-end px-sm-3 px-2 my-1"
+                rel="nofollow"
+              >
+                <i className="bi bi-person-circle  text-leaf-500 fs-4"></i>
+              </Link>
             ) : (
               <Link
                 to={"/auth/login"}
@@ -74,6 +83,16 @@ function MyNavbar() {
                 <Link to={"/utente"} className="btn btn-link text-black text-decoration-none" rel="nofollow">
                   <i className="bi bi-person-circle text-leaf-500 fs-4"></i>&nbsp;&nbsp;
                   <span className=" text-uppercase text-leaf-500">{profile.utente.nome}</span>{" "}
+                </Link>
+              ) : azienda ? (
+                <Link
+                  to={"/azienda"}
+                  className="btn btn-link text-black text-decoration-none"
+                  rel="nofollow"
+                  onClick={() => dispatch(setLogout())}
+                >
+                  <i className="bi bi-person-circle text-leaf-500 fs-4"></i>&nbsp;&nbsp;
+                  <span className=" text-uppercase text-leaf-500">{azienda.azienda.nomeAzienda}</span>{" "}
                 </Link>
               ) : (
                 <Link to={"/auth/login"} className="btn btn-link text-black text-decoration-none" rel="nofollow">

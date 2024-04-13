@@ -68,6 +68,7 @@ function HeroSearchForm() {
   // Funzione per gestire l'invio del form
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    if (!address || !address.trim()) return;
     dispatch(setRestaurantId(null));
     navigate(`/searchlocal/${address}`);
   };

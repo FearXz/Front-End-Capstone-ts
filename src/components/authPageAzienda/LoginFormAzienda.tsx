@@ -1,7 +1,7 @@
 import { Button, Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { loginPost } from "../../redux/actions/authAction";
+import { loginAziendaPost } from "../../redux/actions/authAction";
 import { Link, useLocation, useNavigate, Location, NavigateFunction } from "react-router-dom";
 import { LoginDto } from "../../interfaces/interfaces";
 import { AppDispatch } from "../../redux/store/store";
@@ -23,7 +23,7 @@ function LoginFormAzienda() {
       email: data.email,
       password: data.password,
     };
-    dispatch(loginPost(loginObj, navigate, from));
+    dispatch(loginAziendaPost(loginObj, navigate, from));
 
     console.log(data);
   }

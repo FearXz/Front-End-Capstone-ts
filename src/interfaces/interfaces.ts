@@ -20,12 +20,38 @@ export interface LoginResponse {
   token: string;
   utente: UserData;
 }
+export interface AziendaData {
+  idAzienda: number;
+  nomeAzienda: string;
+  partitaIva: string;
+  email: string;
+  citta: string;
+  telefono: string;
+  Indirizzo: string;
+  cap: string;
+  role: string;
+}
+export interface LoginAziendaResponse {
+  token: string;
+  azienda: AziendaData;
+}
 export interface RegisterDto {
   email: string;
   password: string;
   nome: string;
   cognome: string;
   cellulare: string;
+  indirizzo: string;
+  citta: string;
+  cap: string;
+  confermaPassword?: string;
+}
+export interface RegisterAziendaDto {
+  email: string;
+  password: string;
+  nomeAzienda: string;
+  partitaIva: string;
+  telefono: string;
   indirizzo: string;
   citta: string;
   cap: string;

@@ -12,7 +12,7 @@ import SearchPage from "./components/SearchPage/SearchPage";
 import OrderPage from "./components/orderPage/OrderPage";
 import CheckoutForm from "./components/checkoutPage/CheckoutForm";
 import AuthRoute from "./components/modularComponent/AuthRoute";
-import { ADMIN, UTENTE } from "./functions/config";
+import { ADMIN, AZIENDA, UTENTE } from "./functions/config";
 import Success from "./components/success/Success";
 import UtentePage from "./components/utentePage/UtentePage";
 import AuthPageAzienda from "./components/authPageAzienda/AuthPageAzienda";
@@ -52,6 +52,14 @@ function App() {
           path="/utente"
           element={
             <AuthRoute role={[UTENTE, ADMIN]}>
+              <UtentePage />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/azienda"
+          element={
+            <AuthRoute role={[AZIENDA]}>
               <UtentePage />
             </AuthRoute>
           }
