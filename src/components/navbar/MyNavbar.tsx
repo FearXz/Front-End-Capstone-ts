@@ -22,7 +22,7 @@ function MyNavbar() {
       <Container fluid>
         <Row>
           <Col className="col-3 d-md-none d-flex align-items-center px-sm-3 px-0">
-            {location.pathname == "/utente" ? (
+            {location.pathname == "/utente" || location.pathname == "/azienda" ? (
               <div className="d-flex d-sm-none align-items-center border-end border-1 fix-h-50  order-0">
                 <Dropdown>
                   <Dropdown.Toggle className="btn btn-link bg-light custom-dropdown-toggle" id="dropdown-basic">
@@ -68,9 +68,16 @@ function MyNavbar() {
               </Link>
             )}
 
-            <Link to={"/contatti"} className="btn btn-link rounded-0 btn-lg border-end px-sm-3 px-2 ">
-              <i className="bi bi-chat-dots text-gray-800 fs-4"></i>
-            </Link>
+            {azienda ? (
+              <Link to={"/backoffice"} className="btn btn-link text-black text-decoration-none">
+                <i className="bi bi-person-workspace text-leaf-500 fs-4"></i>
+                <span className="text-leaf-500"> </span>{" "}
+              </Link>
+            ) : (
+              <Link to={"/contatti"} className="btn btn-link text-black text-decoration-none">
+                <i className="bi bi-chat-dots text-gray-800 fs-4"></i>
+              </Link>
+            )}
           </Col>
           <Col className="col-xxl-2 col-md-3 col-7 text-md-start text-center">
             <Link to={"/"} className="navbar-brand py-md-3 d-inline-block bg-lightw">
@@ -89,7 +96,7 @@ function MyNavbar() {
                   to={"/azienda"}
                   className="btn btn-link text-black text-decoration-none"
                   rel="nofollow"
-                  onClick={() => dispatch(setLogout())}
+                  // onClick={() => dispatch(setLogout())}
                 >
                   <i className="bi bi-person-circle text-leaf-500 fs-4"></i>&nbsp;&nbsp;
                   <span className=" text-uppercase text-leaf-500">{azienda.azienda.nomeAzienda}</span>{" "}
@@ -100,10 +107,18 @@ function MyNavbar() {
                 </Link>
               )}
             </div>
+
             <div className="d-md-flex d-none align-items-center border-start border-1 fix-h-50">
-              <Link to={"/contatti"} className="btn btn-link text-black text-decoration-none">
-                <i className="bi bi-chat-dots text-gray-800 fs-4"></i> CONTATTI{" "}
-              </Link>
+              {azienda ? (
+                <Link to={"/backoffice"} className="btn btn-link text-black text-decoration-none">
+                  <i className="bi bi-person-workspace text-leaf-500 fs-4"></i>
+                  <span className="text-leaf-500"> BACKOFFICE</span>{" "}
+                </Link>
+              ) : (
+                <Link to={"/contatti"} className="btn btn-link text-black text-decoration-none">
+                  <i className="bi bi-chat-dots text-gray-800 fs-4"></i> CONTATTI{" "}
+                </Link>
+              )}
             </div>
             <div className="d-flex align-items-center border-start border-1 fix-h-50">
               <button

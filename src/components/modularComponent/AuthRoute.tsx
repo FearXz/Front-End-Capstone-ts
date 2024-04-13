@@ -9,9 +9,13 @@ interface AuthRouteProps {
 
 function AuthRoute(props: AuthRouteProps) {
   const location = useLocation();
-  const auth = useSelector((state: RootState) => state.auth.loggedProfile);
 
-  if (!auth || !props.role.includes(auth.utente.role)) {
+  const utente = useSelector((state: RootState) => state.auth.loggedProfile);
+  const azienda = useSelector((state: RootState) => state.auth.loggedAzienda);
+
+  const role = utente ? utente.utente.role : azienda ? azienda.azienda.role : null;
+
+  if (!role || !props.role.includes(role)) {
     return <Navigate to="/auth/login" state={{ from: location }} />;
   }
 

@@ -12,7 +12,7 @@ import SearchPage from "./components/SearchPage/SearchPage";
 import OrderPage from "./components/orderPage/OrderPage";
 import CheckoutForm from "./components/checkoutPage/CheckoutForm";
 import AuthRoute from "./components/modularComponent/AuthRoute";
-import { ADMIN, AZIENDA, UTENTE } from "./functions/config";
+import { AZIENDA, UTENTE } from "./functions/config";
 import Success from "./components/success/Success";
 import UtentePage from "./components/utentePage/UtentePage";
 import AuthPageAzienda from "./components/authPageAzienda/AuthPageAzienda";
@@ -35,7 +35,7 @@ function App() {
         <Route
           path="/checkout"
           element={
-            <AuthRoute role={[UTENTE, ADMIN]}>
+            <AuthRoute role={[UTENTE]}>
               <CheckoutForm />
             </AuthRoute>
           }
@@ -43,7 +43,7 @@ function App() {
         <Route
           path="/success"
           element={
-            <AuthRoute role={[UTENTE, ADMIN]}>
+            <AuthRoute role={[UTENTE]}>
               <Success />
             </AuthRoute>
           }
@@ -51,7 +51,7 @@ function App() {
         <Route
           path="/utente"
           element={
-            <AuthRoute role={[UTENTE, ADMIN]}>
+            <AuthRoute role={[UTENTE]}>
               <UtentePage />
             </AuthRoute>
           }

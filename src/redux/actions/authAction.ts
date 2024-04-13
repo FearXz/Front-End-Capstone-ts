@@ -135,7 +135,6 @@ export const registerAziendaPost =
         };
 
         dispatch(loginAziendaPost(loginObj, navigate, { pathname: "/" }));
-        // navigate("/");
       } else {
         if (response.status === 409) {
           toast.error("Email già registrata");
