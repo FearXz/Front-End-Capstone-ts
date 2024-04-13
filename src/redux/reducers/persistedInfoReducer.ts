@@ -9,6 +9,7 @@ interface persistedInfoState {
   selectedHour: string | null;
   cartOrder: CartOrderDto | null;
   selectedOption: string;
+  selectedLoginPage: string;
 }
 
 const initialState: persistedInfoState = {
@@ -18,6 +19,7 @@ const initialState: persistedInfoState = {
   selectedHour: null,
   cartOrder: null,
   selectedOption: "profilo",
+  selectedLoginPage: "utente",
 };
 
 const persistedInfoReducer = createSlice({
@@ -91,8 +93,11 @@ const persistedInfoReducer = createSlice({
       }
       state.restaurantId = action.payload;
     },
-    setSelectedOption: (state, action: PayloadAction<string>) => {
+    setSelectedProfileSection: (state, action: PayloadAction<string>) => {
       state.selectedOption = action.payload;
+    },
+    setSelectedLoginPage: (state, action: PayloadAction<string>) => {
+      state.selectedLoginPage = action.payload;
     },
   },
 });
@@ -108,6 +113,7 @@ export const {
   setSelectedHour,
   setCartOrder,
   setRestaurantId,
-  setSelectedOption,
+  setSelectedProfileSection,
+  setSelectedLoginPage,
 } = persistedInfoReducer.actions;
 export default persistedInfoReducer.reducer;

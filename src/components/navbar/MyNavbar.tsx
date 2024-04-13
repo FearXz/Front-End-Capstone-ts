@@ -4,8 +4,9 @@ import logo from "../../assets/images/logo-official.png";
 import { useDispatch, useSelector } from "react-redux";
 import { CartProduct, ListaRistorantiResponse, LoginResponse } from "../../interfaces/interfaces";
 import { AppDispatch, RootState } from "../../redux/store/store";
-import { setSelectedOption } from "../../redux/reducers/persistedInfoReducer";
+import { setSelectedProfileSection } from "../../redux/reducers/persistedInfoReducer";
 import { setLogout } from "../../redux/reducers/authReducer";
+import { ORDINI, PROFILO } from "../../functions/config";
 
 function MyNavbar() {
   const profile: LoginResponse | null = useSelector((state: RootState) => state.auth.loggedProfile);
@@ -28,10 +29,10 @@ function MyNavbar() {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu className=" rounded-0">
-                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedOption("profilo"))}>
+                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedProfileSection(PROFILO))}>
                       Profilo
                     </Dropdown.Item>
-                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedOption("ordini"))}>
+                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedProfileSection(ORDINI))}>
                       Ordini
                     </Dropdown.Item>
                     <Dropdown.Item className="sideHover" onClick={() => dispatch(setLogout())}>

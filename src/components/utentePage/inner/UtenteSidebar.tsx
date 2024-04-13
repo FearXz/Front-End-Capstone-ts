@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store/store";
 import { setLogout } from "../../../redux/reducers/authReducer";
-import { setSelectedOption } from "../../../redux/reducers/persistedInfoReducer";
+import { setSelectedProfileSection } from "../../../redux/reducers/persistedInfoReducer";
+import { ORDINI, PROFILO } from "../../../functions/config";
 
 function UtenteSidebar() {
   const dispatch: AppDispatch = useDispatch();
@@ -15,7 +16,7 @@ function UtenteSidebar() {
             ? "fs-5 text-leaf-500 p-3 fw-light selectedSide"
             : "fs-5 text-leaf-500 p-3 fw-light sideHover"
         }
-        onClick={() => dispatch(setSelectedOption("profilo"))}
+        onClick={() => dispatch(setSelectedProfileSection(PROFILO))}
       >
         <i className="bi bi-person-circle"></i> <span>Profilo</span>
       </div>
@@ -25,7 +26,7 @@ function UtenteSidebar() {
             ? "fs-5 text-leaf-500 p-3 fw-light selectedSide"
             : "fs-5 text-leaf-500 p-3 fw-light sideHover"
         }
-        onClick={() => dispatch(setSelectedOption("ordini"))}
+        onClick={() => dispatch(setSelectedProfileSection(ORDINI))}
       >
         <i className="bi bi-bag-check-fill"></i> <span>Ordini</span>
       </div>
