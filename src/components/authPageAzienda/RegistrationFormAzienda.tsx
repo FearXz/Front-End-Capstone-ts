@@ -1,22 +1,22 @@
 import { Button, Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import { registerPost } from "../../redux/actions/authAction";
 import { RegisterDto } from "../../interfaces/interfaces";
 import { AppDispatch } from "../../redux/store/store";
 
-function RegistrationForm() {
-  const navigate: Function = useNavigate();
+function RegistrationFormAzienda() {
+  const navigate: NavigateFunction = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm<RegisterDto>();
+  } = useForm();
 
-  async function onSubmit(data: RegisterDto) {
+  async function onSubmit(data: any) {
     const registerObj: RegisterDto = {
       email: data.email,
       password: data.password,
@@ -37,8 +37,8 @@ function RegistrationForm() {
       <Row>
         <Col xs={12} lg={10} className="  offset-lg-1   text-center">
           <h2 className="h1 font-breef">Registrati</h2>
-          <Link className="link" to={"/auth/azienda"}>
-            Sei un azienda ? clicca qui !
+          <Link className="link" to={"/auth/login"}>
+            Sei un privato ? clicca qui !
           </Link>
           <Form noValidate onSubmit={handleSubmit(onSubmit)} className="pt-lg-5 pt-md-4 py-3">
             <Row>
@@ -184,4 +184,4 @@ function RegistrationForm() {
   );
 }
 
-export default RegistrationForm;
+export default RegistrationFormAzienda;

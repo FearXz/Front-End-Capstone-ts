@@ -9,6 +9,14 @@ body {
 main {
   min-height: 61.5vh;
 }
+.link {
+  color: #63b34a;
+  cursor: pointer;
+}
+.link:hover {
+  color: #63b34a;
+  text-decoration: underline;
+}
 .vh-615 {
   min-height: 61.5vh;
 }

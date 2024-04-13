@@ -15,6 +15,7 @@ import AuthRoute from "./components/modularComponent/AuthRoute";
 import { ADMIN, UTENTE } from "./functions/config";
 import Success from "./components/success/Success";
 import UtentePage from "./components/utentePage/UtentePage";
+import AuthPageAzienda from "./components/authPageAzienda/AuthPageAzienda";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
 
         <Route path="/auth">
           <Route path="login" element={<AuthPage />} />
+          <Route path="azienda" element={<AuthPageAzienda />} />
         </Route>
         <Route path="/searchlocal/:address" element={<SearchPage />} />
         <Route path="/local/:id" element={<OrderPage />} />

@@ -29,6 +29,7 @@ export interface RegisterDto {
   indirizzo: string;
   citta: string;
   cap: string;
+  confermaPassword?: string;
 }
 export interface CoordinateSearch {
   lat: number;

@@ -72,3 +72,36 @@ export const registerPost = (registerObj: RegisterDto, navigate: Function) => as
     dispatch(setIsLoading(false));
   }
 };
+
+//auth/loginazienda endpoint
+// auth/login endpoint
+export const loginAziendaPost =
+  (loginObj: LoginDto, navigate: Function, from: LastLocation) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsLoading(true));
+      const response = await fetch(url + "auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginObj),
+      });
+
+      if (response.ok) {
+        const dataProfile: LoginResponse = await response.json();
+        console.log(dataProfile);
+
+        dispatch(setLoggedProfile(dataProfile));
+        toast.success("Login effettuato con successo");
+
+        navigate(from.pathname);
+      } else {
+        throw new Error("Errore nel recupero dei risultati");
+      }
+    } catch (error) {
+      // You can handle errors here, if necessary
+      toast.error("Errore nel login");
+    } finally {
+      dispatch(setIsLoading(false));
+    }
+  };

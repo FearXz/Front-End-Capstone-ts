@@ -2,15 +2,15 @@ import { Button, Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { loginPost } from "../../redux/actions/authAction";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, Location, NavigateFunction } from "react-router-dom";
 import { LoginDto } from "../../interfaces/interfaces";
 import { AppDispatch } from "../../redux/store/store";
 
-function LoginForm() {
-  const location = useLocation();
+function LoginFormAzienda() {
+  const location: Location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
 
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const {
     register,
@@ -39,8 +39,8 @@ function LoginForm() {
               o Registrati
             </a>
           </h2>
-          <Link className="link" to={"/auth/azienda"}>
-            Sei un azienda ? clicca qui !
+          <Link className="link" to={"/auth/login"}>
+            Sei un privato ? clicca qui !
           </Link>
           <Form noValidate onSubmit={handleSubmit(onSubmit)} className="pt-lg-5 pt-md-4 py-3">
             <Row>
@@ -94,4 +94,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default LoginFormAzienda;
