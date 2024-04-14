@@ -53,41 +53,39 @@ export function getTotalPrice(newProduct: CartProduct): number {
 export function isChiuso(orarioApertura: string, orarioChiusura: string): boolean {
   const now = new Date();
 
-  let midnight = setSeconds(setMinutes(setHours(now, 0), 0), 0);
+  /*   let midnight = setSeconds(setMinutes(setHours(now, 0), 0), 0);
   midnight = addDays(midnight, 1);
-
-  let sixAM = setSeconds(setMinutes(setHours(now, 6), 0), 0);
+ */
+  /*   let sixAM = setSeconds(setMinutes(setHours(now, 6), 0), 0);
   // console.log("sixAMNormale: " + sixAM);
   if (now.getTime() >= sixAM.getTime()) {
     sixAM = addDays(sixAM, 1);
     // console.log("sixAM+1: " + sixAM);
-  }
+  } */
   const [hoursOpen, minutesOpen, secondsOpen] = orarioApertura.split(":").map(Number);
   let oraApertura = setSeconds(setMinutes(setHours(now, hoursOpen), minutesOpen), secondsOpen);
   const [hours, minutes, seconds] = orarioChiusura.split(":").map(Number);
   let oraChiusura = setSeconds(setMinutes(setHours(now, hours), minutes), seconds);
 
-  const oraCorrente = now.getTime();
-
   if (oraApertura.getTime() <= oraChiusura.getTime()) {
     // Opening and closing times are on the same day
-    if (oraCorrente < oraApertura.getTime() || oraCorrente >= oraChiusura.getTime()) {
+    if (now.getTime() < oraApertura.getTime() || now.getTime() >= oraChiusura.getTime()) {
       return true; // The place is closed
     } else {
       return false; // The place is open
     }
   } else {
     // Closing time is on the next day
-    if (oraCorrente < oraApertura.getTime()) {
+    if (now.getTime() < oraApertura.getTime()) {
       oraApertura = addDays(oraApertura, -1);
-      if (oraCorrente < oraApertura.getTime() || oraCorrente >= oraChiusura.getTime()) {
+      if (now.getTime() < oraApertura.getTime() || now.getTime() >= oraChiusura.getTime()) {
         return true; // The place is closed
       } else {
         return false; // The place is open
       }
-    } else if (oraCorrente >= oraChiusura.getTime()) {
+    } else if (now.getTime() >= oraChiusura.getTime()) {
       oraChiusura = addDays(oraChiusura, 1);
-      if (oraCorrente < oraApertura.getTime() || oraCorrente >= oraChiusura.getTime()) {
+      if (now.getTime() < oraApertura.getTime() || now.getTime() >= oraChiusura.getTime()) {
         return true; // The place is closed
       } else {
         return false; // The place is open
