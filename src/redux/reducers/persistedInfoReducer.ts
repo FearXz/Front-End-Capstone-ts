@@ -1,6 +1,7 @@
 //slice reducer
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CartOrderDto, CartProduct, CoordinateSearch, ListaRistorantiResponse } from "../../interfaces/interfaces";
+import { PROFILO, UTENTE } from "../../functions/config";
 
 interface persistedInfoState {
   indirizzoCercato: CoordinateSearch | null;
@@ -9,6 +10,7 @@ interface persistedInfoState {
   selectedHour: string | null;
   cartOrder: CartOrderDto | null;
   selectedOption: string;
+  selectedAziendaOption: string;
   selectedLoginPage: string;
 }
 
@@ -18,8 +20,9 @@ const initialState: persistedInfoState = {
   cart: [],
   selectedHour: null,
   cartOrder: null,
-  selectedOption: "profilo",
-  selectedLoginPage: "utente",
+  selectedOption: PROFILO,
+  selectedAziendaOption: PROFILO,
+  selectedLoginPage: UTENTE,
 };
 
 const persistedInfoReducer = createSlice({
@@ -96,6 +99,9 @@ const persistedInfoReducer = createSlice({
     setSelectedProfileSection: (state, action: PayloadAction<string>) => {
       state.selectedOption = action.payload;
     },
+    setSelectedAziendaSection: (state, action: PayloadAction<string>) => {
+      state.selectedAziendaOption = action.payload;
+    },
     setSelectedLoginPage: (state, action: PayloadAction<string>) => {
       state.selectedLoginPage = action.payload;
     },
@@ -115,5 +121,6 @@ export const {
   setRestaurantId,
   setSelectedProfileSection,
   setSelectedLoginPage,
+  setSelectedAziendaSection,
 } = persistedInfoReducer.actions;
 export default persistedInfoReducer.reducer;

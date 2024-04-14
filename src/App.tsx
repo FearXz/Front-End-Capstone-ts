@@ -16,6 +16,7 @@ import { AZIENDA, UTENTE } from "./functions/config";
 import Success from "./components/success/Success";
 import UtentePage from "./components/utentePage/UtentePage";
 import AuthPageAzienda from "./components/authPageAzienda/AuthPageAzienda";
+import AziendaPage from "./components/aziendaPage/AziendaPage";
 
 function App() {
   return (
@@ -60,7 +61,7 @@ function App() {
           path="/azienda"
           element={
             <AuthRoute role={[AZIENDA]}>
-              <UtentePage />
+              <AziendaPage />
             </AuthRoute>
           }
         />

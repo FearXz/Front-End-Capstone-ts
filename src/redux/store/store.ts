@@ -8,6 +8,7 @@ import searchRistoranteReducer from "../reducers/searchRistoranteReducer";
 import persistedInfoReducer from "../reducers/persistedInfoReducer";
 import orderReducer from "../reducers/orderReducer";
 import utenteReducer from "../reducers/utenteReducer";
+import aziendaReducer from "../reducers/aziendaReducer";
 
 const persistConfig = {
   key: "root",
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   persist: persistedInfoReducer,
   order: orderReducer,
   utente: utenteReducer,
+  azienda: aziendaReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

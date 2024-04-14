@@ -4,7 +4,7 @@ import logo from "../../assets/images/logo-official.png";
 import { useDispatch, useSelector } from "react-redux";
 import { CartProduct, ListaRistorantiResponse, LoginAziendaResponse, LoginResponse } from "../../interfaces/interfaces";
 import { AppDispatch, RootState } from "../../redux/store/store";
-import { setSelectedProfileSection } from "../../redux/reducers/persistedInfoReducer";
+import { setSelectedAziendaSection, setSelectedProfileSection } from "../../redux/reducers/persistedInfoReducer";
 import { setLogout } from "../../redux/reducers/authReducer";
 import { ORDINI, PROFILO } from "../../functions/config";
 
@@ -22,7 +22,26 @@ function MyNavbar() {
       <Container fluid>
         <Row>
           <Col className="col-3 d-md-none d-flex align-items-center px-sm-3 px-0">
-            {location.pathname == "/utente" || location.pathname == "/azienda" ? (
+            {location.pathname == "/utente" ? (
+              <div className="d-flex d-sm-none align-items-center border-end border-1 fix-h-50  order-0">
+                <Dropdown>
+                  <Dropdown.Toggle className="btn btn-link bg-light custom-dropdown-toggle" id="dropdown-basic">
+                    <i className="bi bi-list text-green fs-3"></i>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu className=" rounded-0">
+                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedProfileSection(PROFILO))}>
+                      Profilo
+                    </Dropdown.Item>
+                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedProfileSection(ORDINI))}>
+                      Ordini
+                    </Dropdown.Item>
+                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setLogout())}>
+                      Logout
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+            ) : location.pathname == "/azienda" ? (
               <div className="d-flex d-sm-none align-items-center border-end border-1 fix-h-50  order-0">
                 <Dropdown>
                   <Dropdown.Toggle className="btn btn-link bg-light custom-dropdown-toggle" id="dropdown-basic">
@@ -30,11 +49,11 @@ function MyNavbar() {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu className=" rounded-0">
-                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedProfileSection(PROFILO))}>
+                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedAziendaSection(PROFILO))}>
                       Profilo
                     </Dropdown.Item>
-                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedProfileSection(ORDINI))}>
-                      Ordini
+                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedAziendaSection(ORDINI))}>
+                      Dashboard
                     </Dropdown.Item>
                     <Dropdown.Item className="sideHover" onClick={() => dispatch(setLogout())}>
                       Logout
@@ -92,12 +111,7 @@ function MyNavbar() {
                   <span className=" text-uppercase text-leaf-500">{profile.utente.nome}</span>{" "}
                 </Link>
               ) : azienda ? (
-                <Link
-                  to={"/azienda"}
-                  className="btn btn-link text-black text-decoration-none"
-                  rel="nofollow"
-                  // onClick={() => dispatch(setLogout())}
-                >
+                <Link to={"/azienda"} className="btn btn-link text-black text-decoration-none" rel="nofollow">
                   <i className="bi bi-person-circle text-leaf-500 fs-4"></i>&nbsp;&nbsp;
                   <span className=" text-uppercase text-leaf-500">{azienda.azienda.nomeAzienda}</span>{" "}
                 </Link>
