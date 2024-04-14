@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store/store";
 import { setLogout } from "../../../redux/reducers/authReducer";
 import { setSelectedAziendaSection } from "../../../redux/reducers/persistedInfoReducer";
-import { ORDINI, PROFILO } from "../../../functions/config";
+import { DASHBOARD, PROFILO } from "../../../functions/config";
 
 function AziendaSidebar() {
   const dispatch: AppDispatch = useDispatch();
@@ -22,11 +22,11 @@ function AziendaSidebar() {
       </div>
       <div
         className={
-          selectedOption == ORDINI
+          selectedOption == DASHBOARD
             ? "fs-5 text-leaf-500 p-3 fw-light selectedSide"
             : "fs-5 text-leaf-500 p-3 fw-light sideHover"
         }
-        onClick={() => dispatch(setSelectedAziendaSection(ORDINI))}
+        onClick={() => dispatch(setSelectedAziendaSection(DASHBOARD))}
       >
         <i className="bi bi-speedometer"></i> <span>Dashboard</span>
       </div>

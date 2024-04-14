@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { ORDINI, PROFILO } from "../../../functions/config";
+import { DASHBOARD, PROFILO } from "../../../functions/config";
 
 import AziendaProfilo from "./AziendaMainSection/AziendaProfilo";
 import AziendaDashboard from "./AziendaMainSection/AziendaDashboard";
@@ -11,7 +11,7 @@ function AziendaMainSection() {
   if (selectedOption === PROFILO) {
     return <AziendaProfilo />;
   }
-  if (selectedOption === ORDINI) {
+  if (selectedOption === DASHBOARD) {
     return <AziendaDashboard />;
   }
   return <div></div>;

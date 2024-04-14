@@ -1,9 +1,9 @@
 //slice reducer
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { GetUtenteResponse } from "../../interfaces/interfaces";
+import { AziendaData } from "../../interfaces/interfaces";
 
 interface AziendaState {
-  myProfile: GetUtenteResponse | null;
+  myProfile: AziendaData | null;
 }
 
 const initialState: AziendaState = {
@@ -15,12 +15,12 @@ const aziendaReducer = createSlice({
   initialState,
   reducers: {
     // Azione definita nello slice
-    setMyProfile: (state, action: PayloadAction<GetUtenteResponse>) => {
+    setMyProfileAzienda: (state, action: PayloadAction<AziendaData>) => {
       state.myProfile = action.payload;
     },
   },
 });
 
 // Esporto solo l'azione definita nello slice
-export const { setMyProfile } = aziendaReducer.actions;
+export const { setMyProfileAzienda } = aziendaReducer.actions;
 export default aziendaReducer.reducer;

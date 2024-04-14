@@ -206,7 +206,7 @@ function UtenteProfilo() {
                 type="password"
                 placeholder="Conferma Password"
               />
-              {errors.confirmNewPassword && <p className="text-danger mb-0">La Password è obbligatoria</p>}
+              {errors.confirmNewPassword && <p className="text-danger mb-0">{errors.confirmNewPassword.message}</p>}
             </Col>
           </Row>
         )}

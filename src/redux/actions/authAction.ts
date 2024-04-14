@@ -30,8 +30,8 @@ export const loginPost =
 
         dispatch(setLoggedProfile(dataProfile));
         toast.success("Login effettuato con successo");
-
-        navigate(from.pathname);
+        console.log();
+        navigate(from.pathname == "/azienda" ? "/" : from.pathname);
       } else {
         throw new Error("Errore nel recupero dei risultati");
       }

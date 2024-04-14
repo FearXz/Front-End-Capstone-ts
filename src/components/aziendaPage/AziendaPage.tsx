@@ -2,16 +2,16 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useEffect } from "react";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { getUtente } from "../../redux/actions/utenteAction";
 import AziendaSidebar from "./inner/AziendaSidebar";
 import AziendaMainSection from "./inner/AziendaMainSection";
+import { getAzienda } from "../../redux/actions/aziendaAction";
 
 function AziendaPage() {
   const dispatch: AppDispatch = useDispatch();
   const refresh: boolean = useSelector((state: RootState) => state.global.refresh);
 
   useEffect(() => {
-    //  dispatch(getUtente());
+    dispatch(getAzienda());
   }, [refresh]);
 
   return (

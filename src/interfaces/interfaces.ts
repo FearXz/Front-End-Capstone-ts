@@ -27,7 +27,7 @@ export interface AziendaData {
   email: string;
   citta: string;
   telefono: string;
-  Indirizzo: string;
+  indirizzo: string;
   cap: string;
   role: string;
 }
@@ -190,4 +190,16 @@ export interface GetUtenteResponse {
   cap: string;
   role: string;
   ordini: GetUtenteOrdini[];
+}
+export interface AziendaProfileDto {
+  nomeAzienda: string;
+  partitaIva: string;
+  email: string;
+  telefono: string;
+  indirizzo: string;
+  citta: string;
+  cap: string;
+  oldPassword?: string;
+  newPassword?: string;
+  confirmNewPassword?: string;
 }

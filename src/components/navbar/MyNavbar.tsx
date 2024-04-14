@@ -6,7 +6,7 @@ import { CartProduct, ListaRistorantiResponse, LoginAziendaResponse, LoginRespon
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { setSelectedAziendaSection, setSelectedProfileSection } from "../../redux/reducers/persistedInfoReducer";
 import { setLogout } from "../../redux/reducers/authReducer";
-import { ORDINI, PROFILO } from "../../functions/config";
+import { DASHBOARD, ORDINI, PROFILO } from "../../functions/config";
 
 function MyNavbar() {
   const profile: LoginResponse | null = useSelector((state: RootState) => state.auth.loggedProfile);
@@ -52,7 +52,7 @@ function MyNavbar() {
                     <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedAziendaSection(PROFILO))}>
                       Profilo
                     </Dropdown.Item>
-                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedAziendaSection(ORDINI))}>
+                    <Dropdown.Item className="sideHover" onClick={() => dispatch(setSelectedAziendaSection(DASHBOARD))}>
                       Dashboard
                     </Dropdown.Item>
                     <Dropdown.Item className="sideHover" onClick={() => dispatch(setLogout())}>

@@ -3,12 +3,12 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { AppDispatch, RootState } from "../../../../redux/store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { UserData, UtenteProfileDto } from "../../../../interfaces/interfaces";
-import { updateutente } from "../../../../redux/actions/utenteAction";
+import { AziendaData, AziendaProfileDto } from "../../../../interfaces/interfaces";
+import { updateAzienda } from "../../../../redux/actions/aziendaAction";
 
 function AziendaProfilo() {
   const [checkbox, setCheckbox] = useState<boolean>(false);
-  const myProfile: UserData | null = useSelector((state: RootState) => state.utente.myProfile);
+  const myProfile: AziendaData | null = useSelector((state: RootState) => state.azienda.myProfile);
   const dispatch: AppDispatch = useDispatch();
 
   const {
@@ -17,14 +17,14 @@ function AziendaProfilo() {
     formState: { errors },
     getValues,
     setValue,
-  } = useForm<UtenteProfileDto>();
+  } = useForm<AziendaProfileDto>();
 
-  async function onSubmit(data: UtenteProfileDto) {
-    let accountDetails: UtenteProfileDto = {
-      nome: data.nome,
-      cognome: data.cognome,
+  async function onSubmit(data: AziendaProfileDto) {
+    let accountDetails: AziendaProfileDto = {
+      nomeAzienda: data.nomeAzienda,
+      partitaIva: data.partitaIva,
       email: data.email,
-      cellulare: data.cellulare,
+      telefono: data.telefono,
       indirizzo: data.indirizzo,
       citta: data.citta,
       cap: data.cap,
@@ -39,7 +39,7 @@ function AziendaProfilo() {
       };
     }
     console.log(accountDetails);
-    dispatch(updateutente(accountDetails));
+    dispatch(updateAzienda(accountDetails));
   }
 
   function toggleInputPassword(e: React.ChangeEvent<HTMLInputElement>) {
@@ -48,10 +48,10 @@ function AziendaProfilo() {
 
   useEffect(() => {
     if (myProfile) {
-      setValue("nome", myProfile.nome);
-      setValue("cognome", myProfile.cognome);
+      setValue("nomeAzienda", myProfile.nomeAzienda);
+      setValue("partitaIva", myProfile.partitaIva);
       setValue("email", myProfile.email);
-      setValue("cellulare", myProfile.cellulare);
+      setValue("telefono", myProfile.telefono);
       setValue("indirizzo", myProfile.indirizzo);
       setValue("citta", myProfile.citta);
       setValue("cap", myProfile.cap);
@@ -66,7 +66,7 @@ function AziendaProfilo() {
           <Col xs={12} sm={6} className="mb-3 ">
             <Form.Label>Nome</Form.Label>
             <Form.Control
-              {...register("nome", {
+              {...register("nomeAzienda", {
                 required: `Il nome è obbligatorio`,
                 pattern: {
                   value: /^[A-Za-z]{2,}$/,
@@ -77,23 +77,23 @@ function AziendaProfilo() {
               type="text"
               placeholder="Nome"
             />
-            {errors?.nome?.message && <p className="text-danger mb-0">{errors.nome.message as string}</p>}
+            {errors?.nomeAzienda?.message && <p className="text-danger mb-0">{errors.nomeAzienda.message as string}</p>}
           </Col>
           <Col xs={12} sm={6} className="mb-3 ">
-            <Form.Label>Cognome</Form.Label>
+            <Form.Label>Partita Iva</Form.Label>
             <Form.Control
-              {...register("cognome", {
-                required: `Il cognome è obbligatorio`,
+              {...register("partitaIva", {
+                required: `La Partita Iva è obbligatoria`,
                 pattern: {
-                  value: /^[A-Za-z]/,
-                  message: "Formato cognome non valido ",
+                  value: /^\d{11}$/,
+                  message: "Formato Partita Iva non valido",
                 },
               })}
               className="rounded-0 focus"
               type="text"
-              placeholder="Cognome"
+              placeholder="Partita Iva"
             />
-            {errors?.cognome?.message && <p className="text-danger mb-0">{errors.cognome.message as string}</p>}
+            {errors?.partitaIva?.message && <p className="text-danger mb-0">{errors.partitaIva.message as string}</p>}
           </Col>
         </Row>
         <Row>
@@ -116,18 +116,18 @@ function AziendaProfilo() {
           <Col xs={12} sm={6} className="mb-3 ">
             <Form.Label>Cellulare</Form.Label>
             <Form.Control
-              {...register("cellulare", {
-                required: "Numero di cellulare obbligatorio",
+              {...register("telefono", {
+                required: "Numero di telefono obbligatorio",
                 pattern: {
                   value: /^[0-9]{10}$/,
-                  message: "Numero di Cellulare non è valido",
+                  message: "Numero di telefono non è valido",
                 },
               })}
               className="rounded-0 focus"
               type="text"
               placeholder="Cellulare"
             />
-            {errors?.cellulare?.message && <p className="text-danger mb-0">{errors.cellulare.message as string}</p>}
+            {errors?.telefono?.message && <p className="text-danger mb-0">{errors.telefono.message as string}</p>}
           </Col>
         </Row>
         <Row>
@@ -206,7 +206,7 @@ function AziendaProfilo() {
                 type="password"
                 placeholder="Conferma Password"
               />
-              {errors.confirmNewPassword && <p className="text-danger mb-0">La Password è obbligatoria</p>}
+              {errors.confirmNewPassword && <p className="text-danger mb-0">{errors.confirmNewPassword.message}</p>}
             </Col>
           </Row>
         )}
