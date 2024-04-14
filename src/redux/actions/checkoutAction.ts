@@ -8,7 +8,7 @@ import { setSessionId } from "../reducers/orderReducer";
 import { loadStripe } from "@stripe/stripe-js";
 import { clearCart, setIndirizzoCercato, setSelectedHour } from "../reducers/persistedInfoReducer";
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY!);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 export const createSession = (order: CartOrderDto | null) => async (dispatch: AppDispatch) => {
   try {
