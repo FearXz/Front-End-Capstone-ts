@@ -17,6 +17,7 @@ import Success from "./components/success/Success";
 import UtentePage from "./components/utentePage/UtentePage";
 import AuthPageAzienda from "./components/authPageAzienda/AuthPageAzienda";
 import AziendaPage from "./components/aziendaPage/AziendaPage";
+import ContactPage from "./components/contactPage/ContactPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <MyNavbar />
       <Routes>
         <Route path="/" element={<MyMain />} />
+        <Route path="/contatti" element={<ContactPage />} />
 
         <Route path="/auth">
           <Route path="login" element={<AuthPage />} />
