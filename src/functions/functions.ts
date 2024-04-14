@@ -67,34 +67,33 @@ export function isChiuso(orarioApertura: string, orarioChiusura: string): boolea
   const [hours, minutes, seconds] = orarioChiusura.split(":").map(Number);
   let oraChiusura = setSeconds(setMinutes(setHours(now, hours), minutes), seconds);
 
-  if (oraApertura.getTime() >= oraChiusura.getTime()) {
-    // console.log("A > C");
-    oraChiusura = addDays(oraChiusura, 1);
-    // console.log("oraChiusura+1: " + oraChiusura);
-  }
+  const oraCorrente = now.getTime();
 
-  /*   console.log("NOW: " + now);
-  console.log("oraChiusura: " + oraChiusura);
-  console.log("oraApertura " + oraApertura); */
-
-  if (now.getTime() >= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime()) {
-    // console.log("TEST > <");
-    if (now.getTime() >= sixAM.getTime()) {
-      return false;
+  if (oraApertura.getTime() <= oraChiusura.getTime()) {
+    // Opening and closing times are on the same day
+    if (oraCorrente < oraApertura.getTime() || oraCorrente >= oraChiusura.getTime()) {
+      return true; // The place is closed
+    } else {
+      return false; // The place is open
     }
-    return true;
+  } else {
+    // Closing time is on the next day
+    if (oraCorrente < oraApertura.getTime()) {
+      oraApertura = addDays(oraApertura, -1);
+      if (oraCorrente < oraApertura.getTime() || oraCorrente >= oraChiusura.getTime()) {
+        return true; // The place is closed
+      } else {
+        return false; // The place is open
+      }
+    } else if (oraCorrente >= oraChiusura.getTime()) {
+      oraChiusura = addDays(oraChiusura, 1);
+      if (oraCorrente < oraApertura.getTime() || oraCorrente >= oraChiusura.getTime()) {
+        return true; // The place is closed
+      } else {
+        return false; // The place is open
+      }
+    } else {
+      return false; // The place is open
+    }
   }
-
-  if (now.getTime() >= oraChiusura.getTime() && now.getTime() >= oraApertura.getTime()) {
-    // console.log("TEST > > ");
-    return true;
-  }
-
-  if (now.getTime() <= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime()) {
-    // console.log("TEST < <");
-    return true;
-  }
-
-  // console.log("FINE");
-  return now.getTime() >= oraChiusura.getTime() && now.getTime() <= oraApertura.getTime();
 }
