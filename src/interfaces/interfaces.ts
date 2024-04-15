@@ -212,3 +212,22 @@ export interface EmailDto {
   citta: string;
   messaggio: string;
 }
+export interface GetRistorantiByIdAziendaResponse {
+  idAzienda: number;
+  idRistorante: number;
+  nomeRistorante: string;
+  tagRistorante: string;
+  indirizzo: string;
+  citta: string;
+  cap: string;
+  latitudine: string;
+  longitudine: string;
+  telefono: string;
+  orarioApertura: string;
+  orarioChiusura: string;
+  imgCopertina: string | null;
+  imgLogo: string | null;
+  descrizione: string | null;
+  categorieRistorante: categorieRistorante[];
+  giorniDiChiusura: GiorniDiChiusura[];
+}

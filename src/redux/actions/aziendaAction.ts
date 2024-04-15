@@ -48,27 +48,3 @@ export const getAzienda = () => async (dispatch: AppDispatch) => {
     dispatch(setIsLoading(false));
   }
 };
-
-/* export const confirmOrder = (idOrder: number) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsLoading(true));
-    const response = await fetchWithAuth(url + "utente/confirmOrder", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(idOrder),
-    });
-
-    if (response.ok) {
-      dispatch(toggleRefresh());
-      toast.success("Ordine confermato con successo");
-    } else {
-      throw new Error("Errore nella conferma dell'ordine");
-    }
-  } catch (error) {
-    toast.error("Errore nella conferma dell'ordine");
-  } finally {
-    dispatch(setIsLoading(false));
-  }
-}; */
