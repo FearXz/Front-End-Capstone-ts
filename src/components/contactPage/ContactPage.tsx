@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ContactBreadCrumb from "./inner/ContactBreadCrumb";
 import ContactHero from "./inner/ContactHero";
 import ContactForm from "./inner/ContactForm";
+import ContactAffiliate from "./inner/ContactAffiliate";
 
 function ContactPage() {
   const [images, setImages] = useState<string[]>([]);
@@ -32,6 +33,7 @@ function ContactPage() {
       <ContactBreadCrumb />
       <ContactHero />
       <ContactForm />
+      <ContactAffiliate />
     </main>
   );
 }

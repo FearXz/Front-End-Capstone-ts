@@ -121,7 +121,7 @@ function ContactForm() {
             </Col>
           </Row>
           <Row>
-            <Col xs={12} className="text-center mb-3">
+            <Col xs={12} className="text-center my-5">
               <Button type="submit" className="btn btn-leaf-500 text-white rounded-0 button-border-success fw-semibold">
                 INVIA
               </Button>
