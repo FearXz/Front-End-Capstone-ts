@@ -15,6 +15,10 @@ function BackOfficePage() {
   );
   const [search, setSearch] = useState<string>("");
 
+  const filteredRistoranti = listaRistoranti?.filter((ristorante) =>
+    ristorante.nomeRistorante.toLowerCase().includes(search.toLowerCase())
+  );
+
   useEffect(() => {
     dispatch(getListaRistorantiById());
   }, [refresh]);
@@ -23,8 +27,14 @@ function BackOfficePage() {
     <main>
       <Container>
         <Row>
-          <Col xs={12}>
+          <Col xs={4}></Col>
+          <Col xs={4}>
             <h1 className="text-center font-breef my-3">BackOffice</h1>
+          </Col>
+          <Col xs={4} className="d-flex justify-content-end  align-items-center">
+            <Link to={"/backoffice/newlocal"} className="btn btn-leaf-500 rounded-0 button-border-success text-white">
+              Crea Locale
+            </Link>
           </Col>
           <Col xs={12}>
             <Form.Control
@@ -38,7 +48,7 @@ function BackOfficePage() {
         </Row>
 
         <TransitionGroup className="row">
-          {listaRistoranti?.map((ristorante: GetRistorantiByIdAziendaResponse, index: number) => (
+          {filteredRistoranti?.map((ristorante: GetRistorantiByIdAziendaResponse, index: number) => (
             <CSSTransition key={`ristorante-${index}`} timeout={500} classNames="fade">
               <Col className="col-xxl-3 col-xl-4 col-sm-6 col-12 px-2">
                 <div className="py-2 px-2 my-3 shadow ">
