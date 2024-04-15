@@ -14,7 +14,7 @@ function HeroSearchForm() {
   const provider = new OpenStreetMapProvider();
   const [address, setAddress] = useState(fullAddress);
   const [suggestions, setSuggestions] = useState<OSMResponse[]>([]);
-  const [searchTimeout, setSearchTimeout] = useState<null | number>(null);
+  const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(null);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
   const dispatch: AppDispatch = useDispatch();
 
