@@ -18,6 +18,7 @@ import UtentePage from "./components/utentePage/UtentePage";
 import AuthPageAzienda from "./components/authPageAzienda/AuthPageAzienda";
 import AziendaPage from "./components/aziendaPage/AziendaPage";
 import ContactPage from "./components/contactPage/ContactPage";
+import BackOfficePage from "./components/backOffice/BackOfficePage";
 
 function App() {
   return (
@@ -64,6 +65,15 @@ function App() {
           element={
             <AuthRoute role={[AZIENDA]}>
               <AziendaPage />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/backoffice"
+          element={
+            <AuthRoute role={[AZIENDA]}>
+              {" "}
+              <BackOfficePage />{" "}
             </AuthRoute>
           }
         />
