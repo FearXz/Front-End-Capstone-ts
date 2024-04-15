@@ -2,6 +2,8 @@ import { Button, Col, Container, FloatingLabel, Form, Row } from "react-bootstra
 import { AppDispatch } from "../../../redux/store/store";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import { EmailDto } from "../../../interfaces/interfaces";
+import { contactPost } from "../../../redux/actions/contactAction";
 
 function ContactForm() {
   const dispatch: AppDispatch = useDispatch();
@@ -10,10 +12,31 @@ function ContactForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    setValue,
+  } = useForm<EmailDto>();
 
-  function onSubmit(data: any) {
+  function onSubmit(data: EmailDto) {
+    const emailDto: EmailDto = {
+      nome: data.nome,
+      cognome: data.cognome,
+      cellulare: data.cellulare,
+      email: data.email,
+      indirizzo: data.indirizzo,
+      citta: data.citta,
+      messaggio: data.messaggio,
+    };
+
+    dispatch(contactPost(emailDto));
+
     console.log(data);
+
+    setValue("nome", "");
+    setValue("cognome", "");
+    setValue("cellulare", "");
+    setValue("email", "");
+    setValue("indirizzo", "");
+    setValue("citta", "");
+    setValue("messaggio", "");
   }
 
   return (

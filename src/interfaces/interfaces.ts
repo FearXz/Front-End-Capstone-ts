@@ -203,3 +203,12 @@ export interface AziendaProfileDto {
   newPassword?: string;
   confirmNewPassword?: string;
 }
+export interface EmailDto {
+  nome: string;
+  cognome: string;
+  cellulare: string;
+  email: string;
+  indirizzo: string;
+  citta: string;
+  messaggio: string;
+}

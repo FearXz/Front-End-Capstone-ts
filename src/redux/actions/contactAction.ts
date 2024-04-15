@@ -1,9 +1,10 @@
-import { url } from "inspector";
 import { setIsLoading } from "../reducers/stateReducer";
 import { AppDispatch } from "../store/store";
 import { toast } from "react-toastify";
+import { EmailDto } from "../../interfaces/interfaces";
+import { url } from "../../functions/config";
 
-export const loginPost = (emailDto: any) => async (dispatch: AppDispatch) => {
+export const contactPost = (emailDto: EmailDto) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsLoading(true));
     const response = await fetch(url + "auth/contactemail", {
@@ -15,11 +16,7 @@ export const loginPost = (emailDto: any) => async (dispatch: AppDispatch) => {
     });
 
     if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-
       toast.success("Email inviata con successo");
-      console.log();
     } else {
       throw new Error("Errore nell'invio dell'email");
     }
