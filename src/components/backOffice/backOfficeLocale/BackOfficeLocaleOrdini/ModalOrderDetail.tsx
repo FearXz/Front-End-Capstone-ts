@@ -25,9 +25,9 @@ function ModalOrderDetail(props: ModalOrderDetailProps) {
                 order?.prodottiAcquistati.map((product: BoProdottiAcquistati, index: number) => (
                   <Row key={`product-${index}`} className="py-2">
                     <Col className="col-sm-7 col-6 d-flex justify-content-between">
-                      <p className="mb-0 fw-bold">
+                      <h5 className="mb-0 fw-bold">
                         {product.nomeProdotto} X{product.quantita}{" "}
-                      </p>
+                      </h5>
                       &nbsp;
                     </Col>
                     <Col className="col-12 text-start mt-1">

@@ -1,4 +1,4 @@
-import { Button, Card, Form, Row } from "react-bootstrap";
+import { Button, Card, Dropdown, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
 import { useRef, useState } from "react";
@@ -65,7 +65,7 @@ function BackOfficeLocaleOrdini() {
   return (
     <div className="mt-3 mb-5 h-100">
       <ModalOrderDetail show={show} handleClose={handleClose} />
-      <div className="mb-3">
+      <div className="mb-3 d-flex align-item-center">
         <Form.Control
           className="rounded-0 fix-h-50  my-input focus"
           type="text"
@@ -73,6 +73,17 @@ function BackOfficeLocaleOrdini() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        <Dropdown className="d-flex align-item-center">
+          <Dropdown.Toggle className="btn btn-leaf-500 text-white button-border-success rounded-0" id="dropdown-basic">
+            Filtro
+          </Dropdown.Toggle>
+          <Dropdown.Menu className="rounded-0 ">
+            <Dropdown.Item className="sideHover">Tutti gli ordini</Dropdown.Item>
+            <Dropdown.Item className="sideHover">Da preparare</Dropdown.Item>
+            <Dropdown.Item className="sideHover">Pronti</Dropdown.Item>
+            <Dropdown.Item className="sideHover">Confermati</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
       <div className="" style={{ minHeight: "750px" }}>
         {currentOrders &&
