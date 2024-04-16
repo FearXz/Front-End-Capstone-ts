@@ -22,10 +22,10 @@ function BackOfficeLocale() {
     <main>
       <Container className="">
         <Row className="vh-615">
-          <Col className="col-3 col-xxl-2  bg-gray p-0 d-none d-sm-block ">
+          <Col className="col-3 col-xxl-2  bg-gray p-0 d-none d-md-block ">
             <BackofficeSideBar />
           </Col>
-          <Col className="col-12 col-sm-9 col-xxl-10 pb-2">
+          <Col className="col-12 col-md-9 col-xxl-10 pb-2">
             {" "}
             <BackOfficeMainSection />
           </Col>

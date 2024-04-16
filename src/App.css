@@ -70,6 +70,9 @@ main {
 .my-input::placeholder {
   color: rgb(162, 162, 162);
 }
+.modal-content {
+  border-radius: 0 !important;
+}
 /* CSS TRANSITION GROUP*/
 .fade-enter {
   opacity: 0;

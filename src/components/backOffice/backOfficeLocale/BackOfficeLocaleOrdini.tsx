@@ -1,29 +1,45 @@
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
 import { useRef, useState } from "react";
-import { GetBoLocaleIdResponse } from "../../../interfaces/interfaces";
+import { BoOrdiniLocaleId, GetBoLocaleIdResponse } from "../../../interfaces/interfaces";
 import { AppDispatch, RootState } from "../../../redux/store/store";
+import { setSelectedOrderModal } from "../../../redux/reducers/backofficeReducer";
+import ModalOrderDetail from "./BackOfficeLocaleOrdini/ModalOrderDetail";
 
 function BackOfficeLocaleOrdini() {
   const dispatch: AppDispatch = useDispatch();
   const locale: GetBoLocaleIdResponse | null = useSelector((state: RootState) => state.backoffice.localeById);
-
-  const ordini = [...(locale?.ordini || [])].reverse();
+  const [search, setSearch] = useState<string>("");
+  const filteredOrdini = locale?.ordini?.filter(
+    (ordini) =>
+      ordini.utente.nome.toLowerCase().includes(search.toLowerCase()) ||
+      ordini.utente.cognome.toLowerCase().includes(search.toLowerCase()) ||
+      ordini.idOrdini.toString().includes(search)
+  );
+  const ordini = [...(filteredOrdini || [])].reverse();
 
   // Aggiungi stato per la pagina corrente
   const [selectPage, setSelectPage] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const inputSelectPage = useRef<HTMLInputElement>(null);
   const ordersPerPage = 3;
-
   // Calcola gli ordini per la pagina corrente
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
   const currentOrders = ordini.slice(indexOfFirstOrder, indexOfLastOrder);
-
   // Calcola il numero totale di pagine
   const totalPages = Math.ceil(ordini.length / ordersPerPage);
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    dispatch(setSelectedOrderModal(null));
+    setShow(false);
+  };
+  const handleShow = (ordini: BoOrdiniLocaleId) => {
+    dispatch(setSelectedOrderModal(ordini));
+    setShow(true);
+  };
 
   function handleSelectPageClick() {
     setSelectPage(true);
@@ -47,37 +63,55 @@ function BackOfficeLocaleOrdini() {
 
   return (
     <div className="mt-3 mb-5 h-100">
+      <ModalOrderDetail show={show} handleClose={handleClose} />
+      <div className="mb-3">
+        <Form.Control
+          className="rounded-0 fix-h-50  my-input focus"
+          type="text"
+          placeholder="Cerca Ordine"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
       <div className="" style={{ minHeight: "750px" }}>
         {currentOrders &&
           currentOrders.map((ordine, index) => (
             <Card key={`ordini-` + index} className="rounded-0 mb-3">
-              <Card.Header as="h5">No. {ordine.idOrdini}</Card.Header>
+              <Card.Header as="h5" className="d-flex justify-content-between">
+                <div>No. {ordine.idOrdini}</div>
+                <div className="cursor-pointer">
+                  <i className="bi bi-card-list" onClick={() => handleShow(ordine)}></i>
+                </div>
+              </Card.Header>
               <Card.Body>
                 <Card.Title>
-                  No.{ordine.idOrdini} per {ordine.utente.nome} {ordine.utente.cognome}
+                  Da: {ordine.utente.nome} {ordine.utente.cognome}
                 </Card.Title>
-                <Card.Text>
-                  {`${format(new Date(ordine.dataOrdine), "dd/MM/yyyy")} - ${ordine.orarioConsegnaPrevista}`}
-                  <br />
-                  Prezzo totale: {ordine.totaleOrdine} €
-                </Card.Text>
-                {ordine.isOrdineConsegnato ? (
-                  <p className="mb-0 text-leaf-500">ORDINE COMPLETATO</p>
-                ) : ordine.isOrdineEvaso ? (
-                  <div>
-                    <p className="mb-0 text-danger">ORDINE IN CONSEGNA</p>
+                <Row>
+                  <div className="col-5">
+                    {`${format(new Date(ordine.dataOrdine), "dd/MM/yyyy")} - ${ordine.orarioConsegnaPrevista}`}
+                    <br />
+                    <p> Prezzo: {ordine.totaleOrdine} €</p>
+                    {ordine.isOrdineConsegnato ? (
+                      <p className="mb-0 text-leaf-500">ORDINE COMPLETATO</p>
+                    ) : ordine.isOrdineEvaso ? (
+                      <div>
+                        <p className="mb-0 text-danger">ORDINE IN CONSEGNA</p>
+                      </div>
+                    ) : (
+                      <div>
+                        <p className="mb-0 text-leaf-500">ORDINE PAGATO</p>
+                        <Button
+                          className="rounded-0 btn btn-leaf-500 button-border-success text-white"
+                          // onClick={() => dispatch(confirmOrder(ordine.idOrdini))}
+                        >
+                          ORDINE PRONTO
+                        </Button>{" "}
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  <div>
-                    <p className="mb-0 text-leaf-500">ORDINE PAGATO</p>
-                    <Button
-                      className="rounded-0 btn btn-leaf-500 button-border-success text-white"
-                      // onClick={() => dispatch(confirmOrder(ordine.idOrdini))}
-                    >
-                      ORDINE PRONTO
-                    </Button>{" "}
-                  </div>
-                )}
+                  <div className="col-7">{ordine.indirizzoConsegna}</div>
+                </Row>
               </Card.Body>
             </Card>
           ))}

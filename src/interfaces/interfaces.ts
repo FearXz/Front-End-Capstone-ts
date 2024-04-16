@@ -249,7 +249,7 @@ export interface BoProdottiAcquistati {
   quantita: number;
   prezzoTotale?: number;
   categorieProdotto: TipiProdottoLocale[];
-  ingrediendiAcquistati: BoIngredientiAcquistati;
+  ingredientiAcquistati: BoIngredientiAcquistati[];
 }
 export interface BoOrdiniLocaleId {
   idOrdini: number;
