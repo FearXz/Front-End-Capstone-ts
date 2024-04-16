@@ -37,8 +37,6 @@ export const getRistorantiById = (id: number, navigate: NavigateFunction) => asy
       if (!data[0]) {
         navigate("/backoffice");
       }
-
-      toast.success("Dati Ristoranti  ottenuti con successo");
     } else {
       throw new Error("Errore nel recupero dei ristoranti");
     }
