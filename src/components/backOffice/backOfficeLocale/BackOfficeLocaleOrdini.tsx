@@ -74,7 +74,7 @@ function BackOfficeLocaleOrdini() {
       <ModalOrderDetail show={show} handleClose={handleClose} />
       <FormFiltroOrdini />
       <div className="" style={{ minHeight: "750px" }}>
-        <h2 className=" text-center">{statusFilter}</h2>
+        <h2 className=" text-center font-breef">{statusFilter}</h2>
         {currentOrders &&
           currentOrders.map((ordine, index) => (
             <Card key={`ordini-` + index} className="rounded-0 mb-3">

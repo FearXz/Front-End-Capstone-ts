@@ -9,7 +9,16 @@ function BackOfficeLocalePage() {
   const locale: GetBoLocaleIdResponse | null = useSelector((state: RootState) => state.backoffice.localeById);
   const [preview, setPreview] = useState<boolean>(false);
 
-  return <Container>{preview && <PreviewPage />}</Container>;
+  return (
+    <Container>
+      <Row>
+        <Col>
+          <h1 className="text-center font-breef">PANNELLO DI CONTROLLO</h1>
+        </Col>
+      </Row>
+      {preview && <PreviewPage />}
+    </Container>
+  );
 }
 
 export default BackOfficeLocalePage;
