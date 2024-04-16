@@ -6,6 +6,7 @@ import { BoOrdiniLocaleId, GetBoLocaleIdResponse } from "../../../interfaces/int
 import { AppDispatch, RootState } from "../../../redux/store/store";
 import { setSelectedOrderModal } from "../../../redux/reducers/backofficeReducer";
 import ModalOrderDetail from "./BackOfficeLocaleOrdini/ModalOrderDetail";
+import { confirmEvaso } from "../../../redux/actions/backofficeAction";
 
 function BackOfficeLocaleOrdini() {
   const dispatch: AppDispatch = useDispatch();
@@ -103,7 +104,7 @@ function BackOfficeLocaleOrdini() {
                         <p className="mb-0 text-leaf-500">ORDINE PAGATO</p>
                         <Button
                           className="rounded-0 btn btn-leaf-500 button-border-success text-white"
-                          // onClick={() => dispatch(confirmOrder(ordine.idOrdini))}
+                          onClick={() => dispatch(confirmEvaso(ordine.idOrdini, locale && locale?.idRistorante))}
                         >
                           ORDINE PRONTO
                         </Button>{" "}

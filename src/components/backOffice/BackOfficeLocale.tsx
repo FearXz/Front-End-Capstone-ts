@@ -20,7 +20,7 @@ function BackOfficeLocale() {
 
   return (
     <main>
-      <Container className="">
+      <Container fluid className="">
         <Row className="vh-615">
           <Col className="col-3 col-xxl-2  bg-gray p-0 d-none d-md-block ">
             <BackofficeSideBar />

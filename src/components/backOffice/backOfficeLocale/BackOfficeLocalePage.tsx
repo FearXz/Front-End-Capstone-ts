@@ -1,13 +1,13 @@
-import { Col, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { GetBoLocaleIdResponse } from "../../../interfaces/interfaces";
 
-function BackOfficeLocaleHeader() {
+function BackOfficeLocalePage() {
   const locale: GetBoLocaleIdResponse | null = useSelector((state: RootState) => state.backoffice.localeById);
 
   return (
-    <div>
+    <Container>
       <Row className="my-1">
         <Col className="col-12">
           <div
@@ -86,8 +86,8 @@ function BackOfficeLocaleHeader() {
           </Col>
         )}
       </Row>
-    </div>
+    </Container>
   );
 }
 
-export default BackOfficeLocaleHeader;
+export default BackOfficeLocalePage;

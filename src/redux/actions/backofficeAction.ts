@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { url } from "../../functions/config";
 import { fetchWithAuth } from "../../functions/interceptor";
-import { setIsLoading } from "../reducers/stateReducer";
+import { setIsLoading, toggleRefresh } from "../reducers/stateReducer";
 import { AppDispatch } from "../store/store";
 import { setListaLocaliById, setLocaleById } from "../reducers/backofficeReducer";
 import { GetBoLocaleIdResponse, GetRistorantiByIdAziendaResponse } from "../../interfaces/interfaces";
@@ -44,6 +44,29 @@ export const getRistorantiById = (id: number, navigate: NavigateFunction) => asy
     }
   } catch (error) {
     toast.error("Errore nel recupero dei ristoranti");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
+export const confirmEvaso = (idOrder: number, idRistorante: number | null) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "backoffice/confirmevaso", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ idOrder, idRistorante }),
+    });
+
+    if (response.ok) {
+      dispatch(toggleRefresh());
+      toast.success("Ordine confermato con successo");
+    } else {
+      throw new Error("Errore nella conferma dell'ordine");
+    }
+  } catch (error) {
+    toast.error("Errore nella conferma dell'ordine");
   } finally {
     dispatch(setIsLoading(false));
   }

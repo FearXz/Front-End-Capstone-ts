@@ -10,7 +10,6 @@ interface ModalOrderDetailProps {
 
 function ModalOrderDetail(props: ModalOrderDetailProps) {
   const order: BoOrdiniLocaleId | null = useSelector((state: RootState) => state.backoffice.selectedOrderModal);
-  console.log(order);
 
   return (
     <div>
