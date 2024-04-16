@@ -7,7 +7,7 @@ function BackOfficeLocalePage() {
   const locale: GetBoLocaleIdResponse | null = useSelector((state: RootState) => state.backoffice.localeById);
 
   return (
-    <Container>
+    <Container style={{ maxWidth: 1200 }}>
       <Row className="my-1">
         <Col className="col-12">
           <div
