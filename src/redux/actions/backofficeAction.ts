@@ -4,7 +4,11 @@ import { fetchWithAuth } from "../../functions/interceptor";
 import { setIsLoading, toggleRefresh } from "../reducers/stateReducer";
 import { AppDispatch } from "../store/store";
 import { setListaLocaliById, setLocaleById } from "../reducers/backofficeReducer";
-import { GetBoLocaleIdResponse, GetRistorantiByIdAziendaResponse } from "../../interfaces/interfaces";
+import {
+  GetBoLocaleIdResponse,
+  GetRistorantiByIdAziendaResponse,
+  LocalMainModalEditDto,
+} from "../../interfaces/interfaces";
 import { NavigateFunction } from "react-router-dom";
 
 export const getListaRistorantiById = () => async (dispatch: AppDispatch) => {
@@ -55,6 +59,29 @@ export const confirmEvaso = (idOrder: number, idRistorante: number | null) => as
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ idOrder, idRistorante }),
+    });
+
+    if (response.ok) {
+      dispatch(toggleRefresh());
+      toast.success("Ordine confermato con successo");
+    } else {
+      throw new Error("Errore nella conferma dell'ordine");
+    }
+  } catch (error) {
+    toast.error("Errore nella conferma dell'ordine");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
+export const localeditmainmodal = (editObj: LocalMainModalEditDto) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "backoffice/localeditmainmodal", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editObj),
     });
 
     if (response.ok) {

@@ -289,3 +289,18 @@ export interface GetBoLocaleIdResponse {
   giorniDiChiusura: GiorniDiChiusura[];
   ordini: BoOrdiniLocaleId[];
 }
+
+export interface LocalMainModalEditDto {
+  idRistorante: number;
+  ristorante: string;
+  tag: string;
+  telefono: string;
+  descrizione: string;
+  oraApertura: string;
+  oraChiusura: string;
+  indirizzo: string;
+  citta: string;
+  cap: string;
+  latitudine: string;
+  longitudine: string;
+}

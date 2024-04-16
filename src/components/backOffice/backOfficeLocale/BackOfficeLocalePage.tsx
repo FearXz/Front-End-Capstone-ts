@@ -4,13 +4,27 @@ import { RootState } from "../../../redux/store/store";
 import { GetBoLocaleIdResponse } from "../../../interfaces/interfaces";
 import PreviewPage from "./BackOfficeLocalePage/PreviewPage";
 import { useState } from "react";
+import LocalMainModal from "./BackOfficeLocalePage/LocalMainModal";
 
 function BackOfficeLocalePage() {
   const locale: GetBoLocaleIdResponse | null = useSelector((state: RootState) => state.backoffice.localeById);
   const [preview, setPreview] = useState<boolean>(false);
 
+  const [mainModalShow, setMainModalShow] = useState(false);
+  const showMain = () => setMainModalShow(true);
+  const closeMain = () => setMainModalShow(false);
+
+  const [dayOffModalShow, setDayOffModalShow] = useState(false);
+  const closeDayOff = () => {
+    setDayOffModalShow(false);
+  };
+  const showDayOff = () => {
+    setDayOffModalShow(true);
+  };
+
   return (
     <Container>
+      <LocalMainModal show={mainModalShow} handleClose={closeMain} />
       <Row>
         <Col xs={1} className="d-flex align-items-center">
           <i className="bi bi-aspect-ratio fs-3 hover" onClick={() => setPreview((prev) => !prev)}></i>
@@ -19,7 +33,7 @@ function BackOfficeLocalePage() {
           <h1 className="text-center font-breef mt-2 mb-3">PANNELLO DI CONTROLLO</h1>
         </Col>
         <Col xs={1} className="d-flex align-items-center">
-          <i className="bi bi-pencil-square fs-3 hover"></i>
+          <i className="bi bi-pencil-square fs-3 hover" onClick={() => showMain()}></i>
         </Col>
       </Row>
       <Row>
@@ -46,7 +60,7 @@ function BackOfficeLocalePage() {
       </Row>
       <Row>
         <Col xs={12} lg={6} className=" ">
-          <h2 className="font-breef">Telefono </h2>
+          <h2 className="font-breef">Cellulare </h2>
           <p className=" fs-5">{locale?.telefono}</p>
         </Col>
         <Col xs={12} lg={6} className=" ">
