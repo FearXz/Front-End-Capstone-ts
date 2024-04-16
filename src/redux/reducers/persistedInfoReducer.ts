@@ -1,7 +1,7 @@
 //slice reducer
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CartOrderDto, CartProduct, CoordinateSearch, ListaRistorantiResponse } from "../../interfaces/interfaces";
-import { PROFILO, UTENTE } from "../../functions/config";
+import { LOCALE, PROFILO, UTENTE } from "../../functions/config";
 
 interface persistedInfoState {
   indirizzoCercato: CoordinateSearch | null;
@@ -12,6 +12,7 @@ interface persistedInfoState {
   selectedOption: string;
   selectedAziendaOption: string;
   selectedLoginPage: string;
+  selectedBoPage: string;
 }
 
 const initialState: persistedInfoState = {
@@ -23,6 +24,7 @@ const initialState: persistedInfoState = {
   selectedOption: PROFILO,
   selectedAziendaOption: PROFILO,
   selectedLoginPage: UTENTE,
+  selectedBoPage: LOCALE,
 };
 
 const persistedInfoReducer = createSlice({
@@ -105,6 +107,9 @@ const persistedInfoReducer = createSlice({
     setSelectedLoginPage: (state, action: PayloadAction<string>) => {
       state.selectedLoginPage = action.payload;
     },
+    setSelectedBoPage: (state, action: PayloadAction<string>) => {
+      state.selectedBoPage = action.payload;
+    },
   },
 });
 
@@ -122,5 +127,6 @@ export const {
   setSelectedProfileSection,
   setSelectedLoginPage,
   setSelectedAziendaSection,
+  setSelectedBoPage,
 } = persistedInfoReducer.actions;
 export default persistedInfoReducer.reducer;

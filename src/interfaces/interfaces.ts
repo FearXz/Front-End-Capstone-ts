@@ -231,3 +231,61 @@ export interface GetRistorantiByIdAziendaResponse {
   categorieRistorante: categorieRistorante[];
   giorniDiChiusura: GiorniDiChiusura[];
 }
+export interface BoIngredientiAcquistati {
+  idIngrediente: number;
+  nomeIngrediente: string;
+  prezzoIngrediente: number;
+  quantita: number;
+  isExtra: boolean;
+  isAttivo: boolean;
+}
+export interface BoProdottiAcquistati {
+  idProdottoRistorante: number;
+  nomeProdotto: string;
+  descrizioneProdotto: string;
+  prezzoProdotto: number;
+  imgProdotto: string | null;
+  isAttivo: boolean;
+  quantita: number;
+  prezzoTotale?: number;
+  categorieProdotto: TipiProdottoLocale[];
+  ingrediendiAcquistati: BoIngredientiAcquistati;
+}
+export interface BoOrdiniLocaleId {
+  idOrdini: number;
+  dataOrdine: string;
+  orarioConsegnaPrevista: string;
+  indirizzoConsegna: string;
+  isOrdineEvaso: boolean;
+  isOrdineConsegnato: boolean;
+  isPagato: boolean;
+  isRefunded: boolean;
+  note?: string;
+  totaleOrdine?: number;
+  stripeSessionId: string;
+  paymentIntentId?: string;
+  utente: UserData;
+  prodottiAcquistati: BoProdottiAcquistati[];
+}
+
+export interface GetBoLocaleIdResponse {
+  idAzienda: number;
+  partitaIva: string;
+  idRistorante: number;
+  nomeRistorante: string;
+  indirizzo: string;
+  citta: string;
+  cap: string;
+  latitudine: string;
+  longitudine: string;
+  telefono: string;
+  orarioApertura: string;
+  orarioChiusura: string;
+  imgCopertina: string | null;
+  imgLogo: string | null;
+  descrizione: string | null;
+  tagRistorante: string;
+  categorieRistorante: categorieRistorante[];
+  giorniDiChiusura: GiorniDiChiusura[];
+  ordini: BoOrdiniLocaleId[];
+}

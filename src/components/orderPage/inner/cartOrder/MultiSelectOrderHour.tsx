@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { LocaleIdResponse } from "../../../../interfaces/interfaces";
 import { AppDispatch, RootState } from "../../../../redux/store/store";
-import { format, addMinutes, parse, isBefore, addDays, setSeconds, setMinutes, setHours } from "date-fns";
+import { format, addMinutes, parse, addDays, setSeconds, setMinutes, setHours } from "date-fns";
 import { useEffect, useState } from "react";
 import { toggleRefresh } from "../../../../redux/reducers/stateReducer";
 import { setSelectedHour } from "../../../../redux/reducers/persistedInfoReducer";
@@ -11,6 +11,7 @@ function MultiSelectOrderHour() {
   const locale: LocaleIdResponse | null = useSelector((state: RootState) => state.searchRistorante.localeById);
   const refresh: boolean = useSelector((state: RootState) => state.global.refresh);
   const selectedHour: string | null = useSelector((state: RootState) => state.persist.selectedHour);
+  const isChiuso: boolean = useSelector((state: RootState) => state.order.isChiuso);
   const now: Date = new Date();
   const openingTime: Date = locale ? parse(locale.orarioApertura, "HH:mm:ss", new Date()) : new Date();
   const closingTime: Date = locale ? parse(locale.orarioChiusura, "HH:mm:ss", new Date()) : new Date();
@@ -44,7 +45,7 @@ function MultiSelectOrderHour() {
   useEffect(() => {
     checkSelectedHour(selectedHour);
     const intervalId = setInterval(() => {
-      if (now.getTime() >= currentTime.getTime() && now.getTime() <= fixedClosingTime.getTime()) {
+      if (!isChiuso) {
         // Trigger a re-render by updating the state
         dispatch(toggleRefresh());
       }

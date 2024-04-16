@@ -3,8 +3,9 @@ import { url } from "../../functions/config";
 import { fetchWithAuth } from "../../functions/interceptor";
 import { setIsLoading } from "../reducers/stateReducer";
 import { AppDispatch } from "../store/store";
-import { setListaLocaliById } from "../reducers/backofficeReducer";
-import { GetRistorantiByIdAziendaResponse } from "../../interfaces/interfaces";
+import { setListaLocaliById, setLocaleById } from "../reducers/backofficeReducer";
+import { GetBoLocaleIdResponse, GetRistorantiByIdAziendaResponse } from "../../interfaces/interfaces";
+import { NavigateFunction } from "react-router-dom";
 
 export const getListaRistorantiById = () => async (dispatch: AppDispatch) => {
   try {
@@ -14,6 +15,28 @@ export const getListaRistorantiById = () => async (dispatch: AppDispatch) => {
       const data: GetRistorantiByIdAziendaResponse[] = await response.json();
       dispatch(setListaLocaliById(data));
       console.log(data);
+
+      toast.success("Dati Ristoranti  ottenuti con successo");
+    } else {
+      throw new Error("Errore nel recupero dei ristoranti");
+    }
+  } catch (error) {
+    toast.error("Errore nel recupero dei ristoranti");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
+export const getRistorantiById = (id: number, navigate: NavigateFunction) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "backoffice/getristorantebyid/" + id);
+    if (response.ok) {
+      const data: GetBoLocaleIdResponse[] = await response.json();
+      dispatch(setLocaleById(data[0]));
+      console.log(data[0]);
+      if (!data[0]) {
+        navigate("/backoffice");
+      }
 
       toast.success("Dati Ristoranti  ottenuti con successo");
     } else {

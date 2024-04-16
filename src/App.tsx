@@ -19,6 +19,7 @@ import AuthPageAzienda from "./components/authPageAzienda/AuthPageAzienda";
 import AziendaPage from "./components/aziendaPage/AziendaPage";
 import ContactPage from "./components/contactPage/ContactPage";
 import BackOfficePage from "./components/backOffice/BackOfficePage";
+import BackOfficeLocale from "./components/backOffice/BackOfficeLocale";
 
 function App() {
   return (
@@ -68,15 +69,25 @@ function App() {
             </AuthRoute>
           }
         />
-        <Route
-          path="/backoffice"
-          element={
-            <AuthRoute role={[AZIENDA]}>
-              {" "}
-              <BackOfficePage />{" "}
-            </AuthRoute>
-          }
-        />
+
+        <Route path="/backoffice">
+          <Route
+            index
+            element={
+              <AuthRoute role={[AZIENDA]}>
+                <BackOfficePage />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="local/:id"
+            element={
+              <AuthRoute role={[AZIENDA]}>
+                <BackOfficeLocale />
+              </AuthRoute>
+            }
+          />
+        </Route>
       </Routes>
       <MyFooter />
     </BrowserRouter>

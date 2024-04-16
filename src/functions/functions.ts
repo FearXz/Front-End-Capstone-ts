@@ -50,18 +50,10 @@ export function getTotalPrice(newProduct: CartProduct): number {
 
   return total;
 }
+
 export function isChiuso(orarioApertura: string, orarioChiusura: string): boolean {
   const now = new Date();
 
-  /*   let midnight = setSeconds(setMinutes(setHours(now, 0), 0), 0);
-  midnight = addDays(midnight, 1);
- */
-  /*   let sixAM = setSeconds(setMinutes(setHours(now, 6), 0), 0);
-  // console.log("sixAMNormale: " + sixAM);
-  if (now.getTime() >= sixAM.getTime()) {
-    sixAM = addDays(sixAM, 1);
-    // console.log("sixAM+1: " + sixAM);
-  } */
   const [hoursOpen, minutesOpen, secondsOpen] = orarioApertura.split(":").map(Number);
   let oraApertura = setSeconds(setMinutes(setHours(now, hoursOpen), minutesOpen), secondsOpen);
   const [hours, minutes, seconds] = orarioChiusura.split(":").map(Number);

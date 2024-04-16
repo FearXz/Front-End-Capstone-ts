@@ -5,3 +5,6 @@ export const AZIENDA: string = "AZIENDA";
 export const DASHBOARD: string = "dashboard";
 export const PROFILO: string = "profilo";
 export const ORDINI: string = "ordini";
+export const LOCALE: string = "locale";
+export const INGREDIENTI: string = "ingredienti";
+export const PRODOTTI: string = "prodotti";
