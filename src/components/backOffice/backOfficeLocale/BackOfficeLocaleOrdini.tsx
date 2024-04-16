@@ -1,4 +1,4 @@
-import { Button, Card, Dropdown, Form, Row } from "react-bootstrap";
+import { Button, Card, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
 import { useRef, useState } from "react";
@@ -7,16 +7,23 @@ import { AppDispatch, RootState } from "../../../redux/store/store";
 import { setSelectedOrderModal } from "../../../redux/reducers/backofficeReducer";
 import ModalOrderDetail from "./BackOfficeLocaleOrdini/ModalOrderDetail";
 import { confirmEvaso } from "../../../redux/actions/backofficeAction";
+import FormFiltroOrdini from "./BackOfficeLocaleOrdini/FormFiltroOrdini";
+import { ALLORDER, CONFIRMED, READY, TODO } from "../../../functions/config";
 
 function BackOfficeLocaleOrdini() {
   const dispatch: AppDispatch = useDispatch();
   const locale: GetBoLocaleIdResponse | null = useSelector((state: RootState) => state.backoffice.localeById);
-  const [search, setSearch] = useState<string>("");
+  const searchFilter: string = useSelector((state: RootState) => state.backoffice.searchFilterOrder);
+  const statusFilter: string = useSelector((state: RootState) => state.backoffice.statusFilterOrder);
   const filteredOrdini = locale?.ordini?.filter(
     (ordini) =>
-      ordini.utente.nome.toLowerCase().includes(search.toLowerCase()) ||
-      ordini.utente.cognome.toLowerCase().includes(search.toLowerCase()) ||
-      ordini.idOrdini.toString().includes(search)
+      (ordini.utente.nome.toLowerCase().includes(searchFilter.toLowerCase()) ||
+        ordini.utente.cognome.toLowerCase().includes(searchFilter.toLowerCase()) ||
+        ordini.idOrdini.toString().includes(searchFilter)) &&
+      (statusFilter === ALLORDER ||
+        (statusFilter === TODO && !ordini.isOrdineEvaso) ||
+        (statusFilter === READY && ordini.isOrdineEvaso && !ordini.isOrdineConsegnato) ||
+        (statusFilter === CONFIRMED && ordini.isOrdineConsegnato))
   );
   const ordini = [...(filteredOrdini || [])].reverse();
 
@@ -65,27 +72,9 @@ function BackOfficeLocaleOrdini() {
   return (
     <div className="mt-3 mb-5 h-100">
       <ModalOrderDetail show={show} handleClose={handleClose} />
-      <div className="mb-3 d-flex align-item-center">
-        <Form.Control
-          className="rounded-0 fix-h-50  my-input focus"
-          type="text"
-          placeholder="Cerca Ordine"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <Dropdown className="d-flex align-item-center">
-          <Dropdown.Toggle className="btn btn-leaf-500 text-white button-border-success rounded-0" id="dropdown-basic">
-            Filtro
-          </Dropdown.Toggle>
-          <Dropdown.Menu className="rounded-0 ">
-            <Dropdown.Item className="sideHover">Tutti gli ordini</Dropdown.Item>
-            <Dropdown.Item className="sideHover">Da preparare</Dropdown.Item>
-            <Dropdown.Item className="sideHover">Pronti</Dropdown.Item>
-            <Dropdown.Item className="sideHover">Confermati</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </div>
+      <FormFiltroOrdini />
       <div className="" style={{ minHeight: "750px" }}>
+        <h2 className=" text-center">{statusFilter}</h2>
         {currentOrders &&
           currentOrders.map((ordine, index) => (
             <Card key={`ordini-` + index} className="rounded-0 mb-3">
