@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CartProduct, CoordinateSearch, LocaleIdResponse } from "../../../../interfaces/interfaces";
 import { AppDispatch, RootState } from "../../../../redux/store/store";
 import { clearCart } from "../../../../redux/reducers/persistedInfoReducer";
+import { addDays, isAfter, parse } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -9,6 +10,7 @@ function CartSummary() {
   const cart: CartProduct[] = useSelector((state: RootState) => state.persist.cart);
   const locale: LocaleIdResponse | null = useSelector((state: RootState) => state.searchRistorante.localeById);
   const luogoConsegna: CoordinateSearch | null = useSelector((state: RootState) => state.persist.indirizzoCercato);
+  const selectedHour: string | null = useSelector((state: RootState) => state.persist.selectedHour);
   const isChiuso: boolean = useSelector((state: RootState) => state.order.isChiuso);
 
   const dispatch: AppDispatch = useDispatch();
@@ -17,7 +19,14 @@ function CartSummary() {
   function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (cart.length > 0) {
-      if (!isChiuso) {
+      let now = new Date();
+      let selectedDate = selectedHour ? parse(selectedHour, "HH:mm", new Date()) : null;
+
+      if (selectedDate && isAfter(now, selectedDate)) {
+        selectedDate = addDays(selectedDate, 1);
+      }
+
+      if (!isChiuso && selectedHour && selectedDate && isAfter(selectedDate, now)) {
         if (locale && luogoConsegna) {
           navigate("/checkout");
         }

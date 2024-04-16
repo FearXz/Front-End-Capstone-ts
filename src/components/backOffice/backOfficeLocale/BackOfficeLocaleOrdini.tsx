@@ -47,7 +47,7 @@ function BackOfficeLocaleOrdini() {
 
   return (
     <div className="mt-3 mb-5 h-100">
-      <div className="" style={{ minHeight: "700px" }}>
+      <div className="" style={{ minHeight: "750px" }}>
         {currentOrders &&
           currentOrders.map((ordine, index) => (
             <Card key={`ordini-` + index} className="rounded-0 mb-3">
