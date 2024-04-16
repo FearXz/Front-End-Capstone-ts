@@ -58,6 +58,10 @@ main {
 .text-green {
   color: #63b34a;
 }
+.hover:hover {
+  cursor: pointer;
+  color: #63b34a;
+}
 .loader {
   background: rgba(0, 0, 0, 0.8);
   position: fixed;
