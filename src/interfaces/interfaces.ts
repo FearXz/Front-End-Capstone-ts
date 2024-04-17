@@ -74,6 +74,7 @@ export interface categorieRistorante {
 export interface GiorniDiChiusura {
   nomeGiorno: string;
   numeroGiorno: number;
+  idGiorniChiusura?: number;
 }
 export interface ListaRistorantiResponse {
   idAzienda: number;
@@ -267,7 +268,6 @@ export interface BoOrdiniLocaleId {
   utente: UserData;
   prodottiAcquistati: BoProdottiAcquistati[];
 }
-
 export interface GetBoLocaleIdResponse {
   idAzienda: number;
   partitaIva: string;
@@ -289,7 +289,6 @@ export interface GetBoLocaleIdResponse {
   giorniDiChiusura: GiorniDiChiusura[];
   ordini: BoOrdiniLocaleId[];
 }
-
 export interface LocalMainModalEditDto {
   idRistorante: number;
   ristorante: string;
@@ -303,4 +302,8 @@ export interface LocalMainModalEditDto {
   cap: string;
   latitudine: string;
   longitudine: string;
+}
+export interface GiorniDiChiusuraDto {
+  idRistorante: number;
+  idGiorniChiusura: number[];
 }

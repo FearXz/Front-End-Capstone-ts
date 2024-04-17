@@ -3,10 +3,12 @@ import { url } from "../../functions/config";
 import { fetchWithAuth } from "../../functions/interceptor";
 import { setIsLoading, toggleRefresh } from "../reducers/stateReducer";
 import { AppDispatch } from "../store/store";
-import { setListaLocaliById, setLocaleById } from "../reducers/backofficeReducer";
+import { setListaGiorniDiChiusura, setListaLocaliById, setLocaleById } from "../reducers/backofficeReducer";
 import {
   GetBoLocaleIdResponse,
   GetRistorantiByIdAziendaResponse,
+  GiorniDiChiusura,
+  GiorniDiChiusuraDto,
   LocalMainModalEditDto,
 } from "../../interfaces/interfaces";
 import { NavigateFunction } from "react-router-dom";
@@ -30,6 +32,24 @@ export const getListaRistorantiById = () => async (dispatch: AppDispatch) => {
     dispatch(setIsLoading(false));
   }
 };
+export const getGiorniDiChiusura = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "backoffice/getgiornidichiusura/");
+    if (response.ok) {
+      const data: GiorniDiChiusura[] = await response.json();
+      dispatch(setListaGiorniDiChiusura(data));
+
+      console.log(data);
+    } else {
+      throw new Error("Errore nel recupero dei giorni di chiusura");
+    }
+  } catch (error) {
+    toast.error("Errore nel recupero dei giorni di chiusura");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
 export const getRistorantiById = (id: number, navigate: NavigateFunction) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsLoading(true));
@@ -46,6 +66,29 @@ export const getRistorantiById = (id: number, navigate: NavigateFunction) => asy
     }
   } catch (error) {
     toast.error("Errore nel recupero dei ristoranti");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
+export const putGiorniChiusura = (newDayOff: GiorniDiChiusuraDto) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "backoffice/putgiornichiusura", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newDayOff),
+    });
+
+    if (response.ok) {
+      dispatch(toggleRefresh());
+      toast.success("Ordine confermato con successo");
+    } else {
+      throw new Error("Errore nella conferma dell'ordine");
+    }
+  } catch (error) {
+    toast.error("Errore nella conferma dell'ordine");
   } finally {
     dispatch(setIsLoading(false));
   }

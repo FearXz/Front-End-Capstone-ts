@@ -1,6 +1,11 @@
 //slice reducer
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { BoOrdiniLocaleId, GetBoLocaleIdResponse, GetRistorantiByIdAziendaResponse } from "../../interfaces/interfaces";
+import {
+  BoOrdiniLocaleId,
+  GetBoLocaleIdResponse,
+  GetRistorantiByIdAziendaResponse,
+  GiorniDiChiusura,
+} from "../../interfaces/interfaces";
 import { ALLORDER } from "../../functions/config";
 
 interface backofficeState {
@@ -9,6 +14,7 @@ interface backofficeState {
   selectedOrderModal: BoOrdiniLocaleId | null;
   searchFilterOrder: string;
   statusFilterOrder: string;
+  listaGiorniDiChiusura: GiorniDiChiusura[];
 }
 
 const initialState: backofficeState = {
@@ -17,6 +23,7 @@ const initialState: backofficeState = {
   selectedOrderModal: null,
   searchFilterOrder: "",
   statusFilterOrder: ALLORDER,
+  listaGiorniDiChiusura: [],
 };
 
 const backofficeReducer = createSlice({
@@ -39,10 +46,19 @@ const backofficeReducer = createSlice({
     setStatusFilterOrder: (state, action: PayloadAction<string>) => {
       state.statusFilterOrder = action.payload;
     },
+    setListaGiorniDiChiusura: (state, action: PayloadAction<GiorniDiChiusura[]>) => {
+      state.listaGiorniDiChiusura = action.payload;
+    },
   },
 });
 
 // Esporto solo l'azione definita nello slice
-export const { setListaLocaliById, setLocaleById, setSelectedOrderModal, setSearchFilterOrder, setStatusFilterOrder } =
-  backofficeReducer.actions;
+export const {
+  setListaLocaliById,
+  setLocaleById,
+  setSelectedOrderModal,
+  setSearchFilterOrder,
+  setStatusFilterOrder,
+  setListaGiorniDiChiusura,
+} = backofficeReducer.actions;
 export default backofficeReducer.reducer;

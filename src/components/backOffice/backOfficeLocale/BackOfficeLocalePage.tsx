@@ -5,6 +5,7 @@ import { GetBoLocaleIdResponse } from "../../../interfaces/interfaces";
 import PreviewPage from "./BackOfficeLocalePage/PreviewPage";
 import { useState } from "react";
 import LocalMainModal from "./BackOfficeLocalePage/LocalMainModal";
+import LocalDayOffModal from "./BackOfficeLocalePage/LocalDayOffModal";
 
 function BackOfficeLocalePage() {
   const locale: GetBoLocaleIdResponse | null = useSelector((state: RootState) => state.backoffice.localeById);
@@ -20,7 +21,8 @@ function BackOfficeLocalePage() {
 
   return (
     <Container>
-      <LocalMainModal show={mainModalShow} handleClose={closeMain} />
+      {mainModalShow && <LocalMainModal show={mainModalShow} handleClose={closeMain} />}
+      {dayOffModalShow && <LocalDayOffModal show={dayOffModalShow} handleClose={closeDayOff} />}
       <Row>
         <Col xs={1} className="d-flex align-items-center">
           <i className="bi bi-aspect-ratio fs-3 hover" onClick={() => setPreview((prev) => !prev)}></i>
@@ -67,7 +69,7 @@ function BackOfficeLocalePage() {
       <Row>
         <Col xs={12} lg={6} className=" ">
           <div className="d-flex align-items-center">
-            <i className="bi bi-pencil-square fs-4 hover me-2"></i>
+            <i className="bi bi-pencil-square fs-4 hover me-2" onClick={() => showDayOff()}></i>
             <h2 className="font-breef">Giorni Chiusura </h2>
           </div>
           <p className=" fs-5">{locale?.giorniDiChiusura.map((g) => g.nomeGiorno + " ")}</p>
