@@ -67,23 +67,23 @@ export function isChiuso(orarioApertura: string, orarioChiusura: string): boolea
       return false; // The place is open
     }
   } else {
-    // Closing time is on the next day
+    // apertura e chiusura lo stesso giorno
     if (now.getTime() < oraApertura.getTime()) {
       oraApertura = addDays(oraApertura, -1);
       if (now.getTime() < oraApertura.getTime() || now.getTime() >= oraChiusura.getTime()) {
-        return true; // The place is closed
+        return true; // chiuso
       } else {
-        return false; // The place is open
+        return false; // aperto
       }
     } else if (now.getTime() >= oraChiusura.getTime()) {
       oraChiusura = addDays(oraChiusura, 1);
       if (now.getTime() < oraApertura.getTime() || now.getTime() >= oraChiusura.getTime()) {
-        return true; // The place is closed
+        return true;
       } else {
-        return false; // The place is open
+        return false;
       }
     } else {
-      return false; // The place is open
+      return false;
     }
   }
 }

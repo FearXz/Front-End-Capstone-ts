@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { GetBoLocaleIdResponse, LocalMainModalEditDto, OSMResponse } from "../../../../interfaces/interfaces";
 import { AppDispatch, RootState } from "../../../../redux/store/store";
-import { Button, Col, FloatingLabel, Form, Modal, Row } from "react-bootstrap";
+import { Col, FloatingLabel, Form, Modal, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { localeditmainmodal } from "../../../../redux/actions/backofficeAction";
