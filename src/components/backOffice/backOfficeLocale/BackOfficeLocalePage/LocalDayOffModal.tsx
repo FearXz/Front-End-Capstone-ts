@@ -19,7 +19,7 @@ function LocalDayOffModal(props: LocalDayOffModalProps) {
   const [newDayOff, setNewDayOff] = useState<GiorniDiChiusura[]>(giorniDiChiusura ? giorniDiChiusura : []);
 
   let giorniOrdinati = [...listaChiusura];
-  const rifOrdine = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"];
+  const rifOrdine = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdi", "Sabato", "Domenica"];
 
   giorniOrdinati = [...listaChiusura].sort((a, b) => rifOrdine.indexOf(a.nomeGiorno) - rifOrdine.indexOf(b.nomeGiorno));
   console.log(newDayOff);
