@@ -206,12 +206,9 @@ function LocalMainModal(props: LocalMainModalProps) {
             </Row>
             <Row className=" justify-content-between">
               <Col>
-                <button
-                  className="rounded-0 text-white btn btn-gray-500 button-border-gray "
-                  onClick={props.handleClose}
-                >
+                <div className="rounded-0 text-white btn btn-gray-500 button-border-gray" onClick={props.handleClose}>
                   CHIUDI
-                </button>
+                </div>
               </Col>
               <Col className="text-end">
                 <button className="rounded-0 text-white btn btn-leaf-500 button-border-success" type="submit">
