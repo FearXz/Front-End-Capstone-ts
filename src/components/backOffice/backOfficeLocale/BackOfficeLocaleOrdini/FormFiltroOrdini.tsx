@@ -5,12 +5,17 @@ import { setSearchFilterOrder, setStatusFilterOrder } from "../../../../redux/re
 import { ALLORDER, CONFIRMED, READY, TODO } from "../../../../functions/config";
 import { toggleRefresh } from "../../../../redux/reducers/stateReducer";
 
-function FormFiltroOrdini() {
+interface FormFiltroOrdiniProps {
+  setCurrentPage: (page: number) => void;
+}
+
+function FormFiltroOrdini(props: FormFiltroOrdiniProps) {
   const dispatch: AppDispatch = useDispatch();
   const searchValue: string = useSelector((state: RootState) => state.backoffice.searchFilterOrder);
 
   function handleStatusFilter(status: string) {
     dispatch(setStatusFilterOrder(status));
+    props.setCurrentPage(1);
     dispatch(toggleRefresh());
   }
 

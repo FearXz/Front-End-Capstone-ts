@@ -72,7 +72,7 @@ function BackOfficeLocaleOrdini() {
   return (
     <div className="mt-3 mb-5 h-100">
       <ModalOrderDetail show={show} handleClose={handleClose} />
-      <FormFiltroOrdini />
+      <FormFiltroOrdini setCurrentPage={setCurrentPage} />
       <div className="" style={{ minHeight: "750px" }}>
         <h2 className=" text-center font-breef">{statusFilter}</h2>
         {currentOrders &&

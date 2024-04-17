@@ -15,12 +15,8 @@ function BackOfficeLocalePage() {
   const closeMain = () => setMainModalShow(false);
 
   const [dayOffModalShow, setDayOffModalShow] = useState(false);
-  const closeDayOff = () => {
-    setDayOffModalShow(false);
-  };
-  const showDayOff = () => {
-    setDayOffModalShow(true);
-  };
+  const closeDayOff = () => setDayOffModalShow(false);
+  const showDayOff = () => setDayOffModalShow(true);
 
   return (
     <Container>
