@@ -307,3 +307,7 @@ export interface GiorniDiChiusuraDto {
   idRistorante: number;
   idGiorniChiusura: number[];
 }
+export interface TagCategorieDto {
+  idRistorante: number;
+  IdTagCategoria: number[];
+}

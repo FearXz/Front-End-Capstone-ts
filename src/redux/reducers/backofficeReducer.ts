@@ -5,6 +5,7 @@ import {
   GetBoLocaleIdResponse,
   GetRistorantiByIdAziendaResponse,
   GiorniDiChiusura,
+  categorieRistorante,
 } from "../../interfaces/interfaces";
 import { ALLORDER } from "../../functions/config";
 
@@ -15,6 +16,7 @@ interface backofficeState {
   searchFilterOrder: string;
   statusFilterOrder: string;
   listaGiorniDiChiusura: GiorniDiChiusura[];
+  listaTagCategories: categorieRistorante[];
 }
 
 const initialState: backofficeState = {
@@ -24,6 +26,7 @@ const initialState: backofficeState = {
   searchFilterOrder: "",
   statusFilterOrder: ALLORDER,
   listaGiorniDiChiusura: [],
+  listaTagCategories: [],
 };
 
 const backofficeReducer = createSlice({
@@ -49,6 +52,9 @@ const backofficeReducer = createSlice({
     setListaGiorniDiChiusura: (state, action: PayloadAction<GiorniDiChiusura[]>) => {
       state.listaGiorniDiChiusura = action.payload;
     },
+    setListaTagCategories: (state, action: PayloadAction<categorieRistorante[]>) => {
+      state.listaTagCategories = action.payload;
+    },
   },
 });
 
@@ -60,5 +66,6 @@ export const {
   setSearchFilterOrder,
   setStatusFilterOrder,
   setListaGiorniDiChiusura,
+  setListaTagCategories,
 } = backofficeReducer.actions;
 export default backofficeReducer.reducer;

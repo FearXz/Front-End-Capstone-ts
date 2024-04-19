@@ -1,15 +1,21 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../redux/store/store";
 import { GetBoLocaleIdResponse } from "../../../interfaces/interfaces";
 import PreviewPage from "./BackOfficeLocalePage/PreviewPage";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import LocalMainModal from "./BackOfficeLocalePage/LocalMainModal";
 import LocalDayOffModal from "./BackOfficeLocalePage/LocalDayOffModal";
+import LocalTagCategoriesModal from "./BackOfficeLocalePage/LocalTagCategoriesModal";
+import { updateCopertina, updateLogo } from "../../../redux/actions/backofficeAction";
 
 function BackOfficeLocalePage() {
   const locale: GetBoLocaleIdResponse | null = useSelector((state: RootState) => state.backoffice.localeById);
   const [preview, setPreview] = useState<boolean>(false);
+  const logoInputRef = useRef<HTMLInputElement>(null);
+  const copertinaInputRef = useRef<HTMLInputElement>(null);
+
+  const dispatch: AppDispatch = useDispatch();
 
   const [mainModalShow, setMainModalShow] = useState(false);
   const showMain = () => setMainModalShow(true);
@@ -19,10 +25,32 @@ function BackOfficeLocalePage() {
   const closeDayOff = () => setDayOffModalShow(false);
   const showDayOff = () => setDayOffModalShow(true);
 
+  const [categoriesModalShow, setCategoriesModalShow] = useState(false);
+  const closeCategories = () => setCategoriesModalShow(false);
+  const showCategories = () => setCategoriesModalShow(true);
+
+  function handleLogo(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files && e.target.files[0]) {
+      const formData = new FormData();
+      formData.append("logo", e.target.files[0]);
+
+      dispatch(updateLogo(formData, locale?.idRistorante as number));
+    }
+  }
+  function handleCopertina(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files && e.target.files[0]) {
+      const formData = new FormData();
+      formData.append("copertina", e.target.files[0]);
+
+      dispatch(updateCopertina(formData, locale?.idRistorante as number));
+    }
+  }
+
   return (
     <Container>
       {mainModalShow && <LocalMainModal show={mainModalShow} handleClose={closeMain} />}
       {dayOffModalShow && <LocalDayOffModal show={dayOffModalShow} handleClose={closeDayOff} />}
+      {categoriesModalShow && <LocalTagCategoriesModal show={categoriesModalShow} handleClose={closeCategories} />}
       <Row>
         <Col xs={1} className="d-flex align-items-center">
           <i className="bi bi-aspect-ratio fs-3 hover" onClick={() => setPreview((prev) => !prev)}></i>
@@ -76,7 +104,7 @@ function BackOfficeLocalePage() {
         </Col>
         <Col xs={12} lg={6} className=" ">
           <div className="d-flex align-items-center">
-            <i className="bi bi-pencil-square fs-4 hover me-2"></i>
+            <i className="bi bi-pencil-square fs-4 hover me-2" onClick={() => showCategories()}></i>
             <h2 className="font-breef">Tag Categorie </h2>
           </div>
           <p className=" fs-5">{locale?.categorieRistorante.map((c) => c.nomeCategoria + " ")}</p>
@@ -85,18 +113,30 @@ function BackOfficeLocalePage() {
       <Row>
         <Col xs={12} lg={6} className=" ">
           <div className="d-flex align-items-center">
-            <i className="bi bi-pencil-square fs-4 hover me-2"></i>
+            <i
+              className="bi bi-pencil-square fs-4 hover me-2"
+              onClick={() => {
+                logoInputRef.current?.click();
+              }}
+            ></i>
             <h2 className="font-breef">Logo </h2>
           </div>
           <img className=" fix-h-80 fix-w-80" src={locale?.imgLogo ? locale?.imgLogo : ""} alt="logo" />
         </Col>
         <Col xs={12} lg={6} className=" ">
           <div className="d-flex align-items-center">
-            <i className="bi bi-pencil-square fs-4 hover me-2"></i>
+            <i
+              className="bi bi-pencil-square fs-4 hover me-2"
+              onClick={() => {
+                copertinaInputRef.current?.click();
+              }}
+            ></i>
             <h2 className="font-breef">Copertina</h2>
           </div>
           <img className=" fix-w-200 " src={locale?.imgCopertina ? locale?.imgCopertina : ""} alt="copertina" />
         </Col>
+        <input accept="image/*" type="file" hidden ref={logoInputRef} onChange={handleLogo} />
+        <input accept="image/*" type="file" hidden ref={copertinaInputRef} onChange={handleCopertina} />
       </Row>
       {preview && <PreviewPage />}
     </Container>
