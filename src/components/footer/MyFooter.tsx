@@ -22,7 +22,7 @@ function MyFooter() {
                   Blog
                 </Link>
                 <span className="d-block"></span>
-                <Link to={""} className="text-gray-500 text-decoration-none">
+                <Link to={"/contatti"} className="text-gray-500 text-decoration-none">
                   <strong>Contatti</strong>
                 </Link>
                 <span className="d-block"></span>
@@ -36,26 +36,36 @@ function MyFooter() {
             <h4 className="h4 text-white font-breef ">CITTÀ</h4>
 
             <div className="py-lg-3 py-1 fs-5 ">
-              <a href="https://take2me.it/cerca/rimini" className="text-gray-500 text-decoration-none  ">
+              <Link
+                to="http://localhost:5173/searchlocal/Rimini"
+                className="text-gray-500 text-decoration-none  d-block"
+              >
                 Rimini
-              </a>
-              <span className="d-block"></span>
-              <a href="https://take2me.it/cerca/riccione" className="text-gray-500 text-decoration-none  ">
+              </Link>
+              <Link
+                to="http://localhost:5173/searchlocal/Riccione"
+                className="text-gray-500 text-decoration-none  d-block"
+              >
                 Riccione
-              </a>
-              <span className="d-block"></span>
-              <a href="https://take2me.it/cerca/misano-adriatico" className="text-gray-500 text-decoration-none  ">
+              </Link>
+              <Link
+                to="http://localhost:5173/searchlocal/Misano%20Adriatico"
+                className="text-gray-500 text-decoration-none  d-block"
+              >
                 Misano Adriatico
-              </a>
-              <span className="d-block"></span>
-              <a href="https://take2me.it/cerca/cattolica" className="text-gray-500 text-decoration-none  ">
+              </Link>
+              <Link
+                to="http://localhost:5173/searchlocal/Cattolica"
+                className="text-gray-500 text-decoration-none  d-block"
+              >
                 Cattolica
-              </a>
-              <span className="d-block"></span>
-              <a href="https://take2me.it/cerca/pesaro" className="text-gray-500 text-decoration-none  ">
+              </Link>
+              <Link
+                to="http://localhost:5173/searchlocal/Pesaro"
+                className="text-gray-500 text-decoration-none  d-block"
+              >
                 Pesaro
-              </a>
-              <span className="d-block"></span>
+              </Link>
             </div>
           </Col>
         </Row>
