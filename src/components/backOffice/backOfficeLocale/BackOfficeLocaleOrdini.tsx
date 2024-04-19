@@ -65,6 +65,9 @@ function BackOfficeLocaleOrdini() {
       } else if (newPage > totalPages) {
         setCurrentPage(totalPages);
         setSelectPage(false);
+      } else if (newPage < 1) {
+        setCurrentPage(1);
+        setSelectPage(false);
       }
     }
   }

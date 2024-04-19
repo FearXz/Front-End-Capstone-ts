@@ -42,6 +42,7 @@ function LocalDayOffModal(props: LocalDayOffModalProps) {
     };
     console.log(dayOffDto);
     dispatch(putGiorniChiusura(dayOffDto));
+    props.handleClose();
   }
 
   useEffect(() => {
