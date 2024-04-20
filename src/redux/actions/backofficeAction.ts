@@ -15,6 +15,7 @@ import {
   GiorniDiChiusura,
   GiorniDiChiusuraDto,
   LocalMainModalEditDto,
+  LocalStatusDto,
   TagCategorieDto,
   categorieRistorante,
 } from "../../interfaces/interfaces";
@@ -222,6 +223,29 @@ export const updateCopertina = (formData: FormData, idRistorante: number) => asy
     }
   } catch (error) {
     toast.error("Errore nel cambio dell'immagine");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
+export const updateStatus = (newStatus: LocalStatusDto) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "backoffice/updatelocalstatus", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newStatus),
+    });
+
+    if (response.ok) {
+      dispatch(toggleRefresh());
+      toast.success("Stato cambiato con successo");
+    } else {
+      throw new Error("Errore nel cambio dello stato");
+    }
+  } catch (error) {
+    toast.error("Errore nel cambio dello stato");
   } finally {
     dispatch(setIsLoading(false));
   }

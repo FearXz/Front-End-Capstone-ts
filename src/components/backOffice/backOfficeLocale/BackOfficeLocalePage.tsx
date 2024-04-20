@@ -1,17 +1,17 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store/store";
-import { GetBoLocaleIdResponse } from "../../../interfaces/interfaces";
-import PreviewPage from "./BackOfficeLocalePage/PreviewPage";
+import { GetBoLocaleIdResponse, LocalStatusDto } from "../../../interfaces/interfaces";
+
 import { useRef, useState } from "react";
 import LocalMainModal from "./BackOfficeLocalePage/LocalMainModal";
 import LocalDayOffModal from "./BackOfficeLocalePage/LocalDayOffModal";
 import LocalTagCategoriesModal from "./BackOfficeLocalePage/LocalTagCategoriesModal";
-import { updateCopertina, updateLogo } from "../../../redux/actions/backofficeAction";
+import { updateCopertina, updateLogo, updateStatus } from "../../../redux/actions/backofficeAction";
 
 function BackOfficeLocalePage() {
   const locale: GetBoLocaleIdResponse | null = useSelector((state: RootState) => state.backoffice.localeById);
-  const [preview, setPreview] = useState<boolean>(false);
+
   const logoInputRef = useRef<HTMLInputElement>(null);
   const copertinaInputRef = useRef<HTMLInputElement>(null);
 
@@ -45,6 +45,14 @@ function BackOfficeLocalePage() {
       dispatch(updateCopertina(formData, locale?.idRistorante as number));
     }
   }
+  function handleStatus() {
+    const newStatus: LocalStatusDto = {
+      idRistorante: locale?.idRistorante as number,
+      isAttivo: !locale?.isAttivo,
+    };
+
+    dispatch(updateStatus(newStatus));
+  }
 
   return (
     <Container>
@@ -53,7 +61,12 @@ function BackOfficeLocalePage() {
       {categoriesModalShow && <LocalTagCategoriesModal show={categoriesModalShow} handleClose={closeCategories} />}
       <Row>
         <Col xs={1} className="d-flex align-items-center">
-          <i className="bi bi-aspect-ratio fs-3 hover" onClick={() => setPreview((prev) => !prev)}></i>
+          {locale &&
+            (locale.isAttivo ? (
+              <i className="bi bi-shield-check fs-3 hover" onClick={handleStatus}></i>
+            ) : (
+              <i className="bi bi-shield-x fs-3 hover" onClick={handleStatus}></i>
+            ))}
         </Col>
         <Col xs={10}>
           <h1 className="text-center font-breef mt-2 mb-3">PANNELLO DI CONTROLLO</h1>
@@ -138,7 +151,6 @@ function BackOfficeLocalePage() {
         <input accept="image/*" type="file" hidden ref={logoInputRef} onChange={handleLogo} />
         <input accept="image/*" type="file" hidden ref={copertinaInputRef} onChange={handleCopertina} />
       </Row>
-      {preview && <PreviewPage />}
     </Container>
   );
 }

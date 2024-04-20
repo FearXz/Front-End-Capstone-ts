@@ -273,6 +273,7 @@ export interface GetBoLocaleIdResponse {
   partitaIva: string;
   idRistorante: number;
   nomeRistorante: string;
+  isAttivo?: boolean;
   indirizzo: string;
   citta: string;
   cap: string;
@@ -310,4 +311,8 @@ export interface GiorniDiChiusuraDto {
 export interface TagCategorieDto {
   idRistorante: number;
   IdTagCategoria: number[];
+}
+export interface LocalStatusDto {
+  idRistorante: number;
+  isAttivo: boolean;
 }
