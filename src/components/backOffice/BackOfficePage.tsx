@@ -55,6 +55,11 @@ function BackOfficePage() {
                   <Link
                     to={`/backoffice/local/${ristorante.idRistorante}`}
                     className="d-block restaurant-img fix-h-230  rounded-3 position-relative "
+                    style={
+                      ristorante?.isAttivo === false
+                        ? { filter: "grayscale(100%)", opacity: "0.5" /* , pointerEvents: "none" */ }
+                        : {}
+                    }
                   >
                     <img
                       className="w-100 h-100 rounded-3 object-fit-cover"

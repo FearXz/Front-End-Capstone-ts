@@ -217,6 +217,7 @@ export interface GetRistorantiByIdAziendaResponse {
   idAzienda: number;
   idRistorante: number;
   nomeRistorante: string;
+  isAttivo?: boolean;
   tagRistorante: string;
   indirizzo: string;
   citta: string;
