@@ -20,6 +20,7 @@ import AziendaPage from "./components/aziendaPage/AziendaPage";
 import ContactPage from "./components/contactPage/ContactPage";
 import BackOfficePage from "./components/backOffice/BackOfficePage";
 import BackOfficeLocale from "./components/backOffice/BackOfficeLocale";
+import BackOfficeNewLocal from "./components/backOffice/BackOfficeNewLocal";
 
 function App() {
   return (
@@ -91,7 +92,7 @@ function App() {
             path="newlocal"
             element={
               <AuthRoute role={[AZIENDA]}>
-                <BackOfficeLocale />
+                <BackOfficeNewLocal />
               </AuthRoute>
             }
           />
