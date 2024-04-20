@@ -1,7 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store/store";
-import { GetBoLocaleIdResponse } from "../../../../interfaces/interfaces";
+import { RootState } from "../../../../../redux/store/store";
+import { GetBoLocaleIdResponse } from "../../../../../interfaces/interfaces";
 
 function PreviewPage() {
   const locale: GetBoLocaleIdResponse | null = useSelector((state: RootState) => state.backoffice.localeById);

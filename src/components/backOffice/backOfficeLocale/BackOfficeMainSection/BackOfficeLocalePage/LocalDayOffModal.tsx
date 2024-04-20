@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { GetBoLocaleIdResponse, GiorniDiChiusura, GiorniDiChiusuraDto } from "../../../../interfaces/interfaces";
-import { AppDispatch, RootState } from "../../../../redux/store/store";
+import { GetBoLocaleIdResponse, GiorniDiChiusura, GiorniDiChiusuraDto } from "../../../../../interfaces/interfaces";
+import { AppDispatch, RootState } from "../../../../../redux/store/store";
 import { Col, Form, Modal } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { getGiorniDiChiusura, putGiorniChiusura } from "../../../../redux/actions/backofficeAction";
+import { getGiorniDiChiusura, putGiorniChiusura } from "../../../../../redux/actions/backofficeAction";
 
 interface LocalDayOffModalProps {
   show: boolean;

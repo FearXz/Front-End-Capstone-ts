@@ -1,13 +1,13 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../redux/store/store";
-import { GetBoLocaleIdResponse, LocalStatusDto } from "../../../interfaces/interfaces";
+import { AppDispatch, RootState } from "../../../../redux/store/store";
+import { GetBoLocaleIdResponse, LocalStatusDto } from "../../../../interfaces/interfaces";
 
 import { useRef, useState } from "react";
 import LocalMainModal from "./BackOfficeLocalePage/LocalMainModal";
 import LocalDayOffModal from "./BackOfficeLocalePage/LocalDayOffModal";
 import LocalTagCategoriesModal from "./BackOfficeLocalePage/LocalTagCategoriesModal";
-import { updateCopertina, updateLogo, updateStatus } from "../../../redux/actions/backofficeAction";
+import { updateCopertina, updateLogo, updateStatus } from "../../../../redux/actions/backofficeAction";
 
 function BackOfficeLocalePage() {
   const locale: GetBoLocaleIdResponse | null = useSelector((state: RootState) => state.backoffice.localeById);

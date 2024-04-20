@@ -2,8 +2,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { LOCALE, ORDINI } from "../../../functions/config";
 
-import BackOfficeLocaleOrdini from "./BackOfficeLocaleOrdini";
-import BackOfficeLocalePage from "./BackOfficeLocalePage";
+import BackOfficeLocaleOrdini from "./BackOfficeMainSection/BackOfficeLocaleOrdini";
+import BackOfficeLocalePage from "./BackOfficeMainSection/BackOfficeLocalePage";
 
 function BackOfficeMainSection() {
   const selectedOption: string = useSelector((state: RootState) => state.persist.selectedBoPage);

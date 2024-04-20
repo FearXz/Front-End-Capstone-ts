@@ -2,13 +2,13 @@ import { Button, Card, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
 import { useRef, useState } from "react";
-import { BoOrdiniLocaleId, GetBoLocaleIdResponse } from "../../../interfaces/interfaces";
-import { AppDispatch, RootState } from "../../../redux/store/store";
-import { setSelectedOrderModal } from "../../../redux/reducers/backofficeReducer";
+import { BoOrdiniLocaleId, GetBoLocaleIdResponse } from "../../../../interfaces/interfaces";
+import { AppDispatch, RootState } from "../../../../redux/store/store";
+import { setSelectedOrderModal } from "../../../../redux/reducers/backofficeReducer";
 import ModalOrderDetail from "./BackOfficeLocaleOrdini/ModalOrderDetail";
-import { confirmEvaso } from "../../../redux/actions/backofficeAction";
+import { confirmEvaso } from "../../../../redux/actions/backofficeAction";
 import FormFiltroOrdini from "./BackOfficeLocaleOrdini/FormFiltroOrdini";
-import { ALLORDER, CONFIRMED, READY, TODO } from "../../../functions/config";
+import { ALLORDER, CONFIRMED, READY, TODO } from "../../../../functions/config";
 
 function BackOfficeLocaleOrdini() {
   const dispatch: AppDispatch = useDispatch();

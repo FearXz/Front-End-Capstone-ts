@@ -1,7 +1,7 @@
 import { Col, Modal, Row } from "react-bootstrap";
-import { RootState } from "../../../../redux/store/store";
+import { RootState } from "../../../../../redux/store/store";
 import { useSelector } from "react-redux";
-import { BoOrdiniLocaleId, BoProdottiAcquistati } from "../../../../interfaces/interfaces";
+import { BoOrdiniLocaleId, BoProdottiAcquistati } from "../../../../../interfaces/interfaces";
 
 interface ModalOrderDetailProps {
   show: boolean;

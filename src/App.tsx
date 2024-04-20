@@ -87,6 +87,14 @@ function App() {
               </AuthRoute>
             }
           />
+          <Route
+            path="newlocal"
+            element={
+              <AuthRoute role={[AZIENDA]}>
+                <BackOfficeLocale />
+              </AuthRoute>
+            }
+          />
         </Route>
       </Routes>
       <MyFooter />

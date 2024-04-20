@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { GetBoLocaleIdResponse, TagCategorieDto, categorieRistorante } from "../../../../interfaces/interfaces";
-import { AppDispatch, RootState } from "../../../../redux/store/store";
+import { GetBoLocaleIdResponse, TagCategorieDto, categorieRistorante } from "../../../../../interfaces/interfaces";
+import { AppDispatch, RootState } from "../../../../../redux/store/store";
 import { Col, Form, Modal } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { getTagCategories, putTagCategories } from "../../../../redux/actions/backofficeAction";
+import { getTagCategories, putTagCategories } from "../../../../../redux/actions/backofficeAction";
 
 interface LocalTagCategoriesModalProps {
   show: boolean;
