@@ -104,7 +104,7 @@ function BackOfficeLocalePage() {
         </Col>
         <Col xs={12} lg={6} className=" ">
           <h2 className="font-breef">Descrizione</h2>
-          <p className=" fs-5">{locale?.descrizione}</p>
+          <p className=" fs-6">{locale?.descrizione}</p>
         </Col>
       </Row>
       <Row>
