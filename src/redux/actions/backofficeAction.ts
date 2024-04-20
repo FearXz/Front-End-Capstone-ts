@@ -16,6 +16,7 @@ import {
   GiorniDiChiusuraDto,
   LocalMainModalEditDto,
   LocalStatusDto,
+  NewLocalDto,
   TagCategorieDto,
   categorieRistorante,
 } from "../../interfaces/interfaces";
@@ -246,6 +247,29 @@ export const updateStatus = (newStatus: LocalStatusDto) => async (dispatch: AppD
     }
   } catch (error) {
     toast.error("Errore nel cambio dello stato");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
+export const newLocalPost = (newLocal: NewLocalDto) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "backoffice/newlocalpost", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newLocal),
+    });
+
+    if (response.ok) {
+      dispatch(toggleRefresh());
+      toast.success("Local Creato con successo");
+    } else {
+      throw new Error("Errore nella creazione del locale");
+    }
+  } catch (error) {
+    toast.error("Errore nella creazione del locale");
   } finally {
     dispatch(setIsLoading(false));
   }

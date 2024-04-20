@@ -316,3 +316,16 @@ export interface LocalStatusDto {
   idRistorante: number;
   isAttivo: boolean;
 }
+export interface NewLocalDto {
+  nomeRistorante: string;
+  tagRistorante: string;
+  telefono: string;
+  descrizione: string;
+  oraApertura: string;
+  oraChiusura: string;
+  indirizzo: string;
+  citta: string;
+  cap: string;
+  latitudine?: string;
+  longitudine?: string;
+}
