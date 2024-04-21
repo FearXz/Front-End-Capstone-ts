@@ -11,7 +11,7 @@ function BackOfficePage() {
   const dispatch: AppDispatch = useDispatch();
   const refresh: boolean = useSelector((state: RootState) => state.global.refresh);
   const listaRistoranti: GetRistorantiByIdAziendaResponse[] | null = useSelector(
-    (state: RootState) => state.backoffice.listaLocaliById
+    (state: RootState) => state.backoffice.localeById
   );
   const [search, setSearch] = useState<string>("");
 

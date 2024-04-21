@@ -13,3 +13,7 @@ export const ALLORDER: string = "TUTTI GLI ORDINI";
 export const TODO: string = "DA PREPARARE";
 export const READY: string = "PRONTI";
 export const CONFIRMED: string = "CONFERMATI";
+
+export const TUTTI: string = "TUTTI";
+export const ATTIVATI: string = "ATTIVATI";
+export const DISATTIVATI: string = "DISATTIVATI";

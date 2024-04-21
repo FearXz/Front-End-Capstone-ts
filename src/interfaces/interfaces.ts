@@ -100,6 +100,7 @@ export interface IngredientiProdottiLocale {
   idIngrediente: number;
   nomeIngrediente: string;
   prezzoIngrediente: number;
+  isAttivo?: boolean;
 }
 export interface TipiProdottoLocale {
   idTipoProdotto: number;
@@ -329,4 +330,10 @@ export interface NewLocalDto {
   cap: string;
   latitudine?: string;
   longitudine?: string;
+}
+export interface CreateIngredientDto {
+  localeId: number;
+  nomeIngrediente: string;
+  prezzoIngrediente: number;
+  isAttivo: boolean;
 }

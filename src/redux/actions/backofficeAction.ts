@@ -5,15 +5,18 @@ import { setIsLoading, toggleRefresh } from "../reducers/stateReducer";
 import { AppDispatch } from "../store/store";
 import {
   setListaGiorniDiChiusura,
+  setListaIngredienti,
   setListaLocaliById,
   setListaTagCategories,
   setLocaleById,
 } from "../reducers/backofficeReducer";
 import {
+  CreateIngredientDto,
   GetBoLocaleIdResponse,
   GetRistorantiByIdAziendaResponse,
   GiorniDiChiusura,
   GiorniDiChiusuraDto,
+  IngredientiProdottiLocale,
   LocalMainModalEditDto,
   LocalStatusDto,
   NewLocalDto,
@@ -270,6 +273,47 @@ export const newLocalPost = (newLocal: NewLocalDto) => async (dispatch: AppDispa
     }
   } catch (error) {
     toast.error("Errore nella creazione del locale");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
+export const newIngredientiPost = (newIngredient: CreateIngredientDto) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "backoffice/newingredientipost", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newIngredient),
+    });
+
+    if (response.ok) {
+      dispatch(toggleRefresh());
+      toast.success("Local Creato con successo");
+    } else {
+      throw new Error("Errore nella creazione del locale");
+    }
+  } catch (error) {
+    toast.error("Errore nella creazione del locale");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
+export const GetIngredientiRistorante = (idRistorante: number) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "backoffice/getingredientiristorante/" + idRistorante);
+    if (response.ok) {
+      const data: IngredientiProdottiLocale[] = await response.json();
+      dispatch(setListaIngredienti(data));
+
+      console.log(data);
+    } else {
+      throw new Error("Errore nel recupero dei giorni di chiusura");
+    }
+  } catch (error) {
+    toast.error("Errore nel recupero dei giorni di chiusura");
   } finally {
     dispatch(setIsLoading(false));
   }

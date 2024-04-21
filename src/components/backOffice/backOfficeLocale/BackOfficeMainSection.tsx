@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { LOCALE, ORDINI } from "../../../functions/config";
+import { INGREDIENTI, LOCALE, ORDINI } from "../../../functions/config";
 
 import BackOfficeLocaleOrdini from "./BackOfficeMainSection/BackOfficeLocaleOrdini";
 import BackOfficeLocalePage from "./BackOfficeMainSection/BackOfficeLocalePage";
+import BackOfficeLocaleIngredienti from "./BackOfficeLocaleIngredienti";
 
 function BackOfficeMainSection() {
   const selectedOption: string = useSelector((state: RootState) => state.persist.selectedBoPage);
@@ -13,6 +14,9 @@ function BackOfficeMainSection() {
   }
   if (selectedOption === ORDINI) {
     return <BackOfficeLocaleOrdini />;
+  }
+  if (selectedOption === INGREDIENTI) {
+    return <BackOfficeLocaleIngredienti />;
   }
   return <div></div>;
 }
