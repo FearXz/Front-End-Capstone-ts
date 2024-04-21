@@ -63,9 +63,9 @@ function BackOfficeLocalePage() {
         <Col xs={1} className="d-flex align-items-center">
           {locale &&
             (locale.isAttivo ? (
-              <i className="bi bi-shield-check fs-3 hover" onClick={handleStatus}></i>
+              <i className="bi bi-shield-check fs-3 hover text-leaf-500" onClick={handleStatus}></i>
             ) : (
-              <i className="bi bi-shield-x fs-3 hover" onClick={handleStatus}></i>
+              <i className="bi bi-shield-x fs-3 hover text-danger" onClick={handleStatus}></i>
             ))}
         </Col>
         <Col xs={10}>
