@@ -78,7 +78,7 @@ function BackOfficeLocaleIngredienti() {
         )}
         {filteredLista &&
           filteredLista.map((ing: IngredientiProdottiLocale, index: number) => (
-            <Col xs={12} md={6} lg={4} xxl={3} key={`ing-${index}`} className=" mb-3">
+            <Col xs={12} md={6} lg={4} xxl={3} key={`ing-${index}`} className="">
               <Card className=" rounded-0">
                 <Card.Body>
                   <div className=" d-flex justify-content-between align-item-center mb-1"></div>

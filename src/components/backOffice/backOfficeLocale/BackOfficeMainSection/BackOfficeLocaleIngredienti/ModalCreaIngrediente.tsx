@@ -41,7 +41,7 @@ function ModalCreaIngrediente(props: ModalCreaIngredienteProps) {
           <Modal.Title>Crea Ingrediente</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form noValidate onSubmit={handleSubmit(onSubmit)} className="pt-lg-5 pt-md-4 ">
+          <Form noValidate onSubmit={handleSubmit(onSubmit)} className="">
             <Row>
               <Col xs={12} lg={6} className="form-floating mb-3 ">
                 <FloatingLabel controlId="ristorante" label="Nome Ingrediente*" className="">
