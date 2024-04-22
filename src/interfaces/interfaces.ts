@@ -337,3 +337,10 @@ export interface CreateIngredientDto {
   prezzoIngrediente: number;
   isAttivo: boolean;
 }
+export interface UpdateIngredientDto {
+  idIngrediente: number;
+  localeId: number;
+  nomeIngrediente: string;
+  prezzoIngrediente: number;
+  isAttivo: boolean;
+}
