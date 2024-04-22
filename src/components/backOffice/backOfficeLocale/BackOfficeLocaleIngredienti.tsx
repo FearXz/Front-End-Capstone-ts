@@ -98,7 +98,7 @@ function BackOfficeLocaleIngredienti() {
                 <Card.Body>
                   <div className=" d-flex justify-content-between align-item-center mb-1"></div>
                   <Card.Title className="fs-6 d-flex justify-content-between">
-                    <div>{ing.nomeIngrediente}</div>
+                    <div style={ing.isAttivo ? { color: "green" } : { color: "red" }}>{ing.nomeIngrediente}</div>
                     <div>
                       <i className="bi bi-pencil-square hover " onClick={() => handleEditShow(ing)}></i>
                     </div>
