@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Card, Col, Dropdown, Form, Row } from "react-bootstrap";
-import { ATTIVATI, DISATTIVATI, TUTTI } from "../../../functions/config";
-import { AppDispatch, RootState } from "../../../redux/store/store";
+import { ATTIVATI, DISATTIVATI, TUTTI } from "../../../../functions/config";
+import { AppDispatch, RootState } from "../../../../redux/store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { GetBoLocaleIdResponse, IngredientiProdottiLocale } from "../../../interfaces/interfaces";
-import { GetIngredientiRistorante } from "../../../redux/actions/backofficeAction";
-import ModalCreaIngrediente from "./BackOfficeMainSection/BackOfficeLocaleIngredienti/ModalCreaIngrediente";
-import ModalEditIngrediente from "./BackOfficeMainSection/BackOfficeLocaleIngredienti/ModalEditIngrediente";
+import { GetBoLocaleIdResponse, IngredientiProdottiLocale } from "../../../../interfaces/interfaces";
+import { GetIngredientiRistorante } from "../../../../redux/actions/backofficeAction";
+import ModalCreaIngrediente from "./BackOfficeLocaleIngredienti/ModalCreaIngrediente";
+import ModalEditIngrediente from "./BackOfficeLocaleIngredienti/ModalEditIngrediente";
 
 function BackOfficeLocaleIngredienti() {
   const dispatch: AppDispatch = useDispatch();

@@ -4,7 +4,8 @@ import { INGREDIENTI, LOCALE, ORDINI, PRODOTTI } from "../../../functions/config
 
 import BackOfficeLocaleOrdini from "./BackOfficeMainSection/BackOfficeLocaleOrdini";
 import BackOfficeLocalePage from "./BackOfficeMainSection/BackOfficeLocalePage";
-import BackOfficeLocaleIngredienti from "./BackOfficeLocaleIngredienti";
+import BackOfficeLocaleIngredienti from "./BackOfficeMainSection/BackOfficeLocaleIngredienti";
+import BackOfficeLocaleProdotti from "./BackOfficeMainSection/BackOfficeLocaleProdotti";
 
 function BackOfficeMainSection() {
   const selectedOption: string = useSelector((state: RootState) => state.persist.selectedBoPage);
@@ -19,7 +20,7 @@ function BackOfficeMainSection() {
     return <BackOfficeLocaleIngredienti />;
   }
   if (selectedOption === PRODOTTI) {
-    return <div></div>;
+    return <BackOfficeLocaleProdotti />;
   }
   return <div></div>;
 }
