@@ -112,6 +112,7 @@ export interface ProdottiLocale {
   prezzoProdotto: number;
   descrizioneProdotto: string | null;
   imgProdotto: string | null;
+  isAttivo?: boolean;
   ingredienti: IngredientiProdottiLocale[];
   tipiProdotto: TipiProdottoLocale[];
 }

@@ -57,7 +57,7 @@ function BackOfficeLocaleIngredienti() {
         <Form.Control
           className="rounded-0 fix-h-50  my-input focus"
           type="text"
-          placeholder="Cerca Ordine"
+          placeholder="Cerca Ingrediente"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />

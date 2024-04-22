@@ -7,6 +7,7 @@ import {
   setListaGiorniDiChiusura,
   setListaIngredienti,
   setListaLocaliById,
+  setListaProdotti,
   setListaTagCategories,
   setLocaleById,
 } from "../reducers/backofficeReducer";
@@ -20,6 +21,7 @@ import {
   LocalMainModalEditDto,
   LocalStatusDto,
   NewLocalDto,
+  ProdottiLocale,
   TagCategorieDto,
   UpdateIngredientDto,
   categorieRistorante,
@@ -338,6 +340,24 @@ export const updateIngredientiPut = (updateIngredient: UpdateIngredientDto) => a
     }
   } catch (error) {
     toast.error("Errore nella modifica dell'ingrediente");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
+export const GetProdottiRistorante = (idRistorante: number) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "backoffice/getprodottiristorante/" + idRistorante);
+    if (response.ok) {
+      const data: ProdottiLocale[] = await response.json();
+      dispatch(setListaProdotti(data));
+
+      console.log(data);
+    } else {
+      throw new Error("Errore nel recupero dei prodotti");
+    }
+  } catch (error) {
+    toast.error("Errore nel recupero dei prodotti");
   } finally {
     dispatch(setIsLoading(false));
   }
