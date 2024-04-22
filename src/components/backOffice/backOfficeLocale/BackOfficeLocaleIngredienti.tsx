@@ -15,7 +15,6 @@ function BackOfficeLocaleIngredienti() {
   const listaIngredienti: IngredientiProdottiLocale[] | null = useSelector(
     (state: RootState) => state.backoffice.listaIngredienti
   );
-  console.log(listaIngredienti);
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [statusFilter, setStatusFilter] = useState<string>(ATTIVATI);
