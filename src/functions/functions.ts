@@ -35,6 +35,7 @@ export function groupProductsByType(locale: LocaleIdResponse | null): object {
       groupedProducts[tipo.nomeTipoProdotto].push(prodotto);
     });
   });
+
   const orderedProducts: any = {};
   tipiRef.forEach((tipo) => {
     if (groupedProducts[tipo]) {
