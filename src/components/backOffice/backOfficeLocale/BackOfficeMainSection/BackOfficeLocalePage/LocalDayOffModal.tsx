@@ -20,8 +20,7 @@ function LocalDayOffModal(props: LocalDayOffModalProps) {
 
   let giorniOrdinati = [...listaChiusura];
   const rifOrdine = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdi", "Sabato", "Domenica"];
-
-  giorniOrdinati = [...listaChiusura].sort((a, b) => rifOrdine.indexOf(a.nomeGiorno) - rifOrdine.indexOf(b.nomeGiorno));
+  giorniOrdinati.sort((a, b) => rifOrdine.indexOf(a.nomeGiorno) - rifOrdine.indexOf(b.nomeGiorno));
   console.log(newDayOff);
 
   const handleToggle = (giorno: GiorniDiChiusura) => {
