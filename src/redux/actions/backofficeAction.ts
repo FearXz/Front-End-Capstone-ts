@@ -21,6 +21,7 @@ import {
   LocalStatusDto,
   NewLocalDto,
   TagCategorieDto,
+  UpdateIngredientDto,
   categorieRistorante,
 } from "../../interfaces/interfaces";
 import { NavigateFunction } from "react-router-dom";
@@ -314,6 +315,29 @@ export const GetIngredientiRistorante = (idRistorante: number) => async (dispatc
     }
   } catch (error) {
     toast.error("Errore nel recupero dei giorni di chiusura");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
+export const updateIngredientiPut = (updateIngredient: UpdateIngredientDto) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "backoffice/updateingredienti", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateIngredient),
+    });
+
+    if (response.ok) {
+      dispatch(toggleRefresh());
+      toast.success("Ingrediente modificato con successo");
+    } else {
+      throw new Error("Errore nella modifica dell'ingrediente");
+    }
+  } catch (error) {
+    toast.error("Errore nella modifica dell'ingrediente");
   } finally {
     dispatch(setIsLoading(false));
   }

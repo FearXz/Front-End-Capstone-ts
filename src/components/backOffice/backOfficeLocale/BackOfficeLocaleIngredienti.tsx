@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetBoLocaleIdResponse, IngredientiProdottiLocale } from "../../../interfaces/interfaces";
 import { GetIngredientiRistorante } from "../../../redux/actions/backofficeAction";
 import ModalCreaIngrediente from "./BackOfficeMainSection/BackOfficeLocaleIngredienti/ModalCreaIngrediente";
+import ModalEditIngrediente from "./BackOfficeMainSection/BackOfficeLocaleIngredienti/ModalEditIngrediente";
 
 function BackOfficeLocaleIngredienti() {
   const dispatch: AppDispatch = useDispatch();
@@ -19,8 +20,6 @@ function BackOfficeLocaleIngredienti() {
   const [searchValue, setSearchValue] = useState<string>("");
   const [statusFilter, setStatusFilter] = useState<string>(ATTIVATI);
 
-  const [selectedEdit, setSelectedEdit] = useState<IngredientiProdottiLocale | null>(null);
-
   const [showCreateIng, setShowCreateIng] = useState<boolean>(false);
   const handleClose = () => setShowCreateIng(false);
   const handleShow = () => setShowCreateIng(true);
@@ -33,9 +32,17 @@ function BackOfficeLocaleIngredienti() {
   function handleStatusFilter(status: string) {
     setStatusFilter(status);
   }
-  function handleEdit(ing: IngredientiProdottiLocale) {
+
+  const [selectedEdit, setSelectedEdit] = useState<IngredientiProdottiLocale | null>(null);
+  const [showEditIng, setShowEditIng] = useState<boolean>(false);
+  const handleEditClose = () => {
+    setSelectedEdit(null);
+    setShowEditIng(false);
+  };
+  const handleEditShow = (ing: IngredientiProdottiLocale) => {
     setSelectedEdit(ing);
-  }
+    setShowEditIng(true);
+  };
 
   useEffect(() => {
     if (locale) dispatch(GetIngredientiRistorante(locale?.idRistorante as number));
@@ -76,6 +83,14 @@ function BackOfficeLocaleIngredienti() {
         {locale && showCreateIng && (
           <ModalCreaIngrediente localeId={locale?.idRistorante} show={showCreateIng} handleClose={handleClose} />
         )}
+        {locale && showEditIng && selectedEdit && (
+          <ModalEditIngrediente
+            localeId={locale?.idRistorante}
+            ingrediente={selectedEdit}
+            show={showEditIng}
+            handleClose={handleEditClose}
+          />
+        )}
         {filteredLista &&
           filteredLista.map((ing: IngredientiProdottiLocale, index: number) => (
             <Col xs={12} md={6} lg={4} xxl={3} key={`ing-${index}`} className="mb-3">
@@ -85,7 +100,7 @@ function BackOfficeLocaleIngredienti() {
                   <Card.Title className="fs-6 d-flex justify-content-between">
                     <div>{ing.nomeIngrediente}</div>
                     <div>
-                      <i className="bi bi-pencil-square hover " onClick={() => handleEdit(ing)}></i>
+                      <i className="bi bi-pencil-square hover " onClick={() => handleEditShow(ing)}></i>
                     </div>
                   </Card.Title>
                   <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
