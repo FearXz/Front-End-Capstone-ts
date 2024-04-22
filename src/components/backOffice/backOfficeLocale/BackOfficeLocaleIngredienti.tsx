@@ -17,7 +17,7 @@ function BackOfficeLocaleIngredienti() {
   );
 
   const [searchValue, setSearchValue] = useState<string>("");
-  const [statusFilter, setStatusFilter] = useState<string>(ATTIVATI);
+  const [statusFilter, setStatusFilter] = useState<string>(TUTTI);
 
   const [showCreateIng, setShowCreateIng] = useState<boolean>(false);
   const handleClose = () => setShowCreateIng(false);

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { INGREDIENTI, LOCALE, ORDINI } from "../../../functions/config";
+import { INGREDIENTI, LOCALE, ORDINI, PRODOTTI } from "../../../functions/config";
 
 import BackOfficeLocaleOrdini from "./BackOfficeMainSection/BackOfficeLocaleOrdini";
 import BackOfficeLocalePage from "./BackOfficeMainSection/BackOfficeLocalePage";
@@ -17,6 +17,9 @@ function BackOfficeMainSection() {
   }
   if (selectedOption === INGREDIENTI) {
     return <BackOfficeLocaleIngredienti />;
+  }
+  if (selectedOption === PRODOTTI) {
+    return <div></div>;
   }
   return <div></div>;
 }
