@@ -25,18 +25,24 @@ export function haversineDistance(lat1: number, lon1: number, lat2: number, lon2
 }
 export function groupProductsByType(locale: LocaleIdResponse | null): object {
   const groupedProducts: any = {};
+  const tipiRef: string[] = ["Antipasti", "Primi", "Secondi", "Pizze", "Panini", "Hamburger", "Bevande", "Dessert"];
 
   locale?.prodotti.forEach((prodotto) => {
     prodotto.tipiProdotto.forEach((tipo) => {
       if (!groupedProducts[tipo.nomeTipoProdotto]) {
         groupedProducts[tipo.nomeTipoProdotto] = [];
       }
-
       groupedProducts[tipo.nomeTipoProdotto].push(prodotto);
     });
   });
+  const orderedProducts: any = {};
+  tipiRef.forEach((tipo) => {
+    if (groupedProducts[tipo]) {
+      orderedProducts[tipo] = groupedProducts[tipo];
+    }
+  });
 
-  return groupedProducts;
+  return orderedProducts;
 }
 
 export function getTotalPrice(newProduct: CartProduct): number {
