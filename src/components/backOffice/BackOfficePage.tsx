@@ -10,14 +10,15 @@ import { GetRistorantiByIdAziendaResponse } from "../../interfaces/interfaces";
 function BackOfficePage() {
   const dispatch: AppDispatch = useDispatch();
   const refresh: boolean = useSelector((state: RootState) => state.global.refresh);
-  const listaRistoranti: GetRistorantiByIdAziendaResponse[] | null = useSelector(
-    (state: RootState) => state.backoffice.localeById
+  const ristoranti: GetRistorantiByIdAziendaResponse[] | null = useSelector(
+    (state: RootState) => state.backoffice.listaLocaliById
   );
   const [search, setSearch] = useState<string>("");
 
-  const filteredRistoranti = listaRistoranti?.filter((ristorante) =>
+  const filteredRistoranti = ristoranti?.filter((ristorante) =>
     ristorante.nomeRistorante.toLowerCase().includes(search.toLowerCase())
   );
+  console.log(filteredRistoranti);
 
   useEffect(() => {
     dispatch(getListaRistorantiById());
@@ -48,7 +49,7 @@ function BackOfficePage() {
         </Row>
 
         <TransitionGroup className="row">
-          {filteredRistoranti?.map((ristorante: GetRistorantiByIdAziendaResponse, index: number) => (
+          {filteredRistoranti?.map((ristorante, index: number) => (
             <CSSTransition key={`ristorante-${index}`} timeout={500} classNames="fade">
               <Col className="col-xxl-3 col-xl-4 col-sm-6 col-12 px-2">
                 <div className="py-2 px-2 my-3 shadow ">
