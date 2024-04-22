@@ -136,12 +136,12 @@ export const putGiorniChiusura = (newDayOff: GiorniDiChiusuraDto) => async (disp
 
     if (response.ok) {
       dispatch(toggleRefresh());
-      toast.success("Ordine confermato con successo");
+      toast.success("Modifica effettuata con successo");
     } else {
-      throw new Error("Errore nella conferma dell'ordine");
+      throw new Error("Errore nella modifica del giorno di chiusura");
     }
   } catch (error) {
-    toast.error("Errore nella conferma dell'ordine");
+    toast.error("Errore nella modifica del giorno di chiusura");
   } finally {
     dispatch(setIsLoading(false));
   }
