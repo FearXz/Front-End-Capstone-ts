@@ -15,6 +15,7 @@ import {
 import {
   CreateIngredientDto,
   CreateProductDto,
+  EditProductDto,
   GetBoLocaleIdResponse,
   GetRistorantiByIdAziendaResponse,
   GetTipoProdottoResponse,
@@ -392,6 +393,47 @@ export const newProdottoPost = (newLocal: CreateProductDto, imgFile: File | null
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newLocal),
+    });
+
+    if (response.ok) {
+      const idProdotto = await response.json();
+      console.log(idProdotto);
+
+      if (imgFile) {
+        const formData = new FormData();
+        formData.append("imgProdotto", imgFile);
+
+        const responseImg = await fetchWithAuth(url + "backoffice/updateimgprodotto/" + idProdotto, {
+          method: "PUT",
+          body: formData,
+        });
+
+        if (responseImg.ok) {
+          dispatch(toggleRefresh());
+          toast.success("Immagine aggiunta con successo");
+        } else {
+          throw new Error("Errore nell'aggiunta dell'immagine");
+        }
+      }
+      dispatch(toggleRefresh());
+    } else {
+      throw new Error("Errore nella creazione del prodotto");
+    }
+  } catch (error) {
+    toast.error("Errore nella creazione del prodotto");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
+export const editProdottoPut = (editLocal: EditProductDto, imgFile: File | null) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "backoffice/updateprodotto", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editLocal),
     });
 
     if (response.ok) {

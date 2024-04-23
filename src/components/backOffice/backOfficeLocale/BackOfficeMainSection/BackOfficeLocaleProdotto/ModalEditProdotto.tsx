@@ -3,13 +3,14 @@ import { AppDispatch, RootState } from "../../../../../redux/store/store";
 import { useForm } from "react-hook-form";
 import { Col, FloatingLabel, Form, Modal, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { GetIngredientiRistorante, GetListaTipi } from "../../../../../redux/actions/backofficeAction";
+import { GetIngredientiRistorante, GetListaTipi, editProdottoPut } from "../../../../../redux/actions/backofficeAction";
 import {
   EditProductDto,
   GetTipoProdottoResponse,
   IngredientiProdottiLocale,
   ProdottiLocale,
 } from "../../../../../interfaces/interfaces";
+import { toggleRefresh } from "../../../../../redux/reducers/stateReducer";
 
 interface ModalEditProdottoProps {
   show: boolean;
@@ -27,8 +28,6 @@ function ModalEditProdotto(props: ModalEditProdottoProps) {
   const [ingredientiSelezionati, setIngredientiSelezionati] = useState<number[]>([]);
   const [imgProdotto, setImgProdotto] = useState<File | null>(null);
 
-  console.log(props.prodotto);
-
   const {
     register,
     handleSubmit,
@@ -42,15 +41,14 @@ function ModalEditProdotto(props: ModalEditProdottoProps) {
       idRistorante: props.idRistorante,
       nomeProdotto: data.nomeProdotto,
       prezzoProdotto: data.prezzoProdotto,
-      isAttivo: true,
+      isAttivo: data.isAttivo ? data.isAttivo : false,
       idIngredienti: ingredientiSelezionati,
       descrizioneProdotto: data.descrizioneProdotto ? data.descrizioneProdotto : null,
       idTipiProdotto: data.idTipiProdotto != 0 ? data.idTipiProdotto : null,
     };
 
-    console.log(editProdottoDto);
-
-    // dispatch(newProdottoPost(newProdottoDto, imgProdotto));
+    dispatch(editProdottoPut(editProdottoDto, imgProdotto));
+    dispatch(toggleRefresh());
     props.handleClose();
   }
   function handleIngredienti(checked: boolean, idIngrediente: number) {
@@ -78,8 +76,14 @@ function ModalEditProdotto(props: ModalEditProdottoProps) {
       setValue("nomeProdotto", props.prodotto.nomeProdotto);
       setValue("prezzoProdotto", props.prodotto.prezzoProdotto);
       setValue("descrizioneProdotto", props.prodotto.descrizioneProdotto);
+      if (props.prodotto.isAttivo) {
+        setValue("isAttivo", props.prodotto.isAttivo);
+      }
       if (props.prodotto.categoriaProdotto && props.prodotto.categoriaProdotto.length > 0) {
         setValue("idTipiProdotto", props.prodotto.categoriaProdotto[0].idTipoProdotto);
+      }
+      if (props.prodotto.ingredienti && props.prodotto.ingredienti.length > 0) {
+        setIngredientiSelezionati(props.prodotto.ingredienti.map((ing) => ing.idIngrediente));
       }
     }
   }, [listaTipi, listaIngredienti, props.prodotto]);
@@ -88,11 +92,26 @@ function ModalEditProdotto(props: ModalEditProdottoProps) {
     <div>
       {" "}
       <Modal fullscreen show={props.show} onHide={props.handleClose} backdrop="static" keyboard={false}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modifica Prodotto</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form noValidate onSubmit={handleSubmit(onSubmit)} className="">
+        <Form noValidate onSubmit={handleSubmit(onSubmit)} className="">
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <div className="d-flex">
+                <span className="me-3">Modifica Prodotto</span>{" "}
+                <Form.Check
+                  type="switch"
+                  id="custom-switch"
+                  {...register("isAttivo")}
+                  label={props.prodotto?.isAttivo ? "Attivo" : "Disattivo"}
+                />
+                <img
+                  className="ms-1 fix-w-50 fix-h-50 object-fit-cover rounded-1"
+                  src={props.prodotto.imgProdotto || ""}
+                  alt=""
+                />
+              </div>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             <Row>
               <Col xs={12} lg={6} className="form-floating mb-3 ">
                 <FloatingLabel controlId="ristorante" label="Nome Prodotto*" className="">
@@ -175,12 +194,13 @@ function ModalEditProdotto(props: ModalEditProdottoProps) {
                 <Row>
                   {listaIngredienti &&
                     listaIngredienti.map((ing, index) => (
-                      <Col xs={6} lg={4} xxl={3} className="mt-2" key={"ing-" + index}>
+                      <Col xs={6} lg={4} xxl={3} className="mt-2" key={"prod-" + index}>
                         <Form.Check
                           type="switch"
                           id="custom-switch"
                           label={ing.nomeIngrediente}
                           value={ing.idIngrediente}
+                          checked={ingredientiSelezionati.includes(ing.idIngrediente)}
                           onChange={(e) => handleIngredienti(e.target.checked, ing.idIngrediente)}
                         />
                       </Col>
@@ -200,8 +220,8 @@ function ModalEditProdotto(props: ModalEditProdottoProps) {
                 </button>
               </Col>
             </Row>
-          </Form>
-        </Modal.Body>
+          </Modal.Body>
+        </Form>
       </Modal>
     </div>
   );

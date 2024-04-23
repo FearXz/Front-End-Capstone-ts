@@ -13,6 +13,7 @@ function BackOfficeLocaleProdotti() {
 
   const locale: GetBoLocaleIdResponse | null = useSelector((state: RootState) => state.backoffice.localeById);
   const listaProdotti: ProdottiLocale[] | null = useSelector((state: RootState) => state.backoffice.listaProdotti);
+  const refresh: boolean = useSelector((state: RootState) => state.global.refresh);
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [statusFilter, setStatusFilter] = useState<string>(TUTTI);
@@ -46,7 +47,7 @@ function BackOfficeLocaleProdotti() {
   }
   useEffect(() => {
     if (locale) dispatch(GetProdottiRistorante(locale?.idRistorante as number));
-  }, [locale]);
+  }, [locale, refresh]);
 
   return (
     <div className="mt-3 mb-5 h-100">
