@@ -3,7 +3,7 @@ import { AppDispatch, RootState } from "../../../../../redux/store/store";
 import { useForm } from "react-hook-form";
 import { Col, FloatingLabel, Form, Modal, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { GetIngredientiRistorante, GetListaTipi } from "../../../../../redux/actions/backofficeAction";
+import { GetIngredientiRistorante, GetListaTipi, newProdottoPost } from "../../../../../redux/actions/backofficeAction";
 import {
   CreateProductDto,
   GetTipoProdottoResponse,
@@ -41,15 +41,14 @@ function ModalCreaProdotto(props: ModalCreaProdottoProps) {
       descrizioneProdotto: data.descrizioneProdotto ? data.descrizioneProdotto : null,
       idTipiProdotto: data.idTipiProdotto != 0 ? data.idTipiProdotto : null,
     };
-
-    if (imgProdotto) {
+    /*     if (imgProdotto) {
       const formData = new FormData();
       formData.append("imgProdotto", imgProdotto);
       console.log(imgProdotto);
-    }
+    } */
     console.log(newProdottoDto);
 
-    // dispatch(newIngredientiPost(newIngredientDto));
+    dispatch(newProdottoPost(newProdottoDto, imgProdotto));
     // props.handleClose();
   }
 

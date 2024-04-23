@@ -383,7 +383,7 @@ export const GetListaTipi = () => async (dispatch: AppDispatch) => {
     dispatch(setIsLoading(false));
   }
 };
-export const newProdottoPost = (newLocal: CreateProductDto, imgFile: File) => async (dispatch: AppDispatch) => {
+export const newProdottoPost = (newLocal: CreateProductDto, imgFile: File | null) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsLoading(true));
     const response = await fetchWithAuth(url + "backoffice/newprodottopost", {
@@ -395,13 +395,31 @@ export const newProdottoPost = (newLocal: CreateProductDto, imgFile: File) => as
     });
 
     if (response.ok) {
+      const idProdotto = await response.json();
+      console.log(idProdotto);
+
+      if (imgFile) {
+        const formData = new FormData();
+        formData.append("imgProdotto", imgFile);
+
+        const responseImg = await fetchWithAuth(url + "backoffice/updateimgprodotto/" + idProdotto, {
+          method: "PUT",
+          body: formData,
+        });
+
+        if (responseImg.ok) {
+          dispatch(toggleRefresh());
+          toast.success("Immagine aggiunta con successo");
+        } else {
+          throw new Error("Errore nell'aggiunta dell'immagine");
+        }
+      }
       dispatch(toggleRefresh());
-      toast.success("Local Creato con successo");
     } else {
-      throw new Error("Errore nella creazione del locale");
+      throw new Error("Errore nella creazione del prodotto");
     }
   } catch (error) {
-    toast.error("Errore nella creazione del locale");
+    toast.error("Errore nella creazione del prodotto");
   } finally {
     dispatch(setIsLoading(false));
   }
