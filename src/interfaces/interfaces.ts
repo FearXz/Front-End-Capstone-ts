@@ -345,3 +345,16 @@ export interface UpdateIngredientDto {
   prezzoIngrediente: number;
   isAttivo: boolean;
 }
+export interface GetTipoProdottoResponse {
+  idTipoProdotto: number;
+  nomeTipoProdotto: string;
+}
+export interface CreateProductDto {
+  idRistorante: number;
+  nomeProdotto: string;
+  prezzoProdotto: number;
+  isAttivo: boolean;
+  descrizioneProdotto?: string | null;
+  idTipiProdotto?: number | null;
+  idIngredienti?: number[];
+}

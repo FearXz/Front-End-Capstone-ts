@@ -9,12 +9,15 @@ import {
   setListaLocaliById,
   setListaProdotti,
   setListaTagCategories,
+  setListaTipi,
   setLocaleById,
 } from "../reducers/backofficeReducer";
 import {
   CreateIngredientDto,
+  CreateProductDto,
   GetBoLocaleIdResponse,
   GetRistorantiByIdAziendaResponse,
+  GetTipoProdottoResponse,
   GiorniDiChiusura,
   GiorniDiChiusuraDto,
   IngredientiProdottiLocale,
@@ -358,6 +361,47 @@ export const GetProdottiRistorante = (idRistorante: number) => async (dispatch: 
     }
   } catch (error) {
     toast.error("Errore nel recupero dei prodotti");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
+export const GetListaTipi = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "backoffice/gettipoprodotti");
+    if (response.ok) {
+      const data: GetTipoProdottoResponse[] = await response.json();
+      dispatch(setListaTipi(data));
+
+      console.log(data);
+    } else {
+      throw new Error("Errore nel recupero dei Tipi di prodotti");
+    }
+  } catch (error) {
+    toast.error("Errore nel recupero dei Tipi di prodotti");
+  } finally {
+    dispatch(setIsLoading(false));
+  }
+};
+export const newProdottoPost = (newLocal: CreateProductDto, imgFile: File) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const response = await fetchWithAuth(url + "backoffice/newprodottopost", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newLocal),
+    });
+
+    if (response.ok) {
+      dispatch(toggleRefresh());
+      toast.success("Local Creato con successo");
+    } else {
+      throw new Error("Errore nella creazione del locale");
+    }
+  } catch (error) {
+    toast.error("Errore nella creazione del locale");
   } finally {
     dispatch(setIsLoading(false));
   }

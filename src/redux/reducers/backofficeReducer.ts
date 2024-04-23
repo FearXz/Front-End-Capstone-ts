@@ -4,6 +4,7 @@ import {
   BoOrdiniLocaleId,
   GetBoLocaleIdResponse,
   GetRistorantiByIdAziendaResponse,
+  GetTipoProdottoResponse,
   GiorniDiChiusura,
   IngredientiProdottiLocale,
   ProdottiLocale,
@@ -21,6 +22,7 @@ interface backofficeState {
   listaTagCategories: categorieRistorante[];
   listaIngredienti: IngredientiProdottiLocale[] | null;
   listaProdotti: ProdottiLocale[] | null;
+  listaTipi: GetTipoProdottoResponse[] | null;
 }
 
 const initialState: backofficeState = {
@@ -33,6 +35,7 @@ const initialState: backofficeState = {
   listaTagCategories: [],
   listaIngredienti: null,
   listaProdotti: null,
+  listaTipi: null,
 };
 
 const backofficeReducer = createSlice({
@@ -67,6 +70,9 @@ const backofficeReducer = createSlice({
     setListaProdotti: (state, action: PayloadAction<ProdottiLocale[]>) => {
       state.listaProdotti = action.payload;
     },
+    setListaTipi: (state, action: PayloadAction<GetTipoProdottoResponse[]>) => {
+      state.listaTipi = action.payload;
+    },
   },
 });
 
@@ -81,5 +87,6 @@ export const {
   setListaTagCategories,
   setListaIngredienti,
   setListaProdotti,
+  setListaTipi,
 } = backofficeReducer.actions;
 export default backofficeReducer.reducer;

@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from "../../../../redux/store/store";
 import { useEffect, useState } from "react";
 import { ATTIVATI, DISATTIVATI, TUTTI } from "../../../../functions/config";
 import { GetProdottiRistorante } from "../../../../redux/actions/backofficeAction";
+import ModalCreaProdotto from "./BackOfficeLocaleProdotto/ModalCreaProdotto";
 
 function BackOfficeLocaleProdotti() {
   const dispatch: AppDispatch = useDispatch();
@@ -23,22 +24,27 @@ function BackOfficeLocaleProdotti() {
       )
     : [];
 
-  const [showCreateIng, setShowCreateIng] = useState<boolean>(false);
-  const handleClose = () => setShowCreateIng(false);
-  const handleShow = () => setShowCreateIng(true);
+  const [showCreateProd, setShowCreateProd] = useState<boolean>(false);
+  const handleClose = () => setShowCreateProd(false);
+  const handleShow = () => setShowCreateProd(true);
 
   function handleStatusFilter(status: string) {
     setStatusFilter(status);
   }
-
   useEffect(() => {
     if (locale) dispatch(GetProdottiRistorante(locale?.idRistorante as number));
   }, [locale]);
 
   return (
     <div className="mt-3 mb-5 h-100">
+      {locale && showCreateProd && (
+        <ModalCreaProdotto show={showCreateProd} handleClose={handleClose} idRistorante={locale?.idRistorante} />
+      )}
       <div className="mb-3 d-flex align-item-center">
-        <button className="btn btn-leaf-500 text-white button-border-success rounded-0"> Crea</button>
+        <button className="btn btn-leaf-500 text-white button-border-success rounded-0" onClick={handleShow}>
+          {" "}
+          Crea
+        </button>
         <Form.Control
           className="rounded-0 fix-h-50  my-input focus"
           type="text"
@@ -67,7 +73,7 @@ function BackOfficeLocaleProdotti() {
         {/* MAP PRODOTTO */}
         {filteredLista &&
           filteredLista.map((prodotto, index: number) => (
-            <Col key={`prodotto-${index}`} className="col-xxl-6 col-12 py-md-3 py-2 ">
+            <Col key={`prodotto-${index}`} className="col-6 col-xl-4 col-xxxl-3 py-md-3 py-2 ">
               <div className="shadow h-100 p-md-3 p-2 ">
                 <Row>
                   <Col className={prodotto.imgProdotto ? "col-sm-4 col-12 d-flex align-item-center" : "d-none"}>
