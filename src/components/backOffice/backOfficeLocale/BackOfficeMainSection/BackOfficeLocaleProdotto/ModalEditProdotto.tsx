@@ -3,20 +3,22 @@ import { AppDispatch, RootState } from "../../../../../redux/store/store";
 import { useForm } from "react-hook-form";
 import { Col, FloatingLabel, Form, Modal, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { GetIngredientiRistorante, GetListaTipi, newProdottoPost } from "../../../../../redux/actions/backofficeAction";
+import { GetIngredientiRistorante, GetListaTipi } from "../../../../../redux/actions/backofficeAction";
 import {
-  CreateProductDto,
+  EditProductDto,
   GetTipoProdottoResponse,
   IngredientiProdottiLocale,
+  ProdottiLocale,
 } from "../../../../../interfaces/interfaces";
 
-interface ModalCreaProdottoProps {
+interface ModalEditProdottoProps {
   show: boolean;
   handleClose: () => void;
   idRistorante: number;
+  prodotto: ProdottiLocale;
 }
 
-function ModalCreaProdotto(props: ModalCreaProdottoProps) {
+function ModalEditProdotto(props: ModalEditProdottoProps) {
   const dispatch: AppDispatch = useDispatch();
   const listaTipi: GetTipoProdottoResponse[] | null = useSelector((state: RootState) => state.backoffice.listaTipi);
   const listaIngredienti: IngredientiProdottiLocale[] | null = useSelector(
@@ -25,14 +27,18 @@ function ModalCreaProdotto(props: ModalCreaProdottoProps) {
   const [ingredientiSelezionati, setIngredientiSelezionati] = useState<number[]>([]);
   const [imgProdotto, setImgProdotto] = useState<File | null>(null);
 
+  console.log(props.prodotto);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateProductDto>();
+    setValue,
+  } = useForm<EditProductDto>();
 
-  async function onSubmit(data: CreateProductDto) {
-    const newProdottoDto: CreateProductDto = {
+  async function onSubmit(data: EditProductDto) {
+    const editProdottoDto: EditProductDto = {
+      idProdottoRistorante: props.prodotto.idProdottoRistorante,
       idRistorante: props.idRistorante,
       nomeProdotto: data.nomeProdotto,
       prezzoProdotto: data.prezzoProdotto,
@@ -42,12 +48,11 @@ function ModalCreaProdotto(props: ModalCreaProdottoProps) {
       idTipiProdotto: data.idTipiProdotto != 0 ? data.idTipiProdotto : null,
     };
 
-    console.log(newProdottoDto);
+    console.log(editProdottoDto);
 
-    dispatch(newProdottoPost(newProdottoDto, imgProdotto));
+    // dispatch(newProdottoPost(newProdottoDto, imgProdotto));
     props.handleClose();
   }
-
   function handleIngredienti(checked: boolean, idIngrediente: number) {
     if (checked) {
       setIngredientiSelezionati([...ingredientiSelezionati, idIngrediente]);
@@ -66,14 +71,25 @@ function ModalCreaProdotto(props: ModalCreaProdottoProps) {
   useEffect(() => {
     dispatch(GetIngredientiRistorante(props.idRistorante));
     dispatch(GetListaTipi());
-  }, []);
+  }, [props.prodotto]);
+
+  useEffect(() => {
+    if (props.prodotto) {
+      setValue("nomeProdotto", props.prodotto.nomeProdotto);
+      setValue("prezzoProdotto", props.prodotto.prezzoProdotto);
+      setValue("descrizioneProdotto", props.prodotto.descrizioneProdotto);
+      if (props.prodotto.categoriaProdotto && props.prodotto.categoriaProdotto.length > 0) {
+        setValue("idTipiProdotto", props.prodotto.categoriaProdotto[0].idTipoProdotto);
+      }
+    }
+  }, [listaTipi, listaIngredienti, props.prodotto]);
 
   return (
     <div>
       {" "}
       <Modal fullscreen show={props.show} onHide={props.handleClose} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Crea Prodotto</Modal.Title>
+          <Modal.Title>Modifica Prodotto</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form noValidate onSubmit={handleSubmit(onSubmit)} className="">
@@ -191,4 +207,4 @@ function ModalCreaProdotto(props: ModalCreaProdottoProps) {
   );
 }
 
-export default ModalCreaProdotto;
+export default ModalEditProdotto;

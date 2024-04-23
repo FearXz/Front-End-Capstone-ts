@@ -114,6 +114,7 @@ export interface ProdottiLocale {
   imgProdotto: string | null;
   isAttivo?: boolean;
   ingredienti: IngredientiProdottiLocale[];
+  categoriaProdotto?: TipiProdottoLocale[];
   tipiProdotto: TipiProdottoLocale[];
 }
 export interface LocaleIdResponse {
@@ -351,6 +352,16 @@ export interface GetTipoProdottoResponse {
 }
 export interface CreateProductDto {
   idRistorante: number;
+  nomeProdotto: string;
+  prezzoProdotto: number;
+  isAttivo: boolean;
+  descrizioneProdotto?: string | null;
+  idTipiProdotto?: number | null;
+  idIngredienti?: number[];
+}
+export interface EditProductDto {
+  idRistorante: number;
+  idProdottoRistorante: number;
   nomeProdotto: string;
   prezzoProdotto: number;
   isAttivo: boolean;

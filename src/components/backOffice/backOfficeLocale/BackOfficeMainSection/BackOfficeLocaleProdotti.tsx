@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { ATTIVATI, DISATTIVATI, TUTTI } from "../../../../functions/config";
 import { GetProdottiRistorante } from "../../../../redux/actions/backofficeAction";
 import ModalCreaProdotto from "./BackOfficeLocaleProdotto/ModalCreaProdotto";
+import ModalEditProdotto from "./BackOfficeLocaleProdotto/ModalEditProdotto";
 
 function BackOfficeLocaleProdotti() {
   const dispatch: AppDispatch = useDispatch();
@@ -28,6 +29,18 @@ function BackOfficeLocaleProdotti() {
   const handleClose = () => setShowCreateProd(false);
   const handleShow = () => setShowCreateProd(true);
 
+  const [prodottoSelezionato, setProdottoSelezionato] = useState<ProdottiLocale | null>(null);
+  const [showEditProd, setShowEditProd] = useState<boolean>(false);
+  const handleCloseEdit = () => {
+    setProdottoSelezionato(null);
+    setShowEditProd(false);
+  };
+
+  const handleShowEdit = (prodotto: ProdottiLocale) => {
+    setProdottoSelezionato(prodotto);
+    setShowEditProd(true);
+  };
+
   function handleStatusFilter(status: string) {
     setStatusFilter(status);
   }
@@ -39,6 +52,14 @@ function BackOfficeLocaleProdotti() {
     <div className="mt-3 mb-5 h-100">
       {locale && showCreateProd && (
         <ModalCreaProdotto show={showCreateProd} handleClose={handleClose} idRistorante={locale?.idRistorante} />
+      )}
+      {locale && showEditProd && prodottoSelezionato && (
+        <ModalEditProdotto
+          show={showEditProd}
+          prodotto={prodottoSelezionato}
+          handleClose={handleCloseEdit}
+          idRistorante={locale?.idRistorante}
+        />
       )}
       <div className="mb-3 d-flex align-item-center">
         <button className="btn btn-leaf-500 text-white button-border-success rounded-0" onClick={handleShow}>
@@ -73,8 +94,12 @@ function BackOfficeLocaleProdotti() {
         {/* MAP PRODOTTO */}
         {filteredLista &&
           filteredLista.map((prodotto, index: number) => (
-            <Col key={`prodotto-${index}`} className="col-6 col-xl-4 col-xxxl-3 py-md-3 py-2 ">
-              <div className="shadow h-100 p-md-3 p-2 ">
+            <Col
+              key={`prodotto-${index}`}
+              className="col-6 col-xl-4 col-xxxl-3 py-md-3 py-2 "
+              style={prodotto.isAttivo ? {} : { filter: "grayscale(100%)", opacity: "0.5" }}
+            >
+              <div className="shadow h-100 p-md-3 p-2 cursor-pointer" onClick={() => handleShowEdit(prodotto)}>
                 <Row>
                   <Col className={prodotto.imgProdotto ? "col-sm-4 col-12 d-flex align-item-center" : "d-none"}>
                     <div className="" style={{ position: "relative", width: "100%", paddingBottom: "50%" }}>
