@@ -14,7 +14,7 @@ function MobileOrderModal(p: ProductFilterModalProps) {
     <div>
       <Modal dialogClassName="rounded-0" show={p.show} onHide={p.handleClose} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
-          <Modal.Title className=" font-breef">FDFGDGDFDFGDFGDF</Modal.Title>
+          <Modal.Title className=" font-breef">CARRELLO MOBILE</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <CartHeader />
